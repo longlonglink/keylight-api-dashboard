@@ -1,27 +1,25 @@
 /**
  * Secret-handling helpers.
  *
- * The API key is kept in React memory by design. This module only defines the
- * small amount of normalization and cleanup needed by the UI. It never writes,
- * logs, or transmits a key.
+ * This version of Keylight deliberately has no feature that persists an API
+ * key. The key is held only in React memory for the current page.
  */
 
 export const APP_STORAGE_PREFIX = 'keylight.'
 
-/** Trim accidental whitespace from a pasted credential, but never transform it otherwise. */
+/** Trim accidental whitespace from a pasted credential. */
 export function normalizeApiKey(rawValue: string): string {
   return rawValue.trim()
 }
 
-export function isApiKeyBlank(rawValue: string): boolean {
-  return normalizeApiKey(rawValue).length === 0
-}
-
 /**
- * Removes every storage entry owned by this app from localStorage and
- * sessionStorage. It intentionally does not touch cookies.
+ * Removes credentials left by older versions of this app.
+ *
+ * Earlier builds offered an optional "remember" feature. The current version
+ * never writes a key to storage, but this cleanup prevents a stale credential
+ * from a previous visit from remaining in the user's browser.
  */
-export function purgeAppBrowserStorage(): void {
+export function purgeLegacyCredentialStorage(): void {
   const stores: Storage[] = []
 
   try {
@@ -42,7 +40,11 @@ export function purgeAppBrowserStorage(): void {
 
       for (let index = 0; index < store.length; index += 1) {
         const key = store.key(index)
-        if (key && key.startsWith(APP_STORAGE_PREFIX)) {
+        if (
+          key &&
+          (key.startsWith(`${APP_STORAGE_PREFIX}api-key`) ||
+            key.startsWith(`${APP_STORAGE_PREFIX}remembered-key`))
+        ) {
           keysToRemove.push(key)
         }
       }
@@ -51,7 +53,7 @@ export function purgeAppBrowserStorage(): void {
         store.removeItem(key)
       }
     } catch {
-      /* Cleanup should never break the UI. */
+      /* Cleanup must never break the app. */
     }
   }
 }

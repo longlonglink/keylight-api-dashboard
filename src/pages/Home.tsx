@@ -2,8 +2,8 @@ import type { FormEvent } from 'react'
 import {
   ArrowRight,
   ArrowUpRight,
-  Check,
   Globe2,
+  Info,
   KeyRound,
   LockKeyhole,
   Route,
@@ -13,13 +13,13 @@ import {
 import type { ApiProvider } from '../providers'
 import type { ProviderError } from '../lib/errors'
 import type { ThemePreference } from '../lib/storage'
+import { useI18n } from '../i18n/I18nProvider'
 import { ApiKeyInput } from '../components/ApiKeyInput'
 import { ErrorAlert } from '../components/ErrorAlert'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { ProviderGlyph } from '../components/ProviderGlyph'
 import { ProviderSelector } from '../components/ProviderSelector'
-import { cn } from '../lib/cn'
 
 interface HomeProps {
   theme: ThemePreference
@@ -29,51 +29,9 @@ interface HomeProps {
   onProviderChange: (providerId: string) => void
   apiKey: string
   onApiKeyChange: (value: string) => void
-  remember: boolean
-  onRememberChange: (value: boolean) => void
   onConnect: () => void
   formError: ProviderError | null
-  loadedFromStorage: boolean
 }
-
-const safeguards = [
-  {
-    icon: KeyRound,
-    title: 'Memory first',
-    copy: 'Your key is stored locally only if you opt in.',
-  },
-  {
-    icon: Route,
-    title: 'Direct path',
-    copy: 'No Worker, proxy, or application server.',
-  },
-  {
-    icon: ServerOff,
-    title: 'Zero telemetry',
-    copy: 'No analytics, trackers, or error reporting.',
-  },
-]
-
-const privacyPillars = [
-  {
-    number: '01',
-    icon: ServerOff,
-    title: 'Static hosting only',
-    copy: 'Cloudflare Pages delivers HTML, CSS, and JavaScript. It never receives your credential or handles the API request.',
-  },
-  {
-    number: '02',
-    icon: Route,
-    title: 'Browser to provider',
-    copy: 'When you connect, this tab sends an HTTPS request directly to the official DeepSeek API using the Authorization header.',
-  },
-  {
-    number: '03',
-    icon: KeyRound,
-    title: 'Memory by default',
-    copy: 'The key stays in JavaScript memory. “Remember on this device” is off until you explicitly enable localStorage.',
-  },
-]
 
 export function Home({
   theme,
@@ -83,19 +41,56 @@ export function Home({
   onProviderChange,
   apiKey,
   onApiKeyChange,
-  remember,
-  onRememberChange,
   onConnect,
   formError,
-  loadedFromStorage,
 }: HomeProps) {
+  const { t } = useI18n()
   const selectedProvider = providers.find((provider) => provider.meta.id === providerId) ?? providers[0]
-  const providerName = selectedProvider?.meta.name ?? 'the provider'
+  const providerName = selectedProvider?.meta.name ?? 'DeepSeek'
   const docsUrl = selectedProvider?.meta.docsUrl ?? 'https://api-docs.deepseek.com/'
   const apiKeysUrl = selectedProvider?.meta.apiKeysUrl ?? 'https://platform.deepseek.com/api_keys'
   const providerHost = selectedProvider
     ? new URL(selectedProvider.meta.baseUrl).hostname
     : 'api.deepseek.com'
+
+  const safeguards = [
+    {
+      icon: KeyRound,
+      title: t('home.featureMemoryTitle'),
+      copy: t('home.featureMemoryCopy'),
+    },
+    {
+      icon: Route,
+      title: t('home.featureDirectTitle'),
+      copy: t('home.featureDirectCopy'),
+    },
+    {
+      icon: ServerOff,
+      title: t('home.featureTelemetryTitle'),
+      copy: t('home.featureTelemetryCopy'),
+    },
+  ]
+
+  const privacyPillars = [
+    {
+      number: '01',
+      icon: ServerOff,
+      title: t('home.pillar1Title'),
+      copy: t('home.pillar1Copy'),
+    },
+    {
+      number: '02',
+      icon: Route,
+      title: t('home.pillar2Title'),
+      copy: t('home.pillar2Copy'),
+    },
+    {
+      number: '03',
+      icon: KeyRound,
+      title: t('home.pillar3Title'),
+      copy: t('home.pillar3Copy'),
+    },
+  ]
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -110,12 +105,7 @@ export function Home({
         <div className="absolute -left-48 top-[480px] size-[440px] rounded-full bg-[#dcae65]/[0.07] blur-[100px]" />
       </div>
 
-      <Header
-        theme={theme}
-        onCycleTheme={onCycleTheme}
-        docsUrl={docsUrl}
-        variant="landing"
-      />
+      <Header theme={theme} onCycleTheme={onCycleTheme} docsUrl={docsUrl} variant="landing" />
 
       <main className="flex-1">
         <section className="page-wrap grid gap-14 pb-20 pt-9 sm:pt-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:pb-28 lg:pt-16">
@@ -123,17 +113,17 @@ export function Home({
             <div className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1.5 pl-2.5 pr-3.5 shadow-[0_1px_0_rgb(255_255_255_/_0.7)_inset] backdrop-blur">
               <span className="status-dot" aria-hidden="true" />
               <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-muted">
-                Browser-direct API console
+                {t('home.badge')}
               </span>
             </div>
 
             <h1 className="display-title mt-7 text-[2.65rem] font-extrabold leading-[1.01] text-ink sm:text-6xl xl:text-[4.5rem]">
-              Your API.
+              {t('home.title1')}
               <br />
-              Your browser.
+              {t('home.title2')}
               <br />
               <span className="relative inline-block text-accent">
-                No middleman.
+                {t('home.title3')}
                 <svg
                   className="absolute -bottom-2 left-0 h-3 w-full text-accent/30"
                   viewBox="0 0 300 12"
@@ -152,9 +142,7 @@ export function Home({
             </h1>
 
             <p className="mt-8 max-w-[33rem] text-pretty text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-              A clear, quiet view of the balance and models behind your DeepSeek key. Every request
-              travels directly from this tab to the official API — this website has no server to
-              send it to.
+              {t('home.intro')}
             </p>
 
             <div className="mt-9 grid max-w-[36rem] gap-4 sm:grid-cols-3">
@@ -175,9 +163,11 @@ export function Home({
                   </span>
                   <div>
                     <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
-                      Request origin
+                      {t('home.routeOrigin')}
                     </p>
-                    <p className="mt-0.5 text-[11px] font-bold text-ink">This browser tab</p>
+                    <p className="mt-0.5 text-[11px] font-bold text-ink">
+                      {t('home.routeThisBrowser')}
+                    </p>
                   </div>
                 </div>
 
@@ -185,7 +175,7 @@ export function Home({
                   <span className="h-px flex-1 border-t border-dashed border-line" />
                   <span className="inline-flex items-center gap-1 font-mono text-[8px] uppercase tracking-[0.1em]">
                     <LockKeyhole className="size-2.5" aria-hidden="true" />
-                    HTTPS
+                    {t('home.routeHttps')}
                   </span>
                   <span className="h-px flex-1 border-t border-dashed border-line" />
                 </div>
@@ -194,14 +184,16 @@ export function Home({
                   <ProviderGlyph className="size-8 rounded-lg" iconClassName="size-4" />
                   <div>
                     <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
-                      Official API
+                      {t('home.routeOfficialApi')}
                     </p>
-                    <p className="mt-0.5 font-mono text-[10px] font-medium text-ink">{providerHost}</p>
+                    <p className="mt-0.5 font-mono text-[10px] font-medium text-ink">
+                      {providerHost}
+                    </p>
                   </div>
                 </div>
               </div>
               <p className="mt-3 border-t border-line/80 pt-2.5 text-[10px] leading-4 text-faint">
-                Cloudflare Pages serves the files above. It is not part of this request path.
+                {t('home.routeNote')}
               </p>
             </div>
           </div>
@@ -217,17 +209,17 @@ export function Home({
             />
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="eyebrow">Connect account</p>
+                <p className="eyebrow">{t('home.connectEyebrow')}</p>
                 <h2
                   id="connect-heading"
                   className="mt-2 text-[1.65rem] font-extrabold tracking-[-0.04em] text-ink"
                 >
-                  See what your key can see.
+                  {t('home.connectTitle')}
                 </h2>
               </div>
               <span className="chip mt-0.5 shrink-0 py-1.5">
                 <LockKeyhole className="size-3" aria-hidden="true" />
-                Direct
+                {t('common.direct')}
               </span>
             </div>
 
@@ -238,48 +230,30 @@ export function Home({
                 onChange={onProviderChange}
               />
 
+              <p className="-mt-2.5 text-[10px] leading-4 text-faint">
+                {t('provider.deepseekDescription')}
+              </p>
+
               <ApiKeyInput
                 value={apiKey}
                 onChange={onApiKeyChange}
                 hasError={Boolean(formError)}
-                loadedFromStorage={loadedFromStorage}
               />
 
-              {formError && <ErrorAlert error={formError} />}
+              <div className="flex items-start gap-2 rounded-xl bg-surface-muted/65 px-3 py-2.5">
+                <ShieldCheck
+                  className="mt-0.5 size-3.5 shrink-0 text-accent"
+                  aria-hidden="true"
+                />
+                <p className="text-[10px] leading-4 text-muted">{t('home.keyMemoryNotice')}</p>
+              </div>
 
-              <label className="flex cursor-pointer items-start gap-3 rounded-xl py-0.5">
-                <span className="relative mt-0.5 flex shrink-0">
-                  <input
-                    type="checkbox"
-                    checked={remember}
-                    onChange={(event) => onRememberChange(event.target.checked)}
-                    className="peer sr-only"
-                  />
-                  <span
-                    className={cn(
-                      'flex size-5 items-center justify-center rounded-md border transition peer-focus-visible:ring-4 peer-focus-visible:ring-accent/15',
-                      remember
-                        ? 'border-accent bg-accent text-white'
-                        : 'border-line bg-surface text-transparent',
-                    )}
-                    aria-hidden="true"
-                  >
-                    <Check className="size-3.5" strokeWidth={3} />
-                  </span>
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-[12px] font-bold text-ink">
-                    Remember on this device
-                  </span>
-                  <span className="mt-1 block text-[10px] leading-4 text-muted">
-                    Off by default. Enabling it stores the key in this browser&apos;s localStorage.
-                    It never leaves your device except in direct provider requests.
-                  </span>
-                </span>
-              </label>
+              {formError && (
+                <ErrorAlert error={formError} providerName={providerName} />
+              )}
 
               <button type="submit" className="btn-primary group w-full py-3.5">
-                <span>Connect to {providerName}</span>
+                <span>{t('home.connectTo', { provider: providerName })}</span>
                 <ArrowRight
                   className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
                   aria-hidden="true"
@@ -296,11 +270,10 @@ export function Home({
                 />
                 <div>
                   <p className="text-[11px] font-bold leading-4 text-ink">
-                    This website does not receive or store your API key.
+                    {t('home.privacyTitle')}
                   </p>
                   <p className="mt-1 text-[10px] leading-[1.55] text-muted">
-                    The key is sent directly to {providerName} when making API requests. There is no
-                    backend between this page and the official API.
+                    {t('home.privacyBody', { provider: providerName })}
                   </p>
                 </div>
               </div>
@@ -308,29 +281,28 @@ export function Home({
 
             <details className="group mt-4 rounded-xl px-1">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-[10px] font-semibold text-muted transition hover:text-ink [&::-webkit-details-marker]:hidden">
-                What exactly happens when I connect?
-                <span className="font-mono text-xs text-faint transition group-open:rotate-45" aria-hidden="true">
+                {t('home.detailsSummary')}
+                <span
+                  className="font-mono text-xs text-faint transition group-open:rotate-45"
+                  aria-hidden="true"
+                >
                   +
                 </span>
               </summary>
               <p className="pb-1 pt-2 text-[10px] leading-[1.65] text-muted">
-                Your browser sends <span className="font-mono text-[9px] text-ink">GET</span> requests
-                to <span className="font-mono text-[9px] text-ink">{providerHost}</span>. The key is
-                carried only in an <span className="font-mono text-[9px] text-ink">Authorization</span>{' '}
-                header. The page&apos;s host serves static files and is never contacted by those API
-                requests.
+                {t('home.detailsBody', { host: providerHost })}
               </p>
             </details>
 
             <p className="mt-5 border-t border-line/80 pt-4 text-center text-[10px] text-faint">
-              Need a key?{' '}
+              {t('home.needKey')}{' '}
               <a
                 href={apiKeysUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="font-semibold text-ink underline decoration-line underline-offset-2 transition hover:decoration-accent"
               >
-                Create one at {providerName}
+                {t('home.createKeyAt', { provider: providerName })}
                 <ArrowUpRight className="ml-0.5 inline size-2.5" aria-hidden="true" />
               </a>
             </p>
@@ -341,13 +313,12 @@ export function Home({
           <div className="page-wrap py-20 lg:py-24">
             <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
               <div>
-                <p className="eyebrow">Privacy, by construction</p>
+                <p className="eyebrow">{t('home.privacyEyebrow')}</p>
                 <h2 className="display-title mt-4 max-w-md text-3xl font-extrabold leading-[1.1] text-ink sm:text-4xl">
-                  Privacy isn&apos;t a setting here. It&apos;s the architecture.
+                  {t('home.privacyHeading')}
                 </h2>
                 <p className="mt-5 max-w-md text-pretty text-sm leading-6 text-muted">
-                  Keylight is a static frontend with no application server. That removes an entire
-                  class of risk: there is no endpoint on this site that could receive your key.
+                  {t('home.privacyIntro')}
                 </p>
 
                 <div className="mt-7 inline-flex items-start gap-3 rounded-2xl border border-accent/15 bg-accent-soft/55 px-4 py-3.5">
@@ -356,9 +327,16 @@ export function Home({
                     aria-hidden="true"
                   />
                   <p className="text-[11px] leading-5 text-muted">
-                    <span className="font-bold text-ink">CORS stays honest.</span> If a provider ever
-                    blocks direct browser requests, the dashboard reports it. This project will never
-                    add a proxy to work around browser security.
+                    <span className="font-bold text-ink">{t('home.corsTitle')}</span>{' '}
+                    {t('home.corsBody')}
+                  </p>
+                </div>
+
+                <div className="mt-4 flex items-start gap-3 rounded-2xl border border-line bg-surface/60 px-4 py-3.5">
+                  <Info className="mt-0.5 size-[18px] shrink-0 text-muted" aria-hidden="true" />
+                  <p className="text-[11px] leading-5 text-muted">
+                    <span className="font-bold text-ink">{t('home.noAccountUsageTitle')}</span>{' '}
+                    {t('home.noAccountUsageBody')}
                   </p>
                 </div>
               </div>
@@ -390,12 +368,8 @@ export function Home({
                   <Globe2 className="size-4" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="text-xs font-bold text-ink">
-                    Deployed as static files on Cloudflare Pages.
-                  </p>
-                  <p className="mt-1 text-[11px] leading-4 text-muted">
-                    GitHub → Cloudflare Pages → your browser. API traffic skips the middle entirely.
-                  </p>
+                  <p className="text-xs font-bold text-ink">{t('home.deployTitle')}</p>
+                  <p className="mt-1 text-[11px] leading-4 text-muted">{t('home.deployBody')}</p>
                 </div>
               </div>
               <a
@@ -404,7 +378,7 @@ export function Home({
                 rel="noreferrer"
                 className="inline-flex shrink-0 items-center gap-1.5 text-[11px] font-bold text-ink transition hover:text-accent"
               >
-                Read the official API docs
+                {t('home.readDocs')}
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
               </a>
             </div>
@@ -412,7 +386,7 @@ export function Home({
         </section>
       </main>
 
-      <Footer docsUrl={docsUrl} apiKeysUrl={apiKeysUrl} />
+      <Footer docsUrl={docsUrl} apiKeysUrl={apiKeysUrl} showSourceProof />
     </div>
   )
 }

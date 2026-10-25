@@ -2,13 +2,13 @@ import { useId, useState } from 'react'
 import { ClipboardPaste, Eye, EyeOff, KeyRound, X } from 'lucide-react'
 import { normalizeApiKey } from '../lib/security'
 import { cn } from '../lib/cn'
+import { useI18n } from '../i18n/I18nProvider'
 
 interface ApiKeyInputProps {
   value: string
   onChange: (value: string) => void
   disabled?: boolean
   hasError?: boolean
-  loadedFromStorage?: boolean
 }
 
 type PasteNotice = { kind: 'error' | 'success'; message: string } | null
@@ -18,8 +18,8 @@ export function ApiKeyInput({
   onChange,
   disabled = false,
   hasError = false,
-  loadedFromStorage = false,
 }: ApiKeyInputProps) {
+  const { t } = useI18n()
   const inputId = useId()
   const hintId = useId()
   const [isVisible, setIsVisible] = useState(false)
@@ -47,32 +47,22 @@ export function ApiKeyInput({
       const clipboardValue = normalizeApiKey(await navigator.clipboard.readText())
 
       if (!clipboardValue) {
-        setPasteNotice({ kind: 'error', message: 'Your clipboard is empty.' })
+        setPasteNotice({ kind: 'error', message: t('home.pasteEmpty') })
         return
       }
 
       onChange(clipboardValue)
-      setPasteNotice({ kind: 'success', message: 'Pasted. Nothing was uploaded.' })
+      setPasteNotice({ kind: 'success', message: t('home.pasteSuccess') })
     } catch {
-      setPasteNotice({
-        kind: 'error',
-        message: 'Clipboard access was blocked. Use Ctrl/⌘ + V in the field instead.',
-      })
+      setPasteNotice({ kind: 'error', message: t('home.pasteBlocked') })
     }
   }
 
   return (
     <div>
       <div className="field-label">
-        <label htmlFor={inputId}>API key</label>
-        <span className="flex items-center gap-2 normal-case tracking-normal">
-          {loadedFromStorage && value && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-[9px] font-semibold text-accent">
-              Saved locally
-            </span>
-          )}
-          <span>Bearer header only</span>
-        </span>
+        <label htmlFor={inputId}>{t('home.keyLabel')}</label>
+        <span>{t('home.bearerOnly')}</span>
       </div>
 
       <div
@@ -104,8 +94,8 @@ export function ApiKeyInput({
             onClick={handleClear}
             disabled={disabled}
             className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-muted transition hover:bg-line/50 hover:text-ink"
-            aria-label="Clear API key input"
-            title="Clear"
+            aria-label={t('home.clearKeyAria')}
+            title={t('home.clearKeyAria')}
           >
             <X className="size-4" aria-hidden="true" />
           </button>
@@ -116,8 +106,8 @@ export function ApiKeyInput({
           onClick={() => setIsVisible((current) => !current)}
           disabled={disabled}
           className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-muted transition hover:bg-line/50 hover:text-ink"
-          aria-label={isVisible ? 'Hide API key' : 'Show API key'}
-          title={isVisible ? 'Hide key' : 'Show key'}
+          aria-label={isVisible ? t('home.hideKeyAria') : t('home.showKeyAria')}
+          title={isVisible ? t('home.hideKeyAria') : t('home.showKeyAria')}
         >
           {isVisible ? (
             <EyeOff className="size-4" aria-hidden="true" />
@@ -135,10 +125,10 @@ export function ApiKeyInput({
           className="inline-flex items-center gap-1.5 rounded-full px-1.5 py-1 text-[11px] font-semibold text-muted transition hover:bg-surface-muted hover:text-ink"
         >
           <ClipboardPaste className="size-3.5" aria-hidden="true" />
-          Paste from clipboard
+          {t('home.paste')}
         </button>
         <span id={hintId} className="px-1.5 text-[10px] leading-4 text-faint">
-          Never placed in a URL
+          {t('home.neverInUrl')}
         </span>
       </div>
 

@@ -4,14 +4,12 @@ import {
   createNetworkError,
   createTimeoutError,
   isAbortError,
-  toProviderError,
 } from '../lib/errors'
 import type {
   ApiProvider,
   BalanceEntry,
   BalanceSnapshot,
   DashboardData,
-  DashboardWarning,
   ModelInfo,
   ProviderMeta,
 } from './types'
@@ -25,21 +23,13 @@ const REQUEST_TIMEOUT_MS = 20_000
 const meta: ProviderMeta = {
   id: 'deepseek',
   name: PROVIDER_NAME,
-  description: 'Balance and the live model catalogue from the official DeepSeek API.',
   baseUrl: API_ROOT,
   docsUrl: 'https://api-docs.deepseek.com/',
   apiKeysUrl: 'https://platform.deepseek.com/api_keys',
   capabilities: {
     balance: true,
     models: true,
-    usage: false,
-    usageHistory: false,
-    account: false,
   },
-  limitations: [
-    'Usage totals and historical usage are not exposed by the documented API.',
-    'Plan, account ID, and account creation date are not exposed by the documented API.',
-  ],
 }
 
 type UnknownRecord = Record<string, unknown>
@@ -105,20 +95,20 @@ async function requestJson(
       })
     } catch {
       if (signal?.aborted) throw abortError()
-      if (timedOut) throw createTimeoutError(PROVIDER_NAME)
-      throw createNetworkError(PROVIDER_NAME)
+      if (timedOut) throw createTimeoutError()
+      throw createNetworkError()
     }
 
     if (!response.ok) {
-      throw createHttpError(response.status, PROVIDER_NAME)
+      throw createHttpError(response.status)
     }
 
     try {
       return (await response.json()) as unknown
     } catch (error) {
       if (signal?.aborted || isAbortError(error)) throw abortError()
-      if (timedOut) throw createTimeoutError(PROVIDER_NAME)
-      throw createMalformedResponseError(PROVIDER_NAME)
+      if (timedOut) throw createTimeoutError()
+      throw createMalformedResponseError()
     }
   } finally {
     window.clearTimeout(timeoutId)
@@ -128,7 +118,7 @@ async function requestJson(
 
 function parseModels(payload: unknown): ModelInfo[] {
   if (!isRecord(payload) || !Array.isArray(payload.data)) {
-    throw createMalformedResponseError(PROVIDER_NAME)
+    throw createMalformedResponseError()
   }
 
   const models: ModelInfo[] = []
@@ -181,13 +171,13 @@ function parseBalance(payload: unknown): BalanceSnapshot {
     typeof payload.is_available !== 'boolean' ||
     !Array.isArray(payload.balance_infos)
   ) {
-    throw createMalformedResponseError(PROVIDER_NAME)
+    throw createMalformedResponseError()
   }
 
   const entries = payload.balance_infos.map(parseBalanceEntry)
 
   if (entries.some((entry) => entry === null)) {
-    throw createMalformedResponseError(PROVIDER_NAME)
+    throw createMalformedResponseError()
   }
 
   return {
@@ -196,56 +186,23 @@ function parseBalance(payload: unknown): BalanceSnapshot {
   }
 }
 
-async function fetchModels(apiKey: string, signal?: AbortSignal): Promise<ModelInfo[]> {
-  const payload = await requestJson(MODELS_PATH, apiKey, signal)
-  return parseModels(payload)
-}
-
 export const deepseekProvider: ApiProvider = {
   meta,
 
-  async validateApiKey(apiKey: string, signal?: AbortSignal): Promise<void> {
-    await fetchModels(apiKey, signal)
-  },
-
   async getDashboard(apiKey: string, signal?: AbortSignal): Promise<DashboardData> {
-    // The authenticated models request doubles as key validation. A 401 here
-    // means the dashboard cannot connect.
-    const models = await fetchModels(apiKey, signal)
-    const warnings: DashboardWarning[] = []
-    let balance: BalanceSnapshot | null = null
+    // Both endpoints are documented read-only operations. /models also acts as
+    // authentication validation; no billable chat or completion request is used.
+    const modelsPayload = await requestJson(MODELS_PATH, apiKey, signal)
+    const models = parseModels(modelsPayload)
 
-    try {
-      balance = parseBalance(await requestJson(BALANCE_PATH, apiKey, signal))
-    } catch (error) {
-      const providerError = toProviderError(error)
-
-      if (providerError.kind === 'aborted' || providerError.kind === 'invalid-key') {
-        throw providerError
-      }
-
-      warnings.push({
-        title: 'Balance could not be loaded',
-        detail: providerError.message,
-      })
-    }
+    const balancePayload = await requestJson(BALANCE_PATH, apiKey, signal)
+    const balance = parseBalance(balancePayload)
 
     return {
       provider: meta,
       fetchedAt: new Date().toISOString(),
-      models,
       balance,
-      account: {
-        status: 'Connected',
-        plan: null,
-        accountId: null,
-        createdAt: null,
-        currency: balance?.entries[0]?.currency ?? null,
-      },
-      usage: null,
-      capabilities: meta.capabilities,
-      warnings,
+      models,
     }
   },
 }
-

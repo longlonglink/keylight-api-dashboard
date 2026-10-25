@@ -6,7 +6,7 @@
     <title>Keylight — Privacy-first API Dashboard</title>
     <meta
       name="description"
-      content="A fully static dashboard for your DeepSeek API account. Your API key stays in your browser and requests go directly to the official API. No backend, no proxy, no analytics."
+      content="纯静态、浏览器直连 DeepSeek 官方 API 的余额与模型仪表盘。API Key 只保存在内存中。A static DeepSeek balance and models dashboard. Your key stays in browser memory; requests go directly to the official API."
     />
     <meta name="referrer" content="no-referrer" />
     <meta name="color-scheme" content="light dark" />
@@ -16,20 +16,21 @@
     <meta property="og:title" content="Keylight — Privacy-first API Dashboard" />
     <meta
       property="og:description"
-      content="Check your DeepSeek API balance and models locally. Your key never touches this website's server — because there isn't one."
+      content="DeepSeek 余额与模型的纯静态仪表盘。浏览器直连官方 API，无后端、无代理、无追踪。A fully static DeepSeek dashboard with direct browser-to-API requests."
     />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script src="/theme-init.js"></script>
+    <script src="/app-init.js"></script>
   </head>
   <body class="min-h-full">
     <div id="root"></div>
     <noscript>
       <div style="max-width: 640px; margin: 80px auto; padding: 24px; font-family: system-ui, sans-serif">
-        <h1>JavaScript is required</h1>
+        <h1>JavaScript is required / 需要启用 JavaScript</h1>
         <p>
           Keylight is a static browser application. Enable JavaScript to use it. Your API key is
-          never sent to this website.
+          never sent to this website. / Keylight 是纯静态浏览器应用，请启用 JavaScript。API Key
+          不会发送到本站。
         </p>
       </div>
     </noscript>

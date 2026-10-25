@@ -1,18 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { DashboardSkeleton } from './components/DashboardSkeleton'
 import { ProviderError, toProviderError } from './lib/errors'
-import {
-  clearAppStorage,
-  readAutoRefreshMinutes,
-  readRememberedApiKey,
-  removeRememberedApiKey,
-  saveAutoRefreshMinutes,
-  saveRememberedApiKey,
-  type AutoRefreshMinutes,
-  type ThemePreference,
-} from './lib/storage'
-import { normalizeApiKey } from './lib/security'
+import { normalizeApiKey, purgeLegacyCredentialStorage } from './lib/security'
 import { useTheme } from './hooks/useTheme'
+import { useI18n } from './i18n/I18nProvider'
 import { Home } from './pages/Home'
 import { DashboardPage } from './pages/DashboardPage'
 import {
@@ -25,15 +16,10 @@ import type { DashboardData } from './providers/types'
 type ConnectionPhase = 'idle' | 'connecting' | 'connected'
 
 export default function App() {
-  const { theme, setTheme, cycleTheme } = useTheme()
+  const { theme, cycleTheme } = useTheme()
+  const { t } = useI18n()
 
-  // These initial values are read once at mount. No throwaway state retains a
-  // second copy of a remembered key after Clear API key.
-  const [apiKey, setApiKey] = useState(() => readRememberedApiKey() ?? '')
-  const [remember, setRemember] = useState(() => readRememberedApiKey() !== null)
-  const [loadedFromStorage, setLoadedFromStorage] = useState(
-    () => readRememberedApiKey() !== null,
-  )
+  const [apiKey, setApiKey] = useState('')
   const [providerId, setProviderId] = useState(DEFAULT_PROVIDER_ID)
   const [phase, setPhase] = useState<ConnectionPhase>('idle')
   const [sessionKey, setSessionKey] = useState<string | null>(null)
@@ -41,25 +27,24 @@ export default function App() {
   const [formError, setFormError] = useState<ProviderError | null>(null)
   const [refreshError, setRefreshError] = useState<ProviderError | null>(null)
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [autoRefresh, setAutoRefresh] = useState<AutoRefreshMinutes>(() =>
-    readAutoRefreshMinutes(),
-  )
 
   const abortRef = useRef<AbortController | null>(null)
   const operationRef = useRef(0)
-  const refreshInFlightRef = useRef(false)
+
+  useEffect(() => {
+    purgeLegacyCredentialStorage()
+  }, [])
 
   useEffect(() => {
     document.title =
       phase === 'connected'
-        ? 'Dashboard · Keylight'
+        ? t('meta.dashboardTitle')
         : phase === 'connecting'
-          ? 'Connecting · Keylight'
-          : 'Keylight — Privacy-first API Dashboard'
-  }, [phase])
+          ? t('meta.connectingTitle')
+          : t('meta.homeTitle')
+  }, [phase, t])
 
   const handleApiKeyChange = useCallback((value: string) => {
-    setLoadedFromStorage(false)
     setFormError(null)
     setApiKey(value)
   }, [])
@@ -69,36 +54,13 @@ export default function App() {
     setFormError(null)
   }, [])
 
-  const handleRememberChange = useCallback(
-    (nextRemember: boolean) => {
-      setRemember(nextRemember)
-
-      if (!nextRemember) {
-        setLoadedFromStorage(false)
-        removeRememberedApiKey()
-        return
-      }
-
-      if (sessionKey) {
-        saveRememberedApiKey(sessionKey)
-      }
-    },
-    [sessionKey],
-  )
-
   const handleConnect = useCallback(async () => {
     if (phase === 'connecting') return
 
     const normalizedKey = normalizeApiKey(apiKey)
 
     if (!normalizedKey) {
-      setFormError(
-        new ProviderError(
-          'unknown',
-          'API key required',
-          'Enter your API key to connect. It is used only for direct requests from this tab.',
-        ),
-      )
+      setFormError(new ProviderError('key-required'))
       return
     }
 
@@ -121,13 +83,6 @@ export default function App() {
       setSessionKey(normalizedKey)
       setPhase('connected')
       setApiKey('')
-      setLoadedFromStorage(false)
-
-      if (remember) {
-        saveRememberedApiKey(normalizedKey)
-      } else {
-        removeRememberedApiKey()
-      }
     } catch (error) {
       if (controller.signal.aborted || attempt !== operationRef.current) return
       setFormError(toProviderError(error))
@@ -137,7 +92,7 @@ export default function App() {
         abortRef.current = null
       }
     }
-  }, [apiKey, phase, providerId, remember])
+  }, [apiKey, phase, providerId])
 
   const handleCancelConnect = useCallback(() => {
     operationRef.current += 1
@@ -148,11 +103,10 @@ export default function App() {
   }, [])
 
   const handleRefresh = useCallback(async () => {
-    if (!sessionKey || refreshInFlightRef.current) return
+    if (!sessionKey || isRefreshing) return
 
     const attempt = operationRef.current + 1
     operationRef.current = attempt
-    refreshInFlightRef.current = true
     const controller = new AbortController()
     abortRef.current = controller
 
@@ -169,56 +123,28 @@ export default function App() {
       setRefreshError(toProviderError(error))
     } finally {
       if (attempt === operationRef.current) {
-        refreshInFlightRef.current = false
         setIsRefreshing(false)
         if (abortRef.current === controller) {
           abortRef.current = null
         }
       }
     }
-  }, [providerId, sessionKey])
+  }, [isRefreshing, providerId, sessionKey])
 
   const handleClear = useCallback(() => {
     operationRef.current += 1
     abortRef.current?.abort()
     abortRef.current = null
-    refreshInFlightRef.current = false
 
     setPhase('idle')
     setSessionKey(null)
     setData(null)
     setApiKey('')
-    setRemember(false)
-    setLoadedFromStorage(false)
     setFormError(null)
     setRefreshError(null)
     setIsRefreshing(false)
-    setAutoRefresh(0)
-    setTheme('system')
-    clearAppStorage()
-  }, [setTheme])
-
-  const handleAutoRefreshChange = useCallback((minutes: AutoRefreshMinutes) => {
-    setAutoRefresh(minutes)
-    saveAutoRefreshMinutes(minutes)
+    purgeLegacyCredentialStorage()
   }, [])
-
-  useEffect(() => {
-    if (phase !== 'connected' || autoRefresh === 0) return
-
-    const timer = window.setInterval(() => {
-      void handleRefresh()
-    }, autoRefresh * 60_000)
-
-    return () => window.clearInterval(timer)
-  }, [autoRefresh, handleRefresh, phase])
-
-  const handleThemeChange = useCallback(
-    (nextTheme: ThemePreference) => {
-      setTheme(nextTheme)
-    },
-    [setTheme],
-  )
 
   const selectedProvider = getProviderById(providerId)
 
@@ -239,16 +165,11 @@ export default function App() {
         data={data}
         theme={theme}
         onCycleTheme={cycleTheme}
-        onThemeChange={handleThemeChange}
         isRefreshing={isRefreshing}
         refreshError={refreshError}
         onDismissRefreshError={() => setRefreshError(null)}
         onRefresh={() => void handleRefresh()}
         onClear={handleClear}
-        autoRefresh={autoRefresh}
-        onAutoRefreshChange={handleAutoRefreshChange}
-        remember={remember}
-        onRememberChange={handleRememberChange}
       />
     )
   }
@@ -262,11 +183,8 @@ export default function App() {
       onProviderChange={handleProviderChange}
       apiKey={apiKey}
       onApiKeyChange={handleApiKeyChange}
-      remember={remember}
-      onRememberChange={handleRememberChange}
       onConnect={() => void handleConnect()}
       formError={formError}
-      loadedFromStorage={loadedFromStorage}
     />
   )
 }

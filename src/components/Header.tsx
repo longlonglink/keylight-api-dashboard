@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { ArrowUpRight } from 'lucide-react'
+import { useI18n } from '../i18n/I18nProvider'
 import { Brand } from './Brand'
+import { LanguageToggle } from './LanguageToggle'
 import { ThemeToggle } from './ThemeToggle'
 import type { ThemePreference } from '../lib/storage'
 
@@ -19,6 +21,7 @@ export function Header({
   docsUrl,
   actions,
 }: HeaderProps) {
+  const { t } = useI18n()
   const isDashboard = variant === 'dashboard'
 
   return (
@@ -29,14 +32,17 @@ export function Header({
           : 'relative z-20'
       }
     >
-      <div className="page-wrap flex h-[76px] items-center justify-between gap-4">
+      <div className="page-wrap flex min-h-[76px] items-center justify-between gap-3 py-3">
         <Brand />
 
         <div className="flex items-center gap-1.5 sm:gap-2">
           {!isDashboard && (
-            <nav className="mr-1 hidden items-center gap-0.5 md:flex" aria-label="Page links">
+            <nav
+              className="mr-1 hidden items-center gap-0.5 md:flex"
+              aria-label={t('header.pageLinks')}
+            >
               <a href="#privacy" className="nav-link">
-                Privacy
+                {t('header.privacy')}
               </a>
               <a
                 href={docsUrl}
@@ -44,7 +50,7 @@ export function Header({
                 rel="noreferrer"
                 className="nav-link inline-flex items-center gap-1"
               >
-                API docs
+                {t('header.apiDocs')}
                 <ArrowUpRight className="size-3.5 text-faint" aria-hidden="true" />
               </a>
             </nav>
@@ -53,11 +59,12 @@ export function Header({
           {isDashboard && (
             <span className="mr-1 hidden items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted sm:inline-flex">
               <span className="status-dot" aria-hidden="true" />
-              Private session
+              {t('header.privateSession')}
             </span>
           )}
 
           {actions}
+          <LanguageToggle />
           <ThemeToggle theme={theme} onCycle={onCycleTheme} />
         </div>
       </div>

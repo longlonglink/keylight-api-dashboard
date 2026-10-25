@@ -1,4 +1,5 @@
 import { cn } from '../lib/cn'
+import { useI18n } from '../i18n/I18nProvider'
 
 interface BrandProps {
   className?: string
@@ -34,6 +35,8 @@ export function BrandMark({ className }: { className?: string }) {
 }
 
 export function Brand({ className, markOnly = false }: BrandProps) {
+  const { t } = useI18n()
+
   return (
     <div className={cn('flex items-center gap-3', className)}>
       <BrandMark />
@@ -43,7 +46,7 @@ export function Brand({ className, markOnly = false }: BrandProps) {
             Keylight
           </span>
           <span className="mt-1 hidden font-mono text-[9px] uppercase tracking-[0.16em] text-faint sm:block">
-            Private API console
+            {t('brand.tagline')}
           </span>
         </div>
       )}

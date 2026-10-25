@@ -1,5 +1,6 @@
 import { ChevronDown } from 'lucide-react'
 import type { ApiProvider } from '../providers'
+import { useI18n } from '../i18n/I18nProvider'
 import { ProviderGlyph } from './ProviderGlyph'
 
 interface ProviderSelectorProps {
@@ -15,6 +16,7 @@ export function ProviderSelector({
   onChange,
   disabled = false,
 }: ProviderSelectorProps) {
+  const { t } = useI18n()
   const selectedProvider = providers.find((provider) => provider.meta.id === value) ?? providers[0]
 
   if (!selectedProvider) return null
@@ -24,8 +26,8 @@ export function ProviderSelector({
   return (
     <div>
       <div className="field-label">
-        <label htmlFor="provider-select">Provider</label>
-        <span>{providers.length} official integration</span>
+        <label htmlFor="provider-select">{t('provider.label')}</label>
+        <span>{t('provider.integrationCount')}</span>
       </div>
 
       <div className="relative">
@@ -49,18 +51,8 @@ export function ProviderSelector({
         />
       </div>
 
-      <p className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] leading-4 text-muted">
-        <span>
-          Requests go to <span className="font-mono text-[10px] text-ink">{hostname}</span>
-        </span>
-        {!selectedProvider.meta.capabilities.usageHistory && (
-          <>
-            <span className="text-faint/60" aria-hidden="true">
-              ·
-            </span>
-            <span>Usage history unavailable from API</span>
-          </>
-        )}
+      <p className="mt-2.5 text-[11px] leading-4 text-muted">
+        {t('provider.requestsTo', { host: hostname })}
       </p>
     </div>
   )
