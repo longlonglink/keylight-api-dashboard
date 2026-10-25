@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keylight — Privacy-first API Dashboard</title>
+    <meta
+      name="description"
+      content="A fully static dashboard for your DeepSeek API account. Your API key stays in your browser and requests go directly to the official API. No backend, no proxy, no analytics."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f3ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#080e0c" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Keylight — Privacy-first API Dashboard" />
+    <meta
+      property="og:description"
+      content="Check your DeepSeek API balance and models locally. Your key never touches this website's server — because there isn't one."
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="/theme-init.js"></script>
+  </head>
+  <body class="min-h-full">
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width: 640px; margin: 80px auto; padding: 24px; font-family: system-ui, sans-serif">
+        <h1>JavaScript is required</h1>
+        <p>
+          Keylight is a static browser application. Enable JavaScript to use it. Your API key is
+          never sent to this website.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
