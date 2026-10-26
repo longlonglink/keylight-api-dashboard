@@ -1,0 +1,78 @@
+# Keylight — full machine-readable summary
+
+Keylight is a client-only DeepSeek API dashboard built with React, TypeScript, Vite, and Tailwind CSS. It is deployed as static assets on Cloudflare Pages. There is no server-side component.
+
+## Architecture
+
+Browser
+  -> downloads static HTML/CSS/JS from Cloudflare Pages
+  -> sends API requests directly to https://api.deepseek.com
+  -> renders the returned JSON in the page
+
+No application backend, Cloudflare Worker, API proxy, serverless function, database, KV, D1, or R2 is used.
+
+## Data shown
+
+Only these documented read-only DeepSeek endpoints are used:
+
+1. GET https://api.deepseek.com/models
+2. GET https://api.deepseek.com/user/balance
+
+The UI displays:
+- `is_available` and every `balance_infos` currency returned by the balance endpoint.
+- Model ID, display name, owner, context window, maximum output tokens, modalities, and effort levels returned by the models endpoint.
+
+The UI does not display, infer, or request:
+- usage history or token-consumption totals;
+- account ID, plan, tier, or creation date;
+- estimated spending derived from balance;
+- any simulated or sample account data.
+
+The dashboard requires the user to supply their own DeepSeek API key. The browser places it only in the `Authorization` header. No billable chat/completion request is made by the dashboard.
+
+## API key privacy
+
+- Key lifetime: current page memory only.
+- `localStorage` contains only non-sensitive theme and language preferences.
+- `sessionStorage` is not used for credentials; startup code removes legacy credential entries from older builds.
+- No key in URL, query, fragment, console, logs, or error strings.
+- No analytics or error reporting.
+- Clear Key clears memory and aborts the current operation.
+- The site makes requests only to its own static assets, `https://api.deepseek.com`, and (on the homepage) two static PayPal brand SVGs from `https://www.paypalobjects.com`.
+
+## CORS
+
+On 2026-10-26, browser preflight requests to both official endpoints returned HTTP 200 with:
+- `access-control-allow-origin: <request origin>`
+- `access-control-allow-methods: GET`
+- `access-control-allow-headers: authorization`
+- `access-control-allow-credentials: true`
+
+If CORS is disabled by the provider, the UI reports a browser/network error and does not attempt a proxy.
+
+## Purchase flow
+
+- Buyer chooses a USD top-up amount at the PayPal hosted payment page:
+  https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG
+- Estimated API balance in CNY:
+  `CNY credit = USD payment × reference USD/CNY rate × 100/95`
+- Current UI reference rate: `1 USD = 6.68 CNY`; this is a static estimate configured in `src/config.ts`.
+- The calculator is local-only and does not modify PayPal's amount.
+- After payment, the buyer joins the Telegram group:
+  https://t.me/+mErIcVI3_R4zMDE1
+- The seller verifies the payment and sends the API key by private message.
+- The website does not process payments, issue API keys, or receive purchased API keys.
+- This is manual fulfillment, not an automatic PayPal discount or automatic FX conversion.
+
+## Source and documentation
+
+GitHub: https://github.com/longlonglink/keylight-api-dashboard
+
+- README: https://github.com/longlonglink/keylight-api-dashboard/blob/main/README.md
+- Privacy: https://github.com/longlonglink/keylight-api-dashboard/blob/main/PRIVACY.md
+- Security: https://github.com/longlonglink/keylight-api-dashboard/blob/main/SECURITY.md
+- Architecture: https://github.com/longlonglink/keylight-api-dashboard/blob/main/ARCHITECTURE.md
+
+## Affiliation
+
+Keylight is an independent open-source project. It is not an official DeepSeek product, store, authorized partner, or agent.

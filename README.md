@@ -172,6 +172,17 @@ export const GITHUB_REPO_URL = 'https://github.com/longlonglink/keylight-api-das
 
 没有图表库，因为当前官方 API 没有历史数据可画。
 
+### SEO / GEO
+
+- `index.html` 包含完整标题、双语描述、keywords、robots、canonical、Open Graph、Twitter Card、manifest 和 theme-color。
+- 静态 JSON-LD 同时声明 `WebApplication` 与 `FAQPage`；JSON-LD 使用 CSP SHA-256 hash 放行，不开启 `unsafe-inline` 脚本。
+- 首页有中英双语的简短 FAQ（默认折叠），内容与结构化数据一致。
+- `public/llms.txt` 和 `public/llms-full.txt` 为生成式搜索/AI 工具提供简洁、可引用的事实摘要，不包含用户数据。
+- `public/robots.txt` 允许搜索引擎和常见 AI crawler；`public/site.webmanifest`、`public/og.png` 和 PNG 图标用于可发现性与社交分享。
+- `og:image` 使用本仓库的 `raw.githubusercontent.com` 绝对地址，确保社交抓取器获得完整图片；fork 后必须同步修改。
+- 当前 canonical 使用站点根路径 `/`，会解析到实际部署域名。绑定正式自定义域名后，可改为绝对 canonical，并按实际域名补充 `sitemap.xml`。
+- 修改内联 JSON-LD 后必须重新计算 CSP hash，否则会被 `public/_headers` 拦截。
+
 ### 本地运行
 
 要求 Node.js 22（见 `.nvmrc`）。
@@ -426,6 +437,17 @@ The link uses `target="_blank"` and `rel="noopener noreferrer"` and switches lan
 - Self-hosted Manrope / JetBrains Mono fonts
 
 No chart library is included because the current public API has no historical data to chart.
+
+### SEO / GEO
+
+- `index.html` includes complete title, bilingual description, keywords, robots, canonical, Open Graph, Twitter Card, manifest, and theme-color metadata.
+- Static JSON-LD declares both `WebApplication` and `FAQPage`. The inline JSON-LD is allowed through a CSP SHA-256 hash, without enabling `unsafe-inline` scripts.
+- The homepage includes a short bilingual FAQ (collapsed by default) whose answers match the structured data.
+- `public/llms.txt` and `public/llms-full.txt` provide concise, citable facts for generative search and AI tools and contain no user data.
+- `public/robots.txt` allows search engines and common AI crawlers. `public/site.webmanifest`, `public/og.png`, and PNG icons support discovery and sharing.
+- `og:image` uses an absolute `raw.githubusercontent.com` URL from this repository so social crawlers receive a complete image; update it if you fork the project.
+- The canonical URL is currently root-relative (`/`) and resolves to the deployment origin. After assigning a custom production domain, switch to an absolute canonical and add `sitemap.xml` for that domain.
+- After editing the inline JSON-LD, recompute the CSP hash or `public/_headers` will block it.
 
 ### Local development
 

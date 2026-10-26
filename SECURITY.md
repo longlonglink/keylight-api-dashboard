@@ -81,7 +81,7 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 `public/_headers` 在生产环境设置：
 
 - `Content-Security-Policy`
-- `script-src 'self'`
+- `script-src 'self' 'sha256-…'`（仅额外放行经过 hash 的 JSON-LD）
 - `connect-src 'self' https://api.deepseek.com`
 - `img-src 'self' data: https://www.paypalobjects.com`
 - `form-action 'self' https://www.paypal.com`
@@ -198,7 +198,7 @@ The key may appear only in request headers in the browser developer tools, never
 In production, `public/_headers` sets:
 
 - `Content-Security-Policy`
-- `script-src 'self'`
+- `script-src 'self' 'sha256-…'` (only the hashed JSON-LD block is additionally allowed)
 - `connect-src 'self' https://api.deepseek.com`
 - `img-src 'self' data: https://www.paypalobjects.com`
 - `form-action 'self' https://www.paypal.com`

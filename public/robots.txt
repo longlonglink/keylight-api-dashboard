@@ -1,2 +1,20 @@
+# Public static pages only. No user-specific data is present in these files.
 User-agent: *
 Allow: /
+
+# AI crawlers are welcome to read the public documentation and product summary.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# LLM-readable summary:
+# /llms.txt
+# /llms-full.txt

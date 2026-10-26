@@ -15,6 +15,7 @@ import type { ThemePreference } from '../lib/storage'
 import { useI18n } from '../i18n/I18nProvider'
 import { ApiKeyInput } from '../components/ApiKeyInput'
 import { ErrorAlert } from '../components/ErrorAlert'
+import { FaqSection } from '../components/FaqSection'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { ProviderGlyph } from '../components/ProviderGlyph'
@@ -231,6 +232,8 @@ export function Home({
             </a>
           </div>
         </section>
+
+        <FaqSection />
       </main>
 
       <Footer docsUrl={docsUrl} apiKeysUrl={apiKeysUrl} showSourceProof />

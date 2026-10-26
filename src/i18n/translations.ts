@@ -1,9 +1,9 @@
 export type Language = 'en' | 'zh'
 
 export const en = {
-  'meta.homeTitle': 'Keylight — Privacy-first API Dashboard',
-  'meta.dashboardTitle': 'Live API Data · Keylight',
-  'meta.connectingTitle': 'Connecting · Keylight',
+  'meta.homeTitle': 'Keylight — DeepSeek API Dashboard | Balance & Models',
+  'meta.dashboardTitle': 'DeepSeek Balance & Models · Keylight',
+  'meta.connectingTitle': 'Connecting · DeepSeek API Dashboard | Keylight',
 
   'brand.tagline': 'Private API console',
 
@@ -217,6 +217,17 @@ export const en = {
   'loading.status':
     'Connecting. Requests are sent directly from this browser to the official API.',
 
+  'faq.title': 'FAQ',
+  'faq.q1': 'Does Keylight store my API key?',
+  'faq.a1': 'No. It stays in this tab’s memory and is sent only to DeepSeek.',
+  'faq.q2': 'What data can Keylight show?',
+  'faq.a2': 'Only the data exposed by DeepSeek’s official balance and model endpoints.',
+  'faq.q3': 'Is Keylight an official DeepSeek product?',
+  'faq.a3': 'No. It is an independent open-source project, not affiliated with DeepSeek.',
+  'faq.q4': 'How does the API key top-up work?',
+  'faq.a4':
+    'Pay USD on PayPal, join Telegram for verification, then receive the API key by DM. CNY credit is estimated at the reference rate × 100/95.',
+
   'errors.keyRequired.title': 'API key required',
   'errors.keyRequired.message':
     'Enter your API key to connect. It is used only for direct requests from this tab.',
@@ -256,9 +267,9 @@ export const en = {
 export type TranslationKey = keyof typeof en
 
 const zh: Record<TranslationKey, string> = {
-  'meta.homeTitle': 'Keylight — 隐私优先的 API 仪表盘',
-  'meta.dashboardTitle': '实时 API 数据 · Keylight',
-  'meta.connectingTitle': '正在连接 · Keylight',
+  'meta.homeTitle': 'Keylight — DeepSeek API 余额与模型仪表盘',
+  'meta.dashboardTitle': 'DeepSeek 余额与模型 · Keylight',
+  'meta.connectingTitle': '正在连接 · DeepSeek API 仪表盘 | Keylight',
 
   'brand.tagline': '私有 API 控制台',
 
@@ -457,6 +468,17 @@ const zh: Record<TranslationKey, string> = {
   'loading.body': '你的浏览器正在直接访问 DeepSeek，没有经过任何本站服务器。',
   'loading.cancel': '取消',
   'loading.status': '正在连接。请求由浏览器直接发往官方 API。',
+
+  'faq.title': '常见问题',
+  'faq.q1': 'Keylight 会保存我的 API Key 吗？',
+  'faq.a1': '不会。只存在当前标签页内存中，并且只发送给 DeepSeek。',
+  'faq.q2': 'Keylight 能显示哪些数据？',
+  'faq.a2': '只显示 DeepSeek 官方余额与模型接口实际返回的数据。',
+  'faq.q3': 'Keylight 是 DeepSeek 官方产品吗？',
+  'faq.a3': '不是。它是独立开源项目，与 DeepSeek 无隶属关系。',
+  'faq.q4': 'API Key 充值流程是什么？',
+  'faq.a4':
+    '在 PayPal 支付 USD，进 Telegram 群核实，然后私聊领取 API Key。人民币额度按参考汇率 × 100/95 估算。',
 
   'errors.keyRequired.title': '需要 API Key',
   'errors.keyRequired.message': '请输入 API Key。它只用于当前标签页的直连请求。',
