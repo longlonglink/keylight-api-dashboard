@@ -97,13 +97,14 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 ### 支付、95 折与 Key 发放
 
 - 本站不处理付款。用户点击 PayPal 后进入 PayPal 托管的结账页。
-- 公开 PayPal 商品类型为 `VARIABLE_PRICE`，充值金额由买家在 PayPal 页面自行填写。
-- 页面计算器只按本地公式 `到账额度 = 充值金额 × 100/95` 估算，不会把金额注入 PayPal，也不修改付款 action。
-- 付款后由商家核对金额并通过 Telegram 发放对应额度的 API Key；本站不接收、不保存、不展示已购 Key。
-- 这是人工履约流程，不是由 PayPal 自动计算的折扣。商家必须按实际付款金额履约，不得虚报额度。
+- 公开 PayPal 商品类型为 `VARIABLE_PRICE`，充值金额由买家在 PayPal 页面自行填写（USD）。
+- 页面计算器只按本地公式 `CNY 额度 = USD 金额 × 静态参考汇率 × 100/95` 估算，不会把金额注入 PayPal，也不修改付款 action。
+- 参考汇率来自 `src/config.ts`，不会在运行时请求第三方汇率服务；最终汇率与取整由商家在 Telegram 核实。
+- 付款后，用户加入 Telegram 群核实；核实完成后，商家私聊发送对应额度的 API Key。本站不接收、不保存、不展示已购 Key。
+- 这是人工履约流程，不是由 PayPal 自动计算的折扣或自动汇率换算。商家必须按实际付款金额履约，不得虚报额度。
 - API Key、余额和模型数据不会写入 Telegram 链接或 PayPal 表单。
 - 严禁通过前端注入金额或修改 PayPal action 绕过付款配置。
-- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对金额与发放方式。
+- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对金额、汇率与发放方式。
 
 ### 报告安全问题
 
@@ -213,13 +214,14 @@ When adding a provider, deliberately add only its official API origin to `connec
 ### Payments, the 95% rule, and key delivery
 
 - This site does not process payments. Clicking PayPal opens a PayPal-hosted checkout page.
-- The public PayPal item is a `VARIABLE_PRICE` checkout; the buyer enters the top-up amount on PayPal.
-- The calculator only estimates `credit = top-up × 100/95` locally. It does not inject an amount into PayPal or alter the payment action.
-- After payment, the seller reconciles the amount and sends the funded API key through Telegram. This site does not receive, store, or display purchased keys.
-- This is a manual fulfillment process, not an automatic PayPal discount. The seller must honour the amount actually paid.
+- The public PayPal item is a `VARIABLE_PRICE` checkout; the buyer enters the top-up amount in USD on PayPal.
+- The calculator only estimates `CNY credit = USD amount × static reference rate × 100/95` locally. It does not inject an amount into PayPal or alter the payment action.
+- The reference rate is a static value in `src/config.ts`; the site makes no runtime exchange-rate API request. Final rate and rounding are verified on Telegram.
+- After payment, the buyer joins the Telegram group for verification. Once verified, the seller sends the API key by private message. This site does not receive, store, or display purchased keys.
+- This is a manual fulfillment process, not an automatic PayPal discount or FX conversion. The seller must honour the amount actually paid.
 - The API key, balance, and model data are not added to the Telegram link or PayPal form.
 - Never inject an amount or alter the PayPal action from the frontend to bypass payment configuration.
-- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify the amount and delivery method through Telegram and PayPal before paying.
+- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify the amount, rate, and delivery method through Telegram and PayPal before paying.
 
 ### Reporting security issues
 

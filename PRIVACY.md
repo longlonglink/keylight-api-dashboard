@@ -76,10 +76,11 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - API Key、余额和模型数据不会被加入 Telegram 链接或 PayPal 表单。
 - 用户点击 Telegram 按钮会打开外部邀请链接 `https://t.me/+mErIcVI3_R4zMDE1`。
 - 充值计算器中的金额只保存在当前页面的本地 state，不写入存储、不发送到本站服务器，也不会自动填入 PayPal。
-- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；买家需要在 PayPal 页面自行输入充值金额。
-- 本站无法控制第三方页面的价格、履约或隐私实践。最终扣款以 PayPal 结算页为准。
-- 95 折按 `到账额度 = 充值金额 × 100/95` 的规则执行，由商家人工核对付款并通过 Telegram 发放 API Key。
-- 本站不接收、不保存、不展示通过 Telegram 发放的已购 API Key。
+- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；买家需要在 PayPal 页面自行输入 USD 充值金额。
+- 人民币额度按 `USD 金额 × 参考汇率 × 100/95` 估算；参考汇率是 `src/config.ts` 中的静态配置值，不会请求第三方汇率服务。
+- 本站无法控制第三方页面的价格、履约或隐私实践。最终扣款以 PayPal 结算页为准，最终汇率与额度以 Telegram 核实为准。
+- 付款后用户加入 Telegram 群核实；核实完成后，商家私聊发送对应 API Key。
+- 本站不接收、不保存、不展示通过 Telegram 私聊发放的已购 API Key。
 
 ### 8. 网络请求边界
 
@@ -190,10 +191,11 @@ The project does not request, display, or infer:
 - The API key, balance, and model data are not appended to the Telegram link or the PayPal form.
 - The Telegram button opens the external invite link `https://t.me/+mErIcVI3_R4zMDE1`.
 - The top-up amount in the calculator is kept only in local page state. It is not persisted, sent to this site's server, or automatically entered into PayPal.
-- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen amount on PayPal.
-- This site does not control third-party pricing, fulfillment, or privacy practices. The final charge is shown on the PayPal checkout page.
-- The 95% rule is `credit = top-up × 100/95`. The seller manually reconciles payment and sends the funded API key through Telegram.
-- This site does not receive, store, or display API keys delivered through Telegram after purchase.
+- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen USD amount on PayPal.
+- CNY credit is estimated as `USD amount × reference rate × 100/95`. The reference rate is a static value in `src/config.ts`; the site does not call a third-party exchange-rate service.
+- This site does not control third-party pricing, fulfillment, or privacy practices. The final charge is shown on PayPal; the final rate and credit are confirmed on Telegram.
+- After payment, the buyer joins the Telegram group for verification; the seller then sends the API key by private message.
+- This site does not receive, store, or display API keys delivered privately through Telegram after purchase.
 
 ### 8. Network boundary
 

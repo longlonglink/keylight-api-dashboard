@@ -2,9 +2,11 @@ import { useId, useState } from 'react'
 import { ArrowUpRight, BadgePercent, Send, ShoppingBag } from 'lucide-react'
 import {
   PAYPAL_PAYMENT_URL,
+  PROMO_CREDIT_CURRENCY,
   PROMO_CREDIT_MULTIPLIER,
-  PROMO_CURRENCY,
   PROMO_DISCOUNT_ENABLED,
+  PROMO_PAY_CURRENCY,
+  PROMO_USD_CNY_RATE,
   TELEGRAM_PURCHASE_URL,
 } from '../config'
 import { useI18n } from '../i18n/I18nProvider'
@@ -36,7 +38,7 @@ export function PurchaseSection() {
   const parsedAmount = Number.parseFloat(topUpAmount)
   const hasValidAmount = Number.isFinite(parsedAmount) && parsedAmount > 0
   const credit = hasValidAmount
-    ? (parsedAmount * PROMO_CREDIT_MULTIPLIER).toFixed(2)
+    ? (parsedAmount * PROMO_USD_CNY_RATE * PROMO_CREDIT_MULTIPLIER).toFixed(2)
     : '—'
 
   return (
@@ -70,8 +72,12 @@ export function PurchaseSection() {
 
               {showDiscount && (
                 <div className="mt-5 space-y-1.5 text-[10px] leading-4">
-                  <p className="font-mono text-[#FFE8A3]">{t('promo.formula')}</p>
-                  <p className="text-white/45">{t('promo.discountDefinition')}</p>
+                  <p className="font-mono text-[#FFE8A3]">
+                    {t('promo.formula', { rate: PROMO_USD_CNY_RATE })}
+                  </p>
+                  <p className="text-white/45">
+                    {t('promo.rateNote', { rate: PROMO_USD_CNY_RATE })}
+                  </p>
                 </div>
               )}
             </div>
@@ -90,7 +96,7 @@ export function PurchaseSection() {
                 </label>
                 <div className="mt-2 flex items-center rounded-xl border border-line bg-surface px-3 transition focus-within:border-accent/60 focus-within:ring-4 focus-within:ring-accent/10">
                   <span className="font-mono text-[10px] font-semibold text-faint">
-                    {PROMO_CURRENCY}
+                    {PROMO_PAY_CURRENCY}
                   </span>
                   <input
                     id={amountId}
@@ -111,7 +117,7 @@ export function PurchaseSection() {
                     {t('promo.calculatorCreditLabel')}
                   </span>
                   <span className="numeric font-mono text-[13px] font-bold text-accent">
-                    {credit === '—' ? '—' : `${PROMO_CURRENCY} ${credit}`}
+                    {credit === '—' ? '—' : `${PROMO_CREDIT_CURRENCY} ${credit}`}
                   </span>
                 </div>
 
@@ -120,24 +126,11 @@ export function PurchaseSection() {
                 </p>
               </div>
 
-              <a
-                href={TELEGRAM_PURCHASE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#229ED9] px-4 py-3 text-center text-xs font-bold text-white transition hover:bg-[#1b8fc6] focus-visible:outline-white"
-              >
-                <Send className="size-4 shrink-0" aria-hidden="true" />
-                {t('promo.telegram')}
-                <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
-              </a>
+              <p className="mt-4 font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                {t('promo.stepPay')}
+              </p>
 
-              <div className="my-4 flex items-center gap-3 text-[8px] font-medium uppercase tracking-[0.14em] text-faint">
-                <span className="h-px flex-1 bg-line" aria-hidden="true" />
-                {t('promo.checkoutDivider')}
-                <span className="h-px flex-1 bg-line" aria-hidden="true" />
-              </div>
-
-              <div className="flex justify-center">
+              <div className="mt-2 flex justify-center">
                 <style>{paypalButtonCss}</style>
                 <form
                   action={PAYPAL_PAYMENT_URL}
@@ -172,8 +165,26 @@ export function PurchaseSection() {
                 </form>
               </div>
 
-              <p className="mt-3 text-center text-[9px] leading-4 text-faint">
+              <p className="mt-2 text-center text-[9px] leading-4 text-faint">
                 {t('promo.priceNote')}
+              </p>
+
+              <p className="mt-5 border-t border-line/80 pt-4 font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                {t('promo.stepVerify')}
+              </p>
+
+              <a
+                href={TELEGRAM_PURCHASE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#229ED9] px-4 py-3 text-center text-xs font-bold text-white transition hover:bg-[#1b8fc6] focus-visible:outline-white"
+              >
+                <Send className="size-4 shrink-0" aria-hidden="true" />
+                {t('promo.telegram')}
+                <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
+              </a>
+              <p className="mt-2 text-center text-[9px] leading-4 text-muted">
+                {t('promo.telegramFlow')}
               </p>
             </div>
           </div>
