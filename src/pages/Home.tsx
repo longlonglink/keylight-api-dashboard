@@ -182,7 +182,7 @@ export function Home({
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <ProviderGlyph className="size-8 rounded-lg" iconClassName="size-4" />
+                  <ProviderGlyph className="size-8 rounded-lg" />
                   <div>
                     <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
                       {t('home.routeOfficialApi')}

@@ -94,15 +94,16 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 
 添加新的 Provider 时，必须审慎地把对应官方 API 域名加入 `connect-src`。不得添加代理域名。
 
-### 支付与价格核验
+### 支付、95 折与 Key 发放
 
 - 本站不处理付款。用户点击 PayPal 后进入 PayPal 托管的结账页。
+- 公开 PayPal 商品类型为 `VARIABLE_PRICE`，充值金额由买家在 PayPal 页面自行填写。
+- 页面计算器只按本地公式 `到账额度 = 充值金额 × 100/95` 估算，不会把金额注入 PayPal，也不修改付款 action。
+- 付款后由商家核对金额并通过 Telegram 发放对应额度的 API Key；本站不接收、不保存、不展示已购 Key。
+- 这是人工履约流程，不是由 PayPal 自动计算的折扣。商家必须按实际付款金额履约，不得虚报额度。
 - API Key、余额和模型数据不会写入 Telegram 链接或 PayPal 表单。
-- 2026-10-26 检查公开 PayPal 页面时，商品为 `Deepseek API Key`，但类型为 `VARIABLE_PRICE`（由买家输入金额），没有可验证的固定 95 折价格。
-- 因此 `PROMO_DISCOUNT_ENABLED` 当前为 `false`，页面不发布 95 折声明。
-- 只有商家在 PayPal 后台配置固定价格、确认其等于标准价的 95%，并在公开结账页验证后，才可将该开关改为 `true`。
-- 严禁通过前端注入金额或修改 PayPal action 来绕过付款配置。
-- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对。
+- 严禁通过前端注入金额或修改 PayPal action 绕过付款配置。
+- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对金额与发放方式。
 
 ### 报告安全问题
 
@@ -209,15 +210,16 @@ The homepage loads only two static PayPal brand SVGs from PayPal; it loads no Pa
 
 When adding a provider, deliberately add only its official API origin to `connect-src`. Never add a proxy origin.
 
-### Payments and price verification
+### Payments, the 95% rule, and key delivery
 
 - This site does not process payments. Clicking PayPal opens a PayPal-hosted checkout page.
+- The public PayPal item is a `VARIABLE_PRICE` checkout; the buyer enters the top-up amount on PayPal.
+- The calculator only estimates `credit = top-up × 100/95` locally. It does not inject an amount into PayPal or alter the payment action.
+- After payment, the seller reconciles the amount and sends the funded API key through Telegram. This site does not receive, store, or display purchased keys.
+- This is a manual fulfillment process, not an automatic PayPal discount. The seller must honour the amount actually paid.
 - The API key, balance, and model data are not added to the Telegram link or PayPal form.
-- When the public PayPal page was checked on 2026-10-26, the item was `Deepseek API Key` but used `VARIABLE_PRICE` (the buyer enters an amount). No fixed 95%-discounted price could be verified.
-- `PROMO_DISCOUNT_ENABLED` is therefore `false`, and the site does not publish a 95% claim.
-- Enable it only after the seller configures a fixed PayPal price, verifies that it equals 95% of the standard price, and confirms the public checkout page.
 - Never inject an amount or alter the PayPal action from the frontend to bypass payment configuration.
-- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify details through Telegram and PayPal before paying.
+- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify the amount and delivery method through Telegram and PayPal before paying.
 
 ### Reporting security issues
 

@@ -63,7 +63,7 @@ PayPal 品牌图片： 浏览器 → www.paypalobjects.com（仅静态 SVG）
 ```text
 src/
 ├── App.tsx                 页面状态与 Key 内存生命周期
-├── config.ts               仓库、Telegram、PayPal URL 与折扣开关
+├── config.ts               仓库、Telegram、PayPal URL 与 100/95 倍率
 ├── i18n/                   中英双语文案与错误映射
 ├── providers/
 │   ├── deepseek.ts         唯一的官方 API 客户端
@@ -106,8 +106,12 @@ src/
 - Telegram 链接指向 `https://t.me/+mErIcVI3_R4zMDE1`，在新标签页打开。
 - PayPal 表单直接 POST 到 `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`，在本站不经过任何后端。
 - 本站只加载 PayPal 提供的两张静态品牌 SVG，不加载 PayPal 脚本，也不处理支付数据。
+- 页面内充值计算器只保存在本地 React state，不持久化、不提交，也不填入 PayPal。
+- 95 折规则为 `到账额度 = 充值金额 × 100/95`；例子：支付 USD 95，到账 USD 100。
+- PayPal 商品是 `VARIABLE_PRICE`，买家在 PayPal 页面输入自己选择的金额。
+- 付款后由商家通过 Telegram 核对金额并发送对应额度的 API Key；本站不接收、不存储、不展示已购 Key。
+- 这是人工核账与发放流程，不是 PayPal 自动折扣。商家必须按实际付款金额履约。
 - API Key、余额和模型数据不会进入 Telegram 链接或 PayPal 表单。
-- 折扣文案由 `PROMO_DISCOUNT_ENABLED` 控制。当前为 `false`，因为公开 PayPal 商品是 `VARIABLE_PRICE`，无法验证 95 折。只有后台配置固定折扣价并验证后才能启用。
 - 禁止通过前端注入金额或修改 action 绕过 PayPal 定价。
 
 ### 只展示官方数据
@@ -246,7 +250,7 @@ Browser → this site's backend / Worker → api.deepseek.com
 ```text
 src/
 ├── App.tsx                 page state and in-memory key lifecycle
-├── config.ts               repo, Telegram, PayPal URLs, discount flag
+├── config.ts               repo, Telegram, PayPal URLs, 100/95 rate
 ├── i18n/                   bilingual copy and error keys
 ├── providers/
 │   ├── deepseek.ts         the only official API client
@@ -289,8 +293,12 @@ src/
 - Telegram opens `https://t.me/+mErIcVI3_R4zMDE1` in a new tab.
 - The PayPal form posts directly to `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`; no site backend is involved.
 - The site loads only two static PayPal brand SVGs from PayPal. It loads no PayPal scripts and handles no payment data.
+- The top-up calculator keeps its value in local React state only. It is not persisted, submitted, or inserted into PayPal.
+- The 95% rule is `credit = top-up × 100/95`; for example, pay USD 95 and receive USD 100.
+- The PayPal item is `VARIABLE_PRICE`; the buyer enters their chosen amount on PayPal.
+- After payment, the seller reconciles the amount and sends an API key with the corresponding credit through Telegram. This site does not receive, store, or display purchased keys.
+- This is a manual reconciliation and delivery flow, not an automatic PayPal discount. The seller must honour the amount actually paid.
 - The API key, balance, and model data are not added to the Telegram link or the PayPal form.
-- Discount copy is controlled by `PROMO_DISCOUNT_ENABLED`. It is currently `false` because the public PayPal item is `VARIABLE_PRICE`, so a 95% discount cannot be verified. Enable it only after a fixed discounted price is configured and verified in PayPal.
 - Never inject an amount or alter the PayPal action from the frontend to bypass PayPal pricing.
 
 ### Confirmed data only

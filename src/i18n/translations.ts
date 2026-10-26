@@ -120,7 +120,16 @@ export const en = {
     'Actual queryable data depends on the official API response. The current dashboard displays balance and models.',
   'promo.discountBadge': '5% off',
   'promo.discountDefinition':
-    'You pay 95% of the standard price — a 5% discount. No original price is invented on this page.',
+    'Top up any amount and receive API credit at 100/95. For example, pay USD 95.00 and receive USD 100.00 in credit.',
+  'promo.calculatorPayLabel': 'Top-up amount (USD)',
+  'promo.calculatorCreditLabel': 'Estimated API credit',
+  'promo.calculatorPlaceholder': 'Enter an amount',
+  'promo.calculatorNote':
+    'Credit = top-up × 100/95. Final rounding and credit are confirmed on Telegram.',
+  'promo.checkoutNote':
+    'The PayPal page currently accepts a custom amount. Enter your chosen amount there; this calculator is informational only and does not change PayPal.',
+  'promo.keyDelivery':
+    'After payment, contact us on Telegram to receive the API Key with the corresponding credit.',
   'promo.featureOfficialTitle': 'Official API lookup',
   'promo.featureOfficialCopy':
     'Use the key with this dashboard. Balance and model data come directly from DeepSeek’s official API.',
@@ -134,9 +143,9 @@ export const en = {
   'promo.paypalCardsAlt': 'Credit and debit cards',
   'promo.paypalSupport': 'Payment support:',
   'promo.priceNote':
-    'The final price and any discount are shown on the PayPal checkout page. This site does not change or bypass PayPal pricing.',
+    'The amount actually charged is shown by PayPal. This site never changes or bypasses PayPal pricing. API keys are issued through Telegram after payment.',
   'promo.affiliation': 'Not a DeepSeek official store or authorized partner.',
-  'promo.telegramHint': 'Ask about current pricing and purchase steps.',
+  'promo.telegramHint': 'Ask about purchase, payment, or API key delivery.',
   'promo.checkoutDivider': 'or pay with',
 
   'githubProof.heading': 'Open Source & Transparency',
@@ -365,7 +374,15 @@ const zh: Record<TranslationKey, string> = {
   'promo.accountNote':
     '实际可查询内容以官方 API 返回为准；当前 Dashboard 展示余额与模型列表。',
   'promo.discountBadge': '95 折',
-  'promo.discountDefinition': '售价为标准售价的 95%，即优惠 5%。本页不虚构原价。',
+  'promo.discountDefinition':
+    '充值任意金额，按 100/95 倍率获得 API 额度。例如支付 USD 95.00，到账 USD 100.00 额度。',
+  'promo.calculatorPayLabel': '充值金额（USD）',
+  'promo.calculatorCreditLabel': '预计 API 额度',
+  'promo.calculatorPlaceholder': '输入金额',
+  'promo.calculatorNote': '额度 = 充值金额 × 100/95。最终取整与到账额度以 Telegram 确认为准。',
+  'promo.checkoutNote':
+    'PayPal 当前为自定义金额，请在付款页填写你选择的金额。此计算器仅作估算，不会修改 PayPal 金额。',
+  'promo.keyDelivery': '付款后请通过 Telegram 联系我们，领取对应额度的 API Key。',
   'promo.featureOfficialTitle': '可通过官方 API 查询',
   'promo.featureOfficialCopy': '将 Key 用于本 Dashboard，余额与模型数据直接来自 DeepSeek 官方 API。',
   'promo.featureNoLoginTitle': '无需登录关联账号',
@@ -377,9 +394,9 @@ const zh: Record<TranslationKey, string> = {
   'promo.paypalCardsAlt': '银行卡',
   'promo.paypalSupport': '技术支持提供方：',
   'promo.priceNote':
-    '最终价格与优惠以 PayPal 结算页为准。本站不会修改或绕过 PayPal 的付款价格。',
+    '实际扣款金额以 PayPal 结算页为准。本站不会修改或绕过 PayPal 价格。付款后由商家通过 Telegram 发放 API Key。',
   'promo.affiliation': '非 DeepSeek 官方商店或授权合作伙伴。',
-  'promo.telegramHint': '咨询当前价格与购买流程。',
+  'promo.telegramHint': '咨询购买、付款或 API Key 发放。',
   'promo.checkoutDivider': '或使用 PayPal 支付',
 
   'githubProof.heading': '开源透明，自行审查',

@@ -1,3 +1,4 @@
+import { useId, useState } from 'react'
 import {
   ArrowUpRight,
   BadgePercent,
@@ -8,6 +9,8 @@ import {
 } from 'lucide-react'
 import {
   PAYPAL_PAYMENT_URL,
+  PROMO_CREDIT_MULTIPLIER,
+  PROMO_CURRENCY,
   PROMO_DISCOUNT_ENABLED,
   TELEGRAM_PURCHASE_URL,
 } from '../config'
@@ -33,7 +36,15 @@ const paypalButtonCss = `
 
 export function PurchaseSection() {
   const { t } = useI18n()
+  const amountId = useId()
+  const creditNoteId = useId()
   const showDiscount = PROMO_DISCOUNT_ENABLED
+  const [topUpAmount, setTopUpAmount] = useState('95')
+  const parsedAmount = Number.parseFloat(topUpAmount)
+  const hasValidAmount = Number.isFinite(parsedAmount) && parsedAmount > 0
+  const estimatedCredit = hasValidAmount
+    ? (parsedAmount * PROMO_CREDIT_MULTIPLIER).toFixed(2)
+    : '—'
 
   return (
     <section
@@ -109,6 +120,52 @@ export function PurchaseSection() {
                 {t('promo.checkoutTitle')}
               </h3>
 
+              {showDiscount && (
+                <div className="mt-4 rounded-2xl border border-line bg-surface-muted/60 p-4">
+                  <label
+                    htmlFor={amountId}
+                    className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint"
+                  >
+                    {t('promo.calculatorPayLabel')}
+                  </label>
+                  <div className="mt-2 flex items-center rounded-xl border border-line bg-surface px-3 transition focus-within:border-accent/60 focus-within:ring-4 focus-within:ring-accent/10">
+                    <span className="font-mono text-[10px] font-semibold text-faint">
+                      {PROMO_CURRENCY}
+                    </span>
+                    <input
+                      id={amountId}
+                      type="number"
+                      min="0.01"
+                      step="0.01"
+                      inputMode="decimal"
+                      value={topUpAmount}
+                      onChange={(event) => setTopUpAmount(event.target.value)}
+                      placeholder={t('promo.calculatorPlaceholder')}
+                      aria-describedby={creditNoteId}
+                      className="numeric min-h-10 w-full border-0 bg-transparent px-2 text-right text-sm font-bold text-ink outline-none"
+                    />
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-accent/15 bg-accent-soft/60 px-3 py-2.5">
+                    <span className="text-[10px] font-semibold text-muted">
+                      {t('promo.calculatorCreditLabel')}
+                    </span>
+                    <span className="numeric font-mono text-[13px] font-bold text-accent">
+                      {estimatedCredit === '—'
+                        ? '—'
+                        : `${PROMO_CURRENCY} ${estimatedCredit}`}
+                    </span>
+                  </div>
+
+                  <p id={creditNoteId} className="mt-2.5 text-[9px] leading-4 text-muted">
+                    {t('promo.calculatorNote')}
+                  </p>
+                  <p className="mt-1.5 text-[9px] leading-4 text-faint">
+                    {t('promo.checkoutNote')}
+                  </p>
+                </div>
+              )}
+
               <a
                 href={TELEGRAM_PURCHASE_URL}
                 target="_blank"
@@ -132,6 +189,7 @@ export function PurchaseSection() {
               <div className="flex justify-center">
                 <style>{paypalButtonCss}</style>
                 <form
+                  aria-label="PayPal"
                   action={PAYPAL_PAYMENT_URL}
                   method="post"
                   target="_blank"
@@ -165,7 +223,13 @@ export function PurchaseSection() {
                 </form>
               </div>
 
-              <p className="mt-4 border-t border-line/80 pt-3 text-center text-[9px] leading-4 text-faint">
+              <div className="mt-4 rounded-xl border border-accent/15 bg-accent-soft/55 px-3 py-2.5">
+                <p className="text-center text-[9px] leading-4 text-muted">
+                  {t('promo.keyDelivery')}
+                </p>
+              </div>
+
+              <p className="mt-3 border-t border-line/80 pt-3 text-center text-[9px] leading-4 text-faint">
                 {t('promo.priceNote')}
               </p>
             </div>

@@ -75,8 +75,11 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - 本站不接收、不处理、不存储银行卡号或 PayPal 登录信息。
 - API Key、余额和模型数据不会被加入 Telegram 链接或 PayPal 表单。
 - 用户点击 Telegram 按钮会打开外部邀请链接 `https://t.me/+mErIcVI3_R4zMDE1`。
-- 本站无法控制第三方页面的价格、履约或隐私实践。最终价格与优惠以 PayPal 结算页为准。
-- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；在后台配置并核实可验证的 95 折固定价格前，站点不展示 95 折声明。
+- 充值计算器中的金额只保存在当前页面的本地 state，不写入存储、不发送到本站服务器，也不会自动填入 PayPal。
+- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；买家需要在 PayPal 页面自行输入充值金额。
+- 本站无法控制第三方页面的价格、履约或隐私实践。最终扣款以 PayPal 结算页为准。
+- 95 折按 `到账额度 = 充值金额 × 100/95` 的规则执行，由商家人工核对付款并通过 Telegram 发放 API Key。
+- 本站不接收、不保存、不展示通过 Telegram 发放的已购 API Key。
 
 ### 8. 网络请求边界
 
@@ -186,8 +189,11 @@ The project does not request, display, or infer:
 - This site never receives, processes, or stores card details or PayPal login information.
 - The API key, balance, and model data are not appended to the Telegram link or the PayPal form.
 - The Telegram button opens the external invite link `https://t.me/+mErIcVI3_R4zMDE1`.
-- This site does not control third-party pricing, fulfillment, or privacy practices. The final price and discount are shown on the PayPal checkout page.
-- The public PayPal item is currently a `VARIABLE_PRICE` purchase in which the buyer enters an amount. The site does not display a 95% claim until a verifiable fixed discounted price is configured in the PayPal backend.
+- The top-up amount in the calculator is kept only in local page state. It is not persisted, sent to this site's server, or automatically entered into PayPal.
+- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen amount on PayPal.
+- This site does not control third-party pricing, fulfillment, or privacy practices. The final charge is shown on the PayPal checkout page.
+- The 95% rule is `credit = top-up × 100/95`. The seller manually reconciles payment and sends the funded API key through Telegram.
+- This site does not receive, store, or display API keys delivered through Telegram after purchase.
 
 ### 8. Network boundary
 

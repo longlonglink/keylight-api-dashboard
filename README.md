@@ -42,6 +42,8 @@ DeepSeek 官方 API
 | 账户余额 | `GET /user/balance` | 直接展示 `is_available` 与 `balance_infos` |
 | 模型列表 | `GET /models` | 动态展示 API 返回的模型及元数据 |
 
+界面中的 DeepSeek 鲸鱼标志取自 DeepSeek 官方 API 文档的 Logo 资源，仅用于标识 API 服务商。DeepSeek 名称和标志归其权利人所有，本项目与 DeepSeek 无隶属关系。
+
 鉴权：
 
 ```http
@@ -93,7 +95,7 @@ access-control-allow-credentials: true
 - 首页最底部提供 GitHub 开源自证链接，指向本仓库完整源码。
 - 首页 API Key 购买推广区，包含 Telegram 咨询入口和 PayPal 官方付款表单（均在新标签页打开）。
 
-### API Key 购买推广区与价格状态
+### API Key 购买推广区与 95 折规则
 
 首页在主要连接区域下方、页脚上方提供推广购买区：
 
@@ -103,15 +105,19 @@ access-control-allow-credentials: true
 - 新标签页链接使用 `target="_blank"` 与 `rel="noopener noreferrer"`。
 - PayPal 只提供静态品牌 SVG 图片，没有在本站加载 PayPal 脚本、追踪 SDK 或付款代理。
 
-**重要价格状态（2026-10-26 核对）：** 公开 PayPal 页面显示商品为 `Deepseek API Key`，但按钮类型是 `VARIABLE_PRICE`，页面提示 “Enter the amount you would like to top up”。该页面没有固定商品价或可验证的 95 折配置。
+95 折规则：
 
-因此：
+```text
+到账 API 额度 = 充值金额 × 100 / 95
+```
 
-- 站点当前**没有发布 95 折或 5% off 的折扣声明**，以免展示未经 PayPal 后台落实的价格。
-- 95 折中英文文案已在语言资源中实现，但由 `src/config.ts` 的 `PROMO_DISCOUNT_ENABLED` 控制；当前为 `false`。
-- 在 PayPal 后台配置固定商品价格，确认该价格确实等于标准价的 95%（优惠 5%），并在公开结算页验证之前，不要将开关改为 `true`。
-- 不得通过前端添加金额、修改 action 或任何方式绕过 PayPal 定价。
-- 页面始终显示“最终价格与优惠以 PayPal 结算页为准”。
+- 充值金额由用户自行决定。
+- 示例：支付 USD 95.00，到账 USD 100.00 API 额度；支付 USD 190.00，到账 USD 200.00。
+- 页面内计算器仅按该公式进行本地估算，不修改也不提交 PayPal 金额。
+- 公开 PayPal 商品当前是 `VARIABLE_PRICE`，买家在 PayPal 页面自行填写充值金额。
+- 付款后，API Key 由商家通过 Telegram 发放；本站不接收、不存储、不展示购买的 API Key。
+- 这是一套人工核账/发放流程，不是 PayPal 自动折扣。商家必须按实际付款金额和 100/95 比例履约。
+- 站点文案由 `src/config.ts` 中的 `PROMO_DISCOUNT_ENABLED` 和 `PROMO_CREDIT_MULTIPLIER` 控制。
 
 **维护者注意：** 本项目不是 DeepSeek 官方商店，也未声称是授权合作伙伴。请在推广区保留非官方声明，不要添加官方背书、虚构原价、销量或评价。
 
@@ -288,6 +294,8 @@ The [official DeepSeek API documentation](https://api-docs.deepseek.com/) was ch
 | Account balance | `GET /user/balance` | Renders `is_available` and `balance_infos` |
 | Model catalogue | `GET /models` | Renders the returned models and metadata dynamically |
 
+The DeepSeek whale mark in the UI comes from the official DeepSeek API documentation logo asset and is used only to identify the API provider. The DeepSeek name and logo belong to their respective owner; this project is not affiliated with DeepSeek.
+
 Authentication:
 
 ```http
@@ -339,7 +347,7 @@ If DeepSeek disables browser CORS in the future, the app reports it clearly and 
 - A prominent GitHub open-source proof link at the very bottom of the homepage.
 - A homepage API key purchase section with a Telegram support link and the official PayPal hosted form (both open in a new tab).
 
-### API key purchase section and pricing status
+### API key purchase section and 95% rule
 
 The homepage includes a purchase section below the main connection area and above the footer:
 
@@ -349,15 +357,19 @@ The homepage includes a purchase section below the main connection area and abov
 - New-tab links use `target="_blank"` and `rel="noopener noreferrer"`.
 - PayPal is used only for static brand SVG images. No PayPal script, tracking SDK, or payment proxy runs on this site.
 
-**Important pricing status (checked 2026-10-26):** the public PayPal page identifies the item as `Deepseek API Key`, but its button type is `VARIABLE_PRICE` and it asks the buyer to “Enter the amount you would like to top up.” No fixed product price or 95% discount configuration is exposed or verifiable there.
+The 95% top-up rule:
 
-Therefore:
+```text
+API credit = top-up amount × 100 / 95
+```
 
-- The site does **not** publish a 95% / 5%-off discount claim while that claim cannot be tied to a configured PayPal price.
-- The bilingual 95% copy exists in the translation resources but is controlled by `PROMO_DISCOUNT_ENABLED` in `src/config.ts`; it is currently `false`.
-- Configure a fixed product price in PayPal, verify on the public checkout page that it is exactly 95% of the standard price (a 5% discount), and only then set the flag to `true`.
-- Never add amounts fields, alter the action URL, or otherwise bypass PayPal pricing from the frontend.
-- The UI always states that the final price and discount are shown on the PayPal checkout page.
+- The buyer chooses the top-up amount.
+- Example: pay USD 95.00 and receive USD 100.00 in API credit; pay USD 190.00 and receive USD 200.00.
+- The calculator on the page is a local estimate only. It does not alter or submit a PayPal amount.
+- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen amount on the PayPal page.
+- After payment, the seller sends the API key through Telegram. This site does not receive, store, or display purchased API keys.
+- This is a manual reconciliation and delivery process, not an automatic PayPal discount. The seller must honour the 100/95 ratio for the amount actually paid.
+- The copy/rate is controlled by `PROMO_DISCOUNT_ENABLED` and `PROMO_CREDIT_MULTIPLIER` in `src/config.ts`.
 
 **Maintainer note:** this project is not a DeepSeek official store and does not claim to be an authorized partner. Keep the non-affiliation statement and never invent an original price, sales volume, or reviews.
 
@@ -469,4 +481,5 @@ No Wrangler, Worker, backend, API route, or API key environment variable is requ
 - Desktop 1440 / 1024, tablet 768, and mobile 375 / 390 / 414 widths pass.
 - Light / Dark / System and Chinese/English switching work.
 - The GitHub repository is public and contains no real API key.
-- The 95% claim is intentionally disabled until the PayPal backend price is configured and verified.
+- The 95% top-up offer is active: buyer chooses an amount, credit is estimated at 100/95, and the final API key is delivered manually through Telegram.
+- The variable PayPal checkout and manual key delivery are documented; no frontend code changes or bypasses the PayPal amount.
