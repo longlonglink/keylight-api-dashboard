@@ -1,11 +1,4 @@
-import {
-  Clock3,
-  Info,
-  LockKeyhole,
-  RefreshCw,
-  ShieldCheck,
-  Trash2,
-} from 'lucide-react'
+import { Clock3, LockKeyhole, RefreshCw, Trash2 } from 'lucide-react'
 import type { DashboardData } from '../providers/types'
 import type { ProviderError } from '../lib/errors'
 import type { ThemePreference } from '../lib/storage'
@@ -131,37 +124,6 @@ export function DashboardPage({
         <div className="mt-6 space-y-4 lg:space-y-5">
           <BalanceCard balance={data.balance} />
           <ModelsTable models={data.models} />
-        </div>
-
-        <div className="mt-5 flex flex-col gap-4 rounded-3xl border border-line bg-surface/60 p-4 sm:p-5">
-          <div className="flex items-start gap-3">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-accent">
-              <Info className="size-4" aria-hidden="true" />
-            </span>
-            <div>
-              <p className="text-[11px] font-bold text-ink">{t('dashboard.scopeTitle')}</p>
-              <p className="mt-1 text-[10px] leading-4 text-muted">{t('dashboard.scopeBody')}</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3 border-t border-line/80 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-start gap-3">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-accent">
-                <ShieldCheck className="size-4" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="text-[11px] font-bold text-ink">
-                  {t('dashboard.directBadge')}
-                </p>
-                <p className="mt-1 text-[10px] leading-4 text-muted">
-                  {t('dashboard.routeNote', { host: providerHost })}
-                </p>
-              </div>
-            </div>
-            <span className="shrink-0 self-start rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.12em] text-faint sm:self-auto">
-              {t('dashboard.noServerKey')}
-            </span>
-          </div>
         </div>
       </main>
 

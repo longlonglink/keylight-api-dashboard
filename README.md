@@ -140,10 +140,7 @@ access-control-allow-credentials: true
 
 ```text
 开源透明，自行审查
-
-本项目采用纯前端架构，完整源代码公开在 GitHub。
-你可以自行查看源码，检查 API 请求逻辑与数据处理方式。
-
+完整源码公开，可自行审查 API 请求与数据处理。
 [ 在 GitHub 查看完整源码 ↗ ]
 ```
 
@@ -392,11 +389,7 @@ The bottom of the homepage Footer always displays the localized equivalent of:
 
 ```text
 Open Source & Transparency
-
-This project uses a frontend-only architecture.
-The complete source code is public on GitHub.
-You can inspect the source code, API requests, and data handling.
-
+Full source is public. Inspect the API calls and data handling.
 [ View Source on GitHub ↗ ]
 ```
 

@@ -10,23 +10,22 @@ export function GitHubProof() {
       aria-labelledby="github-proof-heading"
       className="border-t border-line/80 bg-surface-muted/35"
     >
-      <div className="page-wrap flex flex-col gap-6 py-9 sm:py-10 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-start gap-4">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-line bg-surface text-ink">
-            <Github className="size-5" strokeWidth={1.8} aria-hidden="true" />
+      <div className="page-wrap flex flex-col gap-5 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-line bg-surface text-ink">
+            <Github className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
           </span>
           <div>
-            <p className="eyebrow">GitHub · {GITHUB_REPO_NAME}</p>
+            <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
+              GitHub · {GITHUB_REPO_NAME}
+            </p>
             <h2
               id="github-proof-heading"
-              className="mt-2 text-lg font-extrabold tracking-[-0.035em] text-ink"
+              className="mt-1 text-sm font-extrabold tracking-[-0.02em] text-ink"
             >
               {t('githubProof.heading')}
             </h2>
-            <div className="mt-2 space-y-1 text-[11px] leading-5 text-muted">
-              <p>{t('githubProof.body1')}</p>
-              <p>{t('githubProof.body2')}</p>
-            </div>
+            <p className="mt-1 text-[10px] leading-4 text-muted">{t('githubProof.body1')}</p>
           </div>
         </div>
 
@@ -35,9 +34,9 @@ export function GitHubProof() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t('githubProof.aria')}
-          className="btn-secondary shrink-0 self-start text-xs md:self-auto"
+          className="btn-secondary shrink-0 self-start text-[11px] sm:self-auto"
         >
-          <Github className="size-4" aria-hidden="true" />
+          <Github className="size-3.5" aria-hidden="true" />
           {t('githubProof.cta')}
         </a>
       </div>
