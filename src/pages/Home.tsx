@@ -20,6 +20,7 @@ import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { ProviderGlyph } from '../components/ProviderGlyph'
 import { ProviderSelector } from '../components/ProviderSelector'
+import { PurchaseSection } from '../components/PurchaseSection'
 
 interface HomeProps {
   theme: ThemePreference
@@ -308,6 +309,8 @@ export function Home({
             </p>
           </section>
         </section>
+
+        <PurchaseSection />
 
         <section id="privacy" className="scroll-mt-20 border-t border-line/80">
           <div className="page-wrap py-20 lg:py-24">

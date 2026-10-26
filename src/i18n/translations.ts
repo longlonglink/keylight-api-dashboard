@@ -110,6 +110,35 @@ export const en = {
   'footer.source': 'Source',
   'footer.notAffiliated': 'Not affiliated with DeepSeek.',
 
+  'promo.eyebrowPurchase': 'API key purchase',
+  'promo.eyebrowOffer': 'API key offer',
+  'promo.titleNeutral': 'DeepSeek API Keys',
+  'promo.titleOffer': 'API Keys at 5% Off',
+  'promo.subtitle':
+    'Check supported balance and account information through the official API, without needing access to the associated account dashboard.',
+  'promo.accountNote':
+    'Actual queryable data depends on the official API response. The current dashboard displays balance and models.',
+  'promo.discountBadge': '5% off',
+  'promo.discountDefinition':
+    'You pay 95% of the standard price — a 5% discount. No original price is invented on this page.',
+  'promo.featureOfficialTitle': 'Official API lookup',
+  'promo.featureOfficialCopy':
+    'Use the key with this dashboard. Balance and model data come directly from DeepSeek’s official API.',
+  'promo.featureNoLoginTitle': 'No account dashboard login',
+  'promo.featureNoLoginCopy':
+    'Check what the key can access without linking the associated account dashboard.',
+  'promo.checkoutEyebrow': 'Purchase & support',
+  'promo.checkoutTitle': 'Get an API key',
+  'promo.telegram': 'Join Telegram / Purchase Support',
+  'promo.paypalButton': 'Buy Now',
+  'promo.paypalCardsAlt': 'Credit and debit cards',
+  'promo.paypalSupport': 'Payment support:',
+  'promo.priceNote':
+    'The final price and any discount are shown on the PayPal checkout page. This site does not change or bypass PayPal pricing.',
+  'promo.affiliation': 'Not a DeepSeek official store or authorized partner.',
+  'promo.telegramHint': 'Ask about current pricing and purchase steps.',
+  'promo.checkoutDivider': 'or pay with',
+
   'githubProof.heading': 'Open Source & Transparency',
   'githubProof.body1':
     'This project uses a frontend-only architecture. The complete source code is public on GitHub.',
@@ -326,6 +355,32 @@ const zh: Record<TranslationKey, string> = {
   'footer.apiDocs': '官方 API 文档',
   'footer.source': '源码',
   'footer.notAffiliated': '本项目与 DeepSeek 无隶属关系。',
+
+  'promo.eyebrowPurchase': 'API KEY 购买',
+  'promo.eyebrowOffer': 'API KEY 优惠',
+  'promo.titleNeutral': 'DeepSeek API Key',
+  'promo.titleOffer': '更优惠的 API Key，95 折优惠',
+  'promo.subtitle':
+    '官方 API 可查，方便查询支持的余额及账户信息。无需登录关联账号，即可通过本站查询 API Key 支持返回的信息。',
+  'promo.accountNote':
+    '实际可查询内容以官方 API 返回为准；当前 Dashboard 展示余额与模型列表。',
+  'promo.discountBadge': '95 折',
+  'promo.discountDefinition': '售价为标准售价的 95%，即优惠 5%。本页不虚构原价。',
+  'promo.featureOfficialTitle': '可通过官方 API 查询',
+  'promo.featureOfficialCopy': '将 Key 用于本 Dashboard，余额与模型数据直接来自 DeepSeek 官方 API。',
+  'promo.featureNoLoginTitle': '无需登录关联账号',
+  'promo.featureNoLoginCopy': '无需登录关联账户后台，即可查询 API Key 支持返回的信息。',
+  'promo.checkoutEyebrow': '购买与咨询',
+  'promo.checkoutTitle': '获取 API Key',
+  'promo.telegram': '加入 Telegram，咨询购买',
+  'promo.paypalButton': '立即购买',
+  'promo.paypalCardsAlt': '银行卡',
+  'promo.paypalSupport': '技术支持提供方：',
+  'promo.priceNote':
+    '最终价格与优惠以 PayPal 结算页为准。本站不会修改或绕过 PayPal 的付款价格。',
+  'promo.affiliation': '非 DeepSeek 官方商店或授权合作伙伴。',
+  'promo.telegramHint': '咨询当前价格与购买流程。',
+  'promo.checkoutDivider': '或使用 PayPal 支付',
 
   'githubProof.heading': '开源透明，自行审查',
   'githubProof.body1': '本项目采用纯前端架构，完整源代码公开在 GitHub。',

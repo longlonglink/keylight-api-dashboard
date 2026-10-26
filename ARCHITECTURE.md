@@ -2,7 +2,7 @@
 
 [简体中文](#简体中文) · [English](#english)
 
-最后更新 / Last updated: 2026-10-25
+最后更新 / Last updated: 2026-10-26
 
 ---
 
@@ -48,6 +48,8 @@ Cloudflare Pages 只分发静态文件。它不会收到用户输入的 API Key�
 ```text
 用户下载静态文件：浏览器 → Cloudflare Pages
 用户查询 API：    浏览器 → api.deepseek.com
+购买咨询/付款：   浏览器 → t.me / www.paypal.com（用户点击后）
+PayPal 品牌图片： 浏览器 → www.paypalobjects.com（仅静态 SVG）
 ```
 
 不存在：
@@ -61,7 +63,7 @@ Cloudflare Pages 只分发静态文件。它不会收到用户输入的 API Key�
 ```text
 src/
 ├── App.tsx                 页面状态与 Key 内存生命周期
-├── config.ts               GITHUB_REPO_URL
+├── config.ts               仓库、Telegram、PayPal URL 与折扣开关
 ├── i18n/                   中英双语文案与错误映射
 ├── providers/
 │   ├── deepseek.ts         唯一的官方 API 客户端
@@ -76,6 +78,7 @@ src/
 │   ├── ApiKeyInput.tsx     内存输入、显示/隐藏、粘贴、清空
 │   ├── ErrorAlert.tsx      本地化错误展示
 │   ├── GitHubProof.tsx     首页底部开源证明
+│   ├── PurchaseSection.tsx 推广、Telegram、PayPal 表单
 │   └── ...
 ├── lib/
 │   ├── errors.ts           不包含 Key 的错误类型
@@ -96,6 +99,16 @@ src/
 5. 解析真实 JSON 后，将余额和模型展示在页面。
 6. 页面刷新时 React 内存清空，用户需要重新输入 Key。
 7. Clear Key 清空内存、中止当前请求并返回首页。
+
+### 购买推广与付款边界
+
+- 首页 `PurchaseSection` 展示 Telegram 咨询链接和 PayPal 官方托管表单。
+- Telegram 链接指向 `https://t.me/+mErIcVI3_R4zMDE1`，在新标签页打开。
+- PayPal 表单直接 POST 到 `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`，在本站不经过任何后端。
+- 本站只加载 PayPal 提供的两张静态品牌 SVG，不加载 PayPal 脚本，也不处理支付数据。
+- API Key、余额和模型数据不会进入 Telegram 链接或 PayPal 表单。
+- 折扣文案由 `PROMO_DISCOUNT_ENABLED` 控制。当前为 `false`，因为公开 PayPal 商品是 `VARIABLE_PRICE`，无法验证 95 折。只有后台配置固定折扣价并验证后才能启用。
+- 禁止通过前端注入金额或修改 action 绕过 PayPal 定价。
 
 ### 只展示官方数据
 
@@ -218,6 +231,8 @@ Cloudflare Pages serves static files only. It never receives the entered API key
 ```text
 Static downloads: Browser → Cloudflare Pages
 API queries:      Browser → api.deepseek.com
+Purchase support: Browser → t.me / www.paypal.com (after a click)
+PayPal images:    Browser → www.paypalobjects.com (static SVGs only)
 ```
 
 Not present:
@@ -231,7 +246,7 @@ Browser → this site's backend / Worker → api.deepseek.com
 ```text
 src/
 ├── App.tsx                 page state and in-memory key lifecycle
-├── config.ts               GITHUB_REPO_URL
+├── config.ts               repo, Telegram, PayPal URLs, discount flag
 ├── i18n/                   bilingual copy and error keys
 ├── providers/
 │   ├── deepseek.ts         the only official API client
@@ -246,6 +261,7 @@ src/
 │   ├── ApiKeyInput.tsx     memory input, show/hide, paste, clear
 │   ├── ErrorAlert.tsx      localized error display
 │   ├── GitHubProof.tsx     homepage open-source proof
+│   ├── PurchaseSection.tsx promotion, Telegram, PayPal form
 │   └── ...
 ├── lib/
 │   ├── errors.ts           error types with no key material
@@ -266,6 +282,16 @@ src/
 5. Real JSON is parsed and balance/models are rendered.
 6. Reloading the page clears React memory; the key must be entered again.
 7. Clear Key clears memory, aborts the active request, and returns home.
+
+### Purchase promotion and payment boundary
+
+- The homepage `PurchaseSection` displays a Telegram support link and PayPal's official hosted form.
+- Telegram opens `https://t.me/+mErIcVI3_R4zMDE1` in a new tab.
+- The PayPal form posts directly to `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`; no site backend is involved.
+- The site loads only two static PayPal brand SVGs from PayPal. It loads no PayPal scripts and handles no payment data.
+- The API key, balance, and model data are not added to the Telegram link or the PayPal form.
+- Discount copy is controlled by `PROMO_DISCOUNT_ENABLED`. It is currently `false` because the public PayPal item is `VARIABLE_PRICE`, so a 95% discount cannot be verified. Enable it only after a fixed discounted price is configured and verified in PayPal.
+- Never inject an amount or alter the PayPal action from the frontend to bypass PayPal pricing.
 
 ### Confirmed data only
 

@@ -60,7 +60,7 @@ Authorization: Bearer <USER_API_KEY>
 
 ### CORS 实测
 
-两个实际使用的接口在 2026-10-25 均通过浏览器 CORS 预检：
+两个实际使用的接口在 2026-10-26 均通过浏览器 CORS 预检：
 
 ```text
 OPTIONS https://api.deepseek.com/models
@@ -91,6 +91,29 @@ access-control-allow-credentials: true
 - Light / Dark / System 主题。
 - 响应式桌面和移动端布局。
 - 首页最底部提供 GitHub 开源自证链接，指向本仓库完整源码。
+- 首页 API Key 购买推广区，包含 Telegram 咨询入口和 PayPal 官方付款表单（均在新标签页打开）。
+
+### API Key 购买推广区与价格状态
+
+首页在主要连接区域下方、页脚上方提供推广购买区：
+
+- Telegram：<https://t.me/+mErIcVI3_R4zMDE1>
+- PayPal 付款表单：`https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`
+- PayPal 表单保留原始 CSS 类名 `.pp-CMTG9BPF9Z2KG`、原始图片地址和 `POST` 目标地址。
+- 新标签页链接使用 `target="_blank"` 与 `rel="noopener noreferrer"`。
+- PayPal 只提供静态品牌 SVG 图片，没有在本站加载 PayPal 脚本、追踪 SDK 或付款代理。
+
+**重要价格状态（2026-10-26 核对）：** 公开 PayPal 页面显示商品为 `Deepseek API Key`，但按钮类型是 `VARIABLE_PRICE`，页面提示 “Enter the amount you would like to top up”。该页面没有固定商品价或可验证的 95 折配置。
+
+因此：
+
+- 站点当前**没有发布 95 折或 5% off 的折扣声明**，以免展示未经 PayPal 后台落实的价格。
+- 95 折中英文文案已在语言资源中实现，但由 `src/config.ts` 的 `PROMO_DISCOUNT_ENABLED` 控制；当前为 `false`。
+- 在 PayPal 后台配置固定商品价格，确认该价格确实等于标准价的 95%（优惠 5%），并在公开结算页验证之前，不要将开关改为 `true`。
+- 不得通过前端添加金额、修改 action 或任何方式绕过 PayPal 定价。
+- 页面始终显示“最终价格与优惠以 PayPal 结算页为准”。
+
+**维护者注意：** 本项目不是 DeepSeek 官方商店，也未声称是授权合作伙伴。请在推广区保留非官方声明，不要添加官方背书、虚构原价、销量或评价。
 
 ### API Key 与隐私
 
@@ -190,6 +213,7 @@ src/
 │   ├── ErrorAlert.tsx
 │   ├── GitHubProof.tsx
 │   ├── ModelsTable.tsx
+│   ├── PurchaseSection.tsx
 │   └── ...
 ├── i18n/
 │   ├── I18nProvider.tsx
@@ -282,7 +306,7 @@ That is why there are no Usage cards, Account cards, or charts, and no request c
 
 ### CORS verification
 
-On 2026-10-25 both endpoints used by this app passed browser CORS preflight:
+On 2026-10-26 both endpoints used by this app passed browser CORS preflight:
 
 ```text
 OPTIONS https://api.deepseek.com/models
@@ -313,6 +337,29 @@ If DeepSeek disables browser CORS in the future, the app reports it clearly and 
 - Light / Dark / System themes.
 - Responsive desktop and mobile layouts.
 - A prominent GitHub open-source proof link at the very bottom of the homepage.
+- A homepage API key purchase section with a Telegram support link and the official PayPal hosted form (both open in a new tab).
+
+### API key purchase section and pricing status
+
+The homepage includes a purchase section below the main connection area and above the footer:
+
+- Telegram: <https://t.me/+mErIcVI3_R4zMDE1>
+- PayPal form: `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`
+- The PayPal form keeps the original `.pp-CMTG9BPF9Z2KG` CSS class, image URLs, and `POST` target.
+- New-tab links use `target="_blank"` and `rel="noopener noreferrer"`.
+- PayPal is used only for static brand SVG images. No PayPal script, tracking SDK, or payment proxy runs on this site.
+
+**Important pricing status (checked 2026-10-26):** the public PayPal page identifies the item as `Deepseek API Key`, but its button type is `VARIABLE_PRICE` and it asks the buyer to “Enter the amount you would like to top up.” No fixed product price or 95% discount configuration is exposed or verifiable there.
+
+Therefore:
+
+- The site does **not** publish a 95% / 5%-off discount claim while that claim cannot be tied to a configured PayPal price.
+- The bilingual 95% copy exists in the translation resources but is controlled by `PROMO_DISCOUNT_ENABLED` in `src/config.ts`; it is currently `false`.
+- Configure a fixed product price in PayPal, verify on the public checkout page that it is exactly 95% of the standard price (a 5% discount), and only then set the flag to `true`.
+- Never add amounts fields, alter the action URL, or otherwise bypass PayPal pricing from the frontend.
+- The UI always states that the final price and discount are shown on the PayPal checkout page.
+
+**Maintainer note:** this project is not a DeepSeek official store and does not claim to be an authorized partner. Keep the non-affiliation statement and never invent an original price, sales volume, or reviews.
 
 ### API key and privacy
 
@@ -415,9 +462,11 @@ No Wrangler, Worker, backend, API route, or API key environment variable is requ
 - `npm run build` passes and writes `dist/`.
 - TypeScript strict checking passes.
 - Real 401 responses render safely without exposing the key.
-- Network requests only target this static site's assets and `https://api.deepseek.com`.
+- Network requests target this static site's assets, `https://api.deepseek.com`, and the two PayPal logo SVGs on `https://www.paypalobjects.com`. There are no analytics or other tracking requests.
+- The Telegram and PayPal URLs are correct, open in a new tab, and the PayPal form retains its original action, class, and image resources.
 - No Usage, Account, historical chart, or fabricated data exists.
 - No local key persistence exists.
 - Desktop 1440 / 1024, tablet 768, and mobile 375 / 390 / 414 widths pass.
 - Light / Dark / System and Chinese/English switching work.
 - The GitHub repository is public and contains no real API key.
+- The 95% claim is intentionally disabled until the PayPal backend price is configured and verified.

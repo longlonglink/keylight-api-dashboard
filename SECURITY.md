@@ -2,7 +2,7 @@
 
 [简体中文](#简体中文) · [English](#english)
 
-最后更新 / Last updated: 2026-10-25
+最后更新 / Last updated: 2026-10-26
 
 ---
 
@@ -83,12 +83,26 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 - `Content-Security-Policy`
 - `script-src 'self'`
 - `connect-src 'self' https://api.deepseek.com`
+- `img-src 'self' data: https://www.paypalobjects.com`
+- `form-action 'self' https://www.paypal.com`
 - `font-src 'self' data:`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
+首页只加载 PayPal 提供的两张静态品牌 SVG，不加载 PayPal 脚本。PayPal 付款通过一个普通 HTML 表单直接提交到 `https://www.paypal.com`，不存在本站代理、付款 API 或付款数据存储。
+
 添加新的 Provider 时，必须审慎地把对应官方 API 域名加入 `connect-src`。不得添加代理域名。
+
+### 支付与价格核验
+
+- 本站不处理付款。用户点击 PayPal 后进入 PayPal 托管的结账页。
+- API Key、余额和模型数据不会写入 Telegram 链接或 PayPal 表单。
+- 2026-10-26 检查公开 PayPal 页面时，商品为 `Deepseek API Key`，但类型为 `VARIABLE_PRICE`（由买家输入金额），没有可验证的固定 95 折价格。
+- 因此 `PROMO_DISCOUNT_ENABLED` 当前为 `false`，页面不发布 95 折声明。
+- 只有商家在 PayPal 后台配置固定价格、确认其等于标准价的 95%，并在公开结账页验证后，才可将该开关改为 `true`。
+- 严禁通过前端注入金额或修改 PayPal action 来绕过付款配置。
+- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对。
 
 ### 报告安全问题
 
@@ -184,12 +198,26 @@ In production, `public/_headers` sets:
 - `Content-Security-Policy`
 - `script-src 'self'`
 - `connect-src 'self' https://api.deepseek.com`
+- `img-src 'self' data: https://www.paypalobjects.com`
+- `form-action 'self' https://www.paypal.com`
 - `font-src 'self' data:`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
+The homepage loads only two static PayPal brand SVGs from PayPal; it loads no PayPal scripts. The PayPal payment button is a plain HTML form that posts directly to `https://www.paypal.com`. There is no site proxy, payment API, or payment-data storage.
+
 When adding a provider, deliberately add only its official API origin to `connect-src`. Never add a proxy origin.
+
+### Payments and price verification
+
+- This site does not process payments. Clicking PayPal opens a PayPal-hosted checkout page.
+- The API key, balance, and model data are not added to the Telegram link or PayPal form.
+- When the public PayPal page was checked on 2026-10-26, the item was `Deepseek API Key` but used `VARIABLE_PRICE` (the buyer enters an amount). No fixed 95%-discounted price could be verified.
+- `PROMO_DISCOUNT_ENABLED` is therefore `false`, and the site does not publish a 95% claim.
+- Enable it only after the seller configures a fixed PayPal price, verifies that it equals 95% of the standard price, and confirms the public checkout page.
+- Never inject an amount or alter the PayPal action from the frontend to bypass payment configuration.
+- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify details through Telegram and PayPal before paying.
 
 ### Reporting security issues
 

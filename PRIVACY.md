@@ -2,7 +2,7 @@
 
 [简体中文](#简体中文) · [English](#english)
 
-最后更新 / Last updated: 2026-10-25
+最后更新 / Last updated: 2026-10-26
 
 ---
 
@@ -65,24 +65,38 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - 不集成 Google Analytics、Sentry、PostHog、Mixpanel、Microsoft Clarity、Hotjar 等。
 - 不设置追踪 Cookie。
 - 字体自托管，不请求 Google Fonts 等第三方字体服务。
-- 除用户主动发起的 DeepSeek 官方 API 请求外，没有其他第三方网络请求。
+- 首页购买区会加载两张来自 `https://www.paypalobjects.com` 的静态 PayPal 品牌 SVG 图片。本站不会加载 PayPal 脚本或追踪 SDK。
+- 本站代码不设置 Cookie；这些第三方图片请求由 PayPal 的服务器处理，适用 PayPal 自己的隐私政策。
+- 用户点击 Telegram 或 PayPal 后会主动离开本站；Telegram 和 PayPal 各自的隐私政策适用。
 
-### 7. 网络请求边界
+### 7. 支付与外部链接
+
+- 首页的 PayPal 按钮是一个普通 HTML 表单，直接提交到 `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG` 并在新标签页打开。
+- 本站不接收、不处理、不存储银行卡号或 PayPal 登录信息。
+- API Key、余额和模型数据不会被加入 Telegram 链接或 PayPal 表单。
+- 用户点击 Telegram 按钮会打开外部邀请链接 `https://t.me/+mErIcVI3_R4zMDE1`。
+- 本站无法控制第三方页面的价格、履约或隐私实践。最终价格与优惠以 PayPal 结算页为准。
+- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；在后台配置并核实可验证的 95 折固定价格前，站点不展示 95 折声明。
+
+### 8. 网络请求边界
 
 允许的网络请求：
 
 ```text
 浏览器 → Cloudflare Pages（静态资源）
 浏览器 → https://api.deepseek.com（官方 API）
+浏览器 → https://www.paypalobjects.com（PayPal 静态品牌图片）
+用户点击后 → https://t.me / https://www.paypal.com（外部页面）
 ```
 
 不存在：
 
 ```text
 浏览器 → 本站后端 / Worker / Proxy → DeepSeek
+浏览器 → 本站后端 → PayPal
 ```
 
-### 8. 安全边界
+### 9. 安全边界
 
 纯静态前端无法防止以下风险：
 
@@ -93,7 +107,7 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 
 本项目通过最小化数据、CSP、无第三方脚本和无本地 Key 持久化来降低风险，但不承诺绝对安全。
 
-### 9. 仓库与审计
+### 10. 仓库与审计
 
 完整源码：
 
@@ -162,24 +176,38 @@ The project does not request, display, or infer:
 - No Google Analytics, Sentry, PostHog, Mixpanel, Microsoft Clarity, Hotjar, or similar services.
 - No tracking cookies.
 - Fonts are self-hosted; no Google Fonts or other third-party font requests.
-- Apart from user-initiated requests to the official DeepSeek API, there are no third-party network requests.
+- The homepage purchase section loads two static PayPal brand SVGs from `https://www.paypalobjects.com`. The site does not load PayPal scripts or tracking SDKs.
+- This site's code sets no cookies; those third-party image requests are handled by PayPal's servers under PayPal's own privacy policy.
+- Clicking Telegram or PayPal intentionally leaves this site. The privacy policies of Telegram and PayPal apply.
 
-### 7. Network boundary
+### 7. Payments and external links
+
+- The PayPal button is a plain HTML form that posts directly to `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG` and opens in a new tab.
+- This site never receives, processes, or stores card details or PayPal login information.
+- The API key, balance, and model data are not appended to the Telegram link or the PayPal form.
+- The Telegram button opens the external invite link `https://t.me/+mErIcVI3_R4zMDE1`.
+- This site does not control third-party pricing, fulfillment, or privacy practices. The final price and discount are shown on the PayPal checkout page.
+- The public PayPal item is currently a `VARIABLE_PRICE` purchase in which the buyer enters an amount. The site does not display a 95% claim until a verifiable fixed discounted price is configured in the PayPal backend.
+
+### 8. Network boundary
 
 Allowed:
 
 ```text
 Browser → Cloudflare Pages (static assets)
 Browser → https://api.deepseek.com (official API)
+Browser → https://www.paypalobjects.com (static PayPal brand images)
+After a click → https://t.me / https://www.paypal.com (external pages)
 ```
 
 Not present:
 
 ```text
 Browser → this site's backend / Worker / proxy → DeepSeek
+Browser → this site's backend → PayPal
 ```
 
-### 8. Security limitations
+### 9. Security limitations
 
 A static frontend cannot protect against:
 
@@ -190,7 +218,7 @@ A static frontend cannot protect against:
 
 This project reduces risk through data minimization, CSP, no third-party scripts, and no persistent key storage. It does not promise absolute security.
 
-### 9. Repository and audit
+### 10. Repository and audit
 
 Full source code:
 
