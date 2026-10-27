@@ -51,8 +51,9 @@ export const en = {
   'home.featureMemoryCopy': 'The key is never written to local storage.',
   'home.featureDirectTitle': 'Direct to DeepSeek',
   'home.featureDirectCopy': 'No Worker, proxy, or application server.',
-  'home.featureTelemetryTitle': 'No tracking',
-  'home.featureTelemetryCopy': 'No analytics, trackers, or error reporting.',
+  'home.featureTelemetryTitle': 'No first-party tracking',
+  'home.featureTelemetryCopy':
+    'No first-party analytics or error reporting. Google AdSense may use its own cookies.',
   'home.routeOrigin': 'Request origin',
   'home.routeThisBrowser': 'This browser',
   'home.routeHttps': 'HTTPS',
@@ -74,7 +75,7 @@ export const en = {
   'home.hideKeyAria': 'Hide API key',
   'home.connectTo': 'Connect to {provider}',
   'home.privacyTitle': 'This site never receives or stores your API key.',
-  'home.privacyBody': 'The key is sent only to {provider}.',
+  'home.privacyBody': 'The app sends it only to {provider}.',
   'home.detailsSummary': 'What exactly happens when I connect?',
   'home.detailsBody':
     'Your browser sends GET requests directly to {host}. The key is carried only in an Authorization request header. The page host serves static files and never handles these API requests.',
@@ -82,7 +83,8 @@ export const en = {
   'home.createKeyAt': 'Create one at {provider}',
   'home.privacyEyebrow': 'Privacy',
   'home.privacyHeading': 'Your key never touches this site.',
-  'home.privacyIntro': 'Memory only, cleared on reload. Requests go straight to DeepSeek.',
+  'home.privacyIntro':
+    'Memory only, cleared on reload. API requests go straight to DeepSeek. Google ads may use cookies.',
   'home.corsTitle': 'CORS stays honest.',
   'home.corsBody':
     'If DeepSeek ever blocks direct browser requests, the dashboard reports it. This project will never add a proxy to work around browser security.',
@@ -207,7 +209,7 @@ export const en = {
 
   'faq.title': 'FAQ',
   'faq.q1': 'Does KeyLight store my API key?',
-  'faq.a1': 'No. It stays in this tab’s memory and is sent only to DeepSeek.',
+  'faq.a1': 'No. It stays in this tab’s memory and the app sends it only to DeepSeek.',
   'faq.q2': 'What data can KeyLight show?',
   'faq.a2': 'Only the data exposed by DeepSeek’s official balance and model endpoints.',
   'faq.q3': 'Is KeyLight an official DeepSeek product?',
@@ -304,8 +306,9 @@ const zh: Record<TranslationKey, string> = {
   'home.featureMemoryCopy': 'API Key 不会写入任何本地存储。',
   'home.featureDirectTitle': '直连 DeepSeek',
   'home.featureDirectCopy': '没有 Worker、代理或应用服务器。',
-  'home.featureTelemetryTitle': '无追踪',
-  'home.featureTelemetryCopy': '没有分析、追踪或错误上报服务。',
+  'home.featureTelemetryTitle': '无本站追踪',
+  'home.featureTelemetryCopy':
+    '本站不做第一方分析或错误上报；Google AdSense 可能使用其自己的 Cookie。',
   'home.routeOrigin': '请求发起方',
   'home.routeThisBrowser': '当前浏览器',
   'home.routeHttps': 'HTTPS',
@@ -326,7 +329,7 @@ const zh: Record<TranslationKey, string> = {
   'home.hideKeyAria': '隐藏 API Key',
   'home.connectTo': '连接 {provider}',
   'home.privacyTitle': '本站不接收也不保存你的 API Key。',
-  'home.privacyBody': 'Key 只发送给 {provider}。',
+  'home.privacyBody': '应用只把它发送给 {provider}。',
   'home.detailsSummary': '点击连接后具体会发生什么？',
   'home.detailsBody':
     '浏览器会直接向 {host} 发送 GET 请求。Key 只放在 Authorization 请求头中。本站静态托管方只提供网页文件，从不处理这些 API 请求。',
@@ -334,7 +337,8 @@ const zh: Record<TranslationKey, string> = {
   'home.createKeyAt': '前往 {provider} 创建',
   'home.privacyEyebrow': '隐私',
   'home.privacyHeading': 'Key 不经过本站服务器。',
-  'home.privacyIntro': '只存内存，刷新即清除；请求直达 DeepSeek。',
+  'home.privacyIntro':
+    '只存内存，刷新即清除；API 请求直达 DeepSeek；Google 广告可能使用 Cookie。',
   'home.corsTitle': '如实面对 CORS。',
   'home.corsBody':
     '如果 DeepSeek 未来禁止浏览器直连，仪表盘会明确报错。本项目绝不会为了绕过浏览器安全策略而增加代理。',
@@ -452,7 +456,7 @@ const zh: Record<TranslationKey, string> = {
 
   'faq.title': '常见问题',
   'faq.q1': 'KeyLight 会保存我的 API Key 吗？',
-  'faq.a1': '不会。只存在当前标签页内存中，并且只发送给 DeepSeek。',
+  'faq.a1': '不会。只存在当前标签页内存中，应用只把它发送给 DeepSeek。',
   'faq.q2': 'KeyLight 能显示哪些数据？',
   'faq.a2': '只显示 DeepSeek 官方余额与模型接口实际返回的数据。',
   'faq.q3': 'KeyLight 是 DeepSeek 官方产品吗？',

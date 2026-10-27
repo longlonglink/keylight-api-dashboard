@@ -81,16 +81,19 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 `public/_headers` 在生产环境设置：
 
 - `Content-Security-Policy`
-- `script-src 'self' 'sha256-…'`（仅额外放行经过 hash 的 JSON-LD）
-- `connect-src 'self' https://api.deepseek.com`
-- `img-src 'self' data:`
+- `script-src 'self' 'sha256-…' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.googleadservices.com https://*.gstatic.com https://*.adtrafficquality.google`（hash 放行 JSON-LD，Google 域名放行 AdSense）
+- `connect-src 'self' https://api.deepseek.com` 及 Google 广告域名
+- `img-src 'self' data:` 及 Google 广告域名
+- `frame-src` Google 广告 iframe 域名
 - `form-action 'self'`
-- `font-src 'self' data:`
+- `font-src 'self' data: https://*.gstatic.com`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
 本站不加载支付脚本、支付表单或支付品牌图片，也没有站内结账。
+
+Google AdSense 是唯一主动加载的第三方广告脚本。它会执行页面脚本并可能访问 DOM、设置 Cookie；CSP 中的 Google 域名允许其脚本、图片、连接和广告 iframe。Google 不保证固定域名列表，AdSense 更新后应由维护者检查 CSP 违规报告并审慎调整。
 
 添加新的 Provider 时，必须审慎地把对应官方 API 域名加入 `connect-src`。不得添加代理域名。
 
@@ -194,16 +197,19 @@ The key may appear only in request headers in the browser developer tools, never
 In production, `public/_headers` sets:
 
 - `Content-Security-Policy`
-- `script-src 'self' 'sha256-…'` (only the hashed JSON-LD block is additionally allowed)
-- `connect-src 'self' https://api.deepseek.com`
-- `img-src 'self' data:`
+- `script-src 'self' 'sha256-…' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.googleadservices.com https://*.gstatic.com https://*.adtrafficquality.google` (hash for JSON-LD; Google domains for AdSense)
+- `connect-src 'self' https://api.deepseek.com` plus Google ad domains
+- `img-src 'self' data:` plus Google ad domains
+- `frame-src` Google ad iframe domains
 - `form-action 'self'`
-- `font-src 'self' data:`
+- `font-src 'self' data: https://*.gstatic.com`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
 The site loads no payment scripts, payment forms, or payment brand images, and has no on-site checkout.
+
+Google AdSense is the only third-party advertising script actively loaded. It executes page script and may access the DOM and set cookies; the CSP allows its scripts, images, connections, and ad iframes. Google does not guarantee a fixed domain list, so maintainers should review CSP violation reports and adjust deliberately after AdSense changes.
 
 When adding a provider, deliberately add only its official API origin to `connect-src`. Never add a proxy origin.
 

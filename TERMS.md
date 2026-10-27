@@ -13,6 +13,7 @@ KeyLight is an independent, open-source API utility. It is not an official DeepS
 - You are responsible for the API key you use and for complying with the provider's terms.
 - The website does not process payments, run a checkout, or issue API keys.
 - No payment card details are collected by this website.
+- The website displays third-party Google AdSense advertising. Google may set or read cookies and process ad-related data under its own terms and privacy policy. The project does not control the ads or Google's data processing.
 
 ### Community and API Access
 
@@ -36,6 +37,7 @@ KeyLight 是独立开源 API 工具，不是 DeepSeek 官方产品、官方商�
 - 你需要对自己的 API Key 负责，并遵守服务商条款。
 - 本站不处理付款、不提供结账页、不发放 API Key。
 - 本站不收集银行卡或付款信息。
+- 本站展示第三方 Google AdSense 广告。Google 可能设置或读取 Cookie，并按自己的条款和隐私政策处理广告相关数据；本项目无法控制广告内容或 Google 的数据处理。
 
 ### 社区与 API Access
 

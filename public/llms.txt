@@ -1,6 +1,6 @@
 # KeyLight API Dashboard
 
-> KeyLight is a lightweight, open-source API dashboard. It checks supported API account information directly in the browser: DeepSeek account balance (`/user/balance`) and available models (`/models`). The user's API key stays in page memory and is sent only to `https://api.deepseek.com`; there is no backend, proxy, Worker, database, or analytics.
+> KeyLight is a lightweight, open-source API dashboard. It checks supported API account information directly in the browser: DeepSeek account balance (`/user/balance`) and available models (`/models`). The user's API key stays in page memory and is sent only to `https://api.deepseek.com`; there is no backend, proxy, Worker, database, or first-party analytics. The page loads Google AdSense for advertising.
 
 ## Key facts
 
@@ -12,8 +12,17 @@
 - The dashboard does not expose Usage history, Account ID, plan, or creation time because those are not in the current public DeepSeek API.
 - Browser CORS preflight for both endpoints passed on 2026-10-26.
 - The interface supports Chinese and English.
-- No analytics, tracking SDKs, or error-reporting services are used.
+- No first-party analytics, tracking SDKs, or error-reporting services are used.
+- Google AdSense is loaded for advertising under publisher `ca-pub-2541823251578668`. Google may set or read cookies and collect ad-related data under its own policies.
 - This website does not process payments and has no checkout.
+
+## Advertising and privacy
+
+- The page loads the Google AdSense script with publisher ID `ca-pub-2541823251578668`.
+- Google may set or read cookies and collect IP/device/ad-interaction data. The site's own code sets no cookies.
+- The site does not intentionally send the API key, balance, or model data to ad requests.
+- AdSense is a third-party script and may access the page DOM. See the privacy document for details.
+- EEA/UK/Swiss consent management must be configured in the AdSense account; this project does not bundle a custom CMP.
 
 ## API Access and community
 

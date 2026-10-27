@@ -39,7 +39,9 @@ Browser renders balance + models
 - Serverless Function。
 - Pages Functions。
 - 数据库、KV、D1、R2。
-- Analytics 或错误追踪服务。
+- 第一方 Analytics 或错误追踪服务。
+
+Google AdSense 是页面唯一主动加载的第三方广告脚本；广告请求由浏览器直接发往 Google。
 
 ### 部署边界
 
@@ -48,6 +50,7 @@ Cloudflare Pages 只分发静态文件。它不会收到用户输入的 API Key�
 ```text
 用户下载静态文件：浏览器 → Cloudflare Pages
 用户查询 API：    浏览器 → api.deepseek.com
+广告脚本/广告：   浏览器 → Google AdSense / Google 广告域名
 社区咨询：        浏览器 → t.me / discord.gg（用户点击后）
 ```
 
@@ -222,7 +225,9 @@ This site has:
 - No serverless function.
 - No Pages Functions.
 - No database, KV, D1, or R2.
-- No analytics or error-tracking service.
+- No first-party analytics or error-tracking service.
+
+Google AdSense is the only third-party advertising script actively loaded by the page; ad requests are made by the browser directly to Google.
 
 ### Deployment boundary
 
@@ -231,6 +236,7 @@ Cloudflare Pages serves static files only. It never receives the entered API key
 ```text
 Static downloads: Browser → Cloudflare Pages
 API queries:      Browser → api.deepseek.com
+Ad script/ads:    Browser → Google AdSense / Google advertising domains
 Community links:  Browser → t.me / discord.gg (after a click)
 ```
 

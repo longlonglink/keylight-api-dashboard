@@ -15,6 +15,12 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
 Sitemap: https://keylight-api-dashboard.pages.dev/sitemap.xml
 
 # LLM-readable summary:

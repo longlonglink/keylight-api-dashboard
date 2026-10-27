@@ -28,7 +28,7 @@ DeepSeek 官方 API
 - 无 Cloudflare Worker。
 - 无 API Proxy。
 - 无数据库、KV、D1、R2。
-- 无 Analytics、追踪 SDK 或错误上报服务。
+- 无第一方 Analytics、追踪 SDK 或错误上报服务；页面会加载 Google AdSense 广告脚本，详见下文。
 - 无 Wrangler 部署步骤。
 - API Key 默认只保存在当前页面的 JavaScript 内存中。
 - API 请求只从用户浏览器直接发往 `https://api.deepseek.com`。
@@ -154,6 +154,13 @@ export const GITHUB_REPO_URL = 'https://github.com/longlonglink/keylight-api-das
 - `public/sitemap.xml` 列出生产 URL。canonical、Open Graph URL/图片、JSON-LD、robots 和 sitemap 统一使用 `https://keylight-api-dashboard.pages.dev/`；如果 Cloudflare Pages 使用不同项目名或自定义域名，必须同步修改 `index.html`、`public/sitemap.xml`、`public/robots.txt`、`public/llms*.txt` 和 `src/config.ts` 中的 `SITE_URL`。
 - 修改内联 JSON-LD 后必须重新计算 CSP hash，否则会被 `public/_headers` 拦截。
 
+### Google AdSense 广告
+
+- `index.html` 的 `<head>` 加载发布商 `ca-pub-2541823251578668` 的 Google AdSense loader。
+- `public/_headers` 的 CSP 允许 Google 广告脚本、图片、连接和广告 iframe 域名；`public/ads.txt` 声明对应发布商。
+- 本仓库只安装 loader，不包含广告单元或 Auto Ads 开关。Auto Ads、广告位和 EEA/英国/瑞士同意管理（CMP）需要在 Google AdSense 后台配置。
+- Google 可能设置或读取 Cookie、收集设备和广告互动数据；详见 [PRIVACY.md](PRIVACY.md)。
+
 ### 本地运行
 
 要求 Node.js 22（见 `.nvmrc`）。
@@ -249,7 +256,7 @@ src/
 - `npm run build` 通过，生成 `dist/`。
 - TypeScript strict 通过。
 - 真实 401 响应能正确显示，不泄露 Key。
-- 网络请求只发往本站静态资源和 `https://api.deepseek.com`；Telegram / Discord 仅在用户点击后打开。
+- 网络请求发往本站静态资源、`https://api.deepseek.com` 和 Google AdSense / Google 广告域名；Telegram / Discord 仅在用户点击后打开。本站没有第一方 Analytics 或追踪。
 - 无 Usage、Account、历史图表或伪造数据。
 - 无本地 Key 持久化。
 - 桌面 1440 / 1024、平板 768、移动 375 / 390 / 414 宽度通过。
@@ -283,7 +290,7 @@ Real data rendered in the browser
 - No Cloudflare Worker.
 - No API proxy.
 - No database, KV, D1, or R2.
-- No analytics, tracking SDK, or error reporting service.
+- No first-party analytics, tracking SDK, or error-reporting service. The page loads Google AdSense for advertising; see below.
 - No Wrangler deployment.
 - The API key stays only in JavaScript memory for the current page by default.
 - API requests go directly from the browser to `https://api.deepseek.com`.
@@ -409,6 +416,13 @@ No chart library is included because the current public API has no historical da
 - `public/sitemap.xml` lists the production URL. Canonical, Open Graph URL/image, JSON-LD, robots and sitemap use `https://keylight-api-dashboard.pages.dev/`; update `index.html`, `public/sitemap.xml`, `public/robots.txt`, `public/llms*.txt`, and `SITE_URL` in `src/config.ts` together if Cloudflare Pages uses a different project name or custom domain.
 - After editing the inline JSON-LD, recompute the CSP hash or `public/_headers` will block it.
 
+### Google AdSense
+
+- The `<head>` in `index.html` loads the Google AdSense loader for publisher `ca-pub-2541823251578668`.
+- The CSP in `public/_headers` allows Google ad scripts, images, connections, and ad iframes; `public/ads.txt` declares the publisher.
+- This repository installs the loader only. Ad units and Auto Ads are not configured here; Auto Ads, placements, and EEA/UK/Swiss consent management (CMP) must be configured in the AdSense account.
+- Google may set or read cookies and collect device and ad-interaction data; see [PRIVACY.md](PRIVACY.md).
+
 ### Local development
 
 Node.js 22 is recommended (see `.nvmrc`).
@@ -475,7 +489,7 @@ This project is not a DeepSeek official store and does not claim to be an author
 - `npm run build` passes and writes `dist/`.
 - TypeScript strict checking passes.
 - Real 401 responses render safely without exposing the key.
-- Network requests target this static site's assets and `https://api.deepseek.com`; Telegram / Discord open only after a click. There are no analytics or other tracking requests.
+- Network requests target this static site's assets, `https://api.deepseek.com`, and Google AdSense/ad domains; Telegram / Discord open only after a click. There is no first-party analytics or tracking.
 - No Usage, Account, historical chart, or fabricated data exists.
 - No local key persistence exists.
 - Desktop 1440 / 1024, tablet 768, and mobile 375 / 390 / 414 widths pass.

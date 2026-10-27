@@ -36,10 +36,19 @@ The dashboard requires the user to supply their own DeepSeek API key. The browse
 - `localStorage` contains only non-sensitive theme and language preferences.
 - `sessionStorage` is not used for credentials; startup code removes legacy credential entries from older builds.
 - No key in URL, query, fragment, console, logs, or error strings.
-- No analytics or error reporting.
+- No first-party analytics or error reporting.
+- Google AdSense is loaded for advertising and may set or read cookies and collect ad data under Google's policies.
 - Clear Key clears memory and aborts the current operation.
-- The site makes requests only to its own static assets and `https://api.deepseek.com`.
+- The site makes requests only to its own static assets, `https://api.deepseek.com`, and Google AdSense/advertising domains.
 - The API key is not sent to Telegram, Discord, or any community endpoint.
+
+## Advertising
+
+- Google AdSense is loaded in the document head with publisher ID `ca-pub-2541823251578668`.
+- `public/ads.txt` declares the same publisher.
+- Google may set or read cookies and collect IP address, device/browser information, approximate location, and ad-interaction data.
+- The site's own code sets no cookies. The API key is not intentionally included in ad requests, but AdSense is a third-party script running in the page and may access the page DOM.
+- EEA/UK/Swiss ad consent/CMP must be configured in the AdSense account; this repository does not include a custom consent manager.
 
 ## CORS
 

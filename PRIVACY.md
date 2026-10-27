@@ -60,14 +60,16 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - 历史余额变化。
 - 任何模拟或估算数据。
 
-### 6. 无追踪
+### 6. 第一方追踪与第三方广告
 
-- 不集成 Google Analytics、Sentry、PostHog、Mixpanel、Microsoft Clarity、Hotjar 等。
-- 不设置追踪 Cookie。
+- 本站不集成本站自己的 Analytics、错误上报、热图或其他第一方追踪。
 - 字体自托管，不请求 Google Fonts 等第三方字体服务。
-- 首页不加载支付脚本、支付表单、支付 SDK 或支付品牌图片。
-- 本站代码不设置 Cookie。
-- 用户点击 Telegram 或 Discord 后会主动离开本站；Telegram 和 Discord 各自的隐私政策适用。
+- 页面在 `<head>` 中加载 Google AdSense（发布商 ID `ca-pub-2541823251578668`）以展示广告。Google 可能设置或读取 Cookie，收集 IP 地址、设备/浏览器信息、近似位置和广告互动数据，并按 Google 的政策与用户同意情况展示个性化或非个性化广告。
+- 本站无法控制 Google 的 Cookie 或数据处理；适用 Google 自己的隐私政策。EEA、英国、瑞士等地区的广告同意/CMP 必须在 Google AdSense 后台配置，本静态项目不包含自定义 CMP。
+- 本站自己的代码不设置 Cookie；但 Google AdSense 可能设置或读取 Cookie。
+- 本站主动发往 DeepSeek 的请求只包含 Authorization 头和 API 路径，不包含页面正文。本站不会主动把 API Key、余额或模型数据加入广告请求。
+- Google AdSense 是运行在页面中的第三方脚本，可能访问页面 DOM。如果你不接受第三方广告脚本访问页面内容，请不要使用本站。
+- 用户点击 Telegram 或 Discord 后会主动离开本站；点击广告也会离开本站，适用相应平台的隐私政策。
 
 ### 7. 社区与外部链接
 
@@ -85,7 +87,9 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 ```text
 浏览器 → Cloudflare Pages（静态资源）
 浏览器 → https://api.deepseek.com（官方 API）
+浏览器 → Google AdSense / Google 广告域名（广告脚本与广告内容）
 用户点击后 → https://t.me / https://discord.gg（外部社区页面）
+用户点击广告后 → Google 广告页面
 ```
 
 不存在：
@@ -103,8 +107,9 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - 恶意浏览器扩展读取页面内容。
 - 用户自行泄露 API Key。
 - DeepSeek 服务端、网络链路或浏览器实现中的漏洞。
+- Google AdSense 等第三方脚本访问页面 DOM、设置 Cookie 或按其政策处理数据。
 
-本项目通过最小化数据、CSP、无第三方脚本和无本地 Key 持久化来降低风险，但不承诺绝对安全。
+本项目通过最小化数据、CSP、限制第三方脚本和无本地 Key 持久化来降低风险，但不承诺绝对安全；Google AdSense 是页面上唯一的第三方广告脚本。
 
 ### 10. 仓库与审计
 
@@ -170,14 +175,16 @@ The project does not request, display, or infer:
 - Historical balance changes.
 - Any simulated or estimated data.
 
-### 6. No tracking
+### 6. First-party tracking and third-party ads
 
-- No Google Analytics, Sentry, PostHog, Mixpanel, Microsoft Clarity, Hotjar, or similar services.
-- No tracking cookies.
+- The site does not run its own analytics, error reporting, heatmaps, or other first-party tracking.
 - Fonts are self-hosted; no Google Fonts or other third-party font requests.
-- The homepage does not load payment scripts, payment forms, payment SDKs, or payment brand images.
-- This site's code sets no cookies.
-- Clicking Telegram or Discord intentionally leaves this site. The privacy policies of Telegram and Discord apply.
+- The page loads Google AdSense (publisher ID `ca-pub-2541823251578668`) from the `<head>` to display ads. Google may set or read cookies and collect IP address, device/browser information, approximate location, and ad-interaction data, and may serve personalized or non-personalized ads under Google's policies and the user's consent choices.
+- This site does not control Google's cookies or data processing; Google's own privacy policy applies. Ad consent/CMP for the EEA, UK, and Switzerland must be configured in the AdSense account; this static project does not include a custom CMP.
+- This site's own code sets no cookies, but Google AdSense may set or read cookies.
+- Requests the site sends to DeepSeek contain only the Authorization header and API path, with no page body. The site does not intentionally add the API key, balance, or model data to ad requests.
+- Google AdSense is a third-party script running in the page and may access the page DOM. If you do not accept third-party ad scripts accessing page content, do not use this site.
+- Clicking Telegram or Discord intentionally leaves this site. Clicking an ad also leaves this site; the relevant platform's privacy policy applies.
 
 ### 7. Community and external links
 
@@ -195,7 +202,9 @@ Allowed:
 ```text
 Browser → Cloudflare Pages (static assets)
 Browser → https://api.deepseek.com (official API)
+Browser → Google AdSense / Google advertising domains (ad script and ad content)
 After a click → https://t.me / https://discord.gg (external community pages)
+After an ad click → Google advertising pages
 ```
 
 Not present:
@@ -213,8 +222,9 @@ A static frontend cannot protect against:
 - Malicious browser extensions reading page content.
 - A user disclosing their API key.
 - Vulnerabilities in DeepSeek's servers, the network path, or browser implementations.
+- Third-party scripts such as Google AdSense accessing the page DOM, setting cookies, or processing data under their own policies.
 
-This project reduces risk through data minimization, CSP, no third-party scripts, and no persistent key storage. It does not promise absolute security.
+This project reduces risk through data minimization, CSP, limited third-party scripts, and no persistent key storage. It does not promise absolute security; Google AdSense is the only third-party advertising script on the page.
 
 ### 10. Repository and audit
 
