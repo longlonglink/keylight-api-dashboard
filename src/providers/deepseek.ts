@@ -148,20 +148,16 @@ function parseBalanceEntry(value: unknown): BalanceEntry | null {
 
   const { currency, total_balance, granted_balance, topped_up_balance } = value
 
-  if (
-    typeof currency !== 'string' ||
-    typeof total_balance !== 'string' ||
-    typeof granted_balance !== 'string' ||
-    typeof topped_up_balance !== 'string'
-  ) {
-    return null
-  }
+  // Currency identifies the entry. The three balance fields are kept as the
+  // exact API strings and may be absent; the UI shows Unavailable rather than
+  // inventing a number.
+  if (typeof currency !== 'string') return null
 
   return {
     currency,
-    totalBalance: total_balance,
-    grantedBalance: granted_balance,
-    toppedUpBalance: topped_up_balance,
+    totalBalance: optionalString(total_balance),
+    grantedBalance: optionalString(granted_balance),
+    toppedUpBalance: optionalString(topped_up_balance),
   }
 }
 

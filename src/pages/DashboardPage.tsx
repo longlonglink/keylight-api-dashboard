@@ -1,8 +1,15 @@
-import { Clock3, LockKeyhole, RefreshCw, Trash2 } from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
+import { Clock3, LockKeyhole, Trash2 } from 'lucide-react'
 import type { DashboardData } from '../providers/types'
 import type { ProviderError } from '../lib/errors'
 import type { ThemePreference } from '../lib/storage'
 import { formatDateTime } from '../lib/format'
+import {
+  DEFAULT_REFRESH_INTERVAL_MS,
+  isRefreshInterval,
+  type RefreshIntervalMs,
+} from '../lib/refresh'
+import { useAutoRefresh } from '../hooks/useAutoRefresh'
 import { useI18n } from '../i18n/I18nProvider'
 import { BalanceCard } from '../components/BalanceCard'
 import { ErrorAlert } from '../components/ErrorAlert'
@@ -33,6 +40,38 @@ export function DashboardPage({
 }: DashboardPageProps) {
   const { t, locale } = useI18n()
   const providerHost = new URL(data.provider.baseUrl).hostname
+  const [autoRefresh, setAutoRefresh] = useState(false)
+  const [refreshIntervalMs, setRefreshIntervalMs] = useState<RefreshIntervalMs>(
+    DEFAULT_REFRESH_INTERVAL_MS,
+  )
+
+  const autoRefreshRef = useRef(false)
+  const isRefreshingRef = useRef(isRefreshing)
+  const onRefreshRef = useRef(onRefresh)
+  isRefreshingRef.current = isRefreshing
+  onRefreshRef.current = onRefresh
+
+  useAutoRefresh({
+    enabled: autoRefresh,
+    intervalMs: refreshIntervalMs,
+    isBusy: isRefreshing,
+    onTick: onRefresh,
+  })
+
+  const handleToggleAutoRefresh = useCallback(() => {
+    const next = !autoRefreshRef.current
+    autoRefreshRef.current = next
+    setAutoRefresh(next)
+
+    if (next && !isRefreshingRef.current) {
+      onRefreshRef.current()
+    }
+  }, [])
+
+  const handleIntervalChange = useCallback((value: number) => {
+    if (!isRefreshInterval(value)) return
+    setRefreshIntervalMs(value)
+  }, [])
 
   return (
     <div className="relative isolate min-h-screen bg-canvas">
@@ -88,19 +127,6 @@ export function DashboardPage({
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={onRefresh}
-              disabled={isRefreshing}
-              className="btn-secondary h-10 px-4 text-xs"
-            >
-              <RefreshCw
-                className={isRefreshing ? 'size-3.5 animate-spin' : 'size-3.5'}
-                aria-hidden="true"
-              />
-              {isRefreshing ? t('common.refreshing') : t('common.refresh')}
-            </button>
-
-            <button
-              type="button"
               onClick={onClear}
               className="btn-secondary h-10 px-4 text-xs text-muted hover:text-danger"
               title={t('dashboard.clearKey')}
@@ -122,7 +148,17 @@ export function DashboardPage({
         )}
 
         <div className="mt-6 space-y-4 lg:space-y-5">
-          <BalanceCard balance={data.balance} />
+          <BalanceCard
+            balance={data.balance}
+            lastUpdated={data.fetchedAt}
+            isRefreshing={isRefreshing}
+            refreshError={refreshError !== null}
+            autoRefresh={autoRefresh}
+            intervalMs={refreshIntervalMs}
+            onRefresh={onRefresh}
+            onToggleAutoRefresh={handleToggleAutoRefresh}
+            onIntervalChange={handleIntervalChange}
+          />
           <ModelsTable models={data.models} />
         </div>
       </main>

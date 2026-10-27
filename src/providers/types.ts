@@ -29,9 +29,16 @@ export interface ModelInfo {
 
 export interface BalanceEntry {
   currency: string
-  totalBalance: string
-  grantedBalance: string
-  toppedUpBalance: string
+  /**
+   * Raw API strings from the official balance_infos entry:
+   * total_balance, granted_balance, topped_up_balance.
+   *
+   * These are never calculated or normalized by the frontend. null means the
+   * field was absent or not a string in the API response.
+   */
+  totalBalance: string | null
+  grantedBalance: string | null
+  toppedUpBalance: string | null
 }
 
 export interface BalanceSnapshot {

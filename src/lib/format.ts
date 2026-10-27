@@ -13,6 +13,18 @@ export function formatDateTime(timestamp: string | number | Date, locale: string
   }).format(date)
 }
 
+export function formatTime(timestamp: string | number | Date, locale: string): string {
+  const date = new Date(timestamp)
+
+  if (!Number.isFinite(date.getTime())) return '—'
+
+  return new Intl.DateTimeFormat(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(date)
+}
+
 export function formatTokenCount(tokens: number | null, locale: string): string {
   if (tokens === null) return '—'
 

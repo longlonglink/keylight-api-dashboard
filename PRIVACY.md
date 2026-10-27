@@ -42,7 +42,7 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 
 ### 4. 浏览器中唯一保留的本地偏好
 
-主题（`keylight.theme.v1`）和语言（`keylight.language.v1`）偏好会写入用户自己的 `localStorage`。它们不是敏感数据，也不包含 API Key、余额或任何 API 响应。
+主题（`keylight.theme.v1`）和语言（`keylight.language.v1`）偏好会写入用户自己的 `localStorage`。它们不是敏感数据，也不包含 API Key、余额或任何 API 响应。自动刷新开关和刷新间隔只存在当前页面内存中，刷新或关闭页面后恢复为 OFF / 30 秒。
 
 ### 5. 获取并展示的数据
 
@@ -152,7 +152,7 @@ The current version contains no code that persists an API key in browser storage
 
 ### 4. The only local preferences
 
-Theme (`keylight.theme.v1`) and language (`keylight.language.v1`) preferences are stored in the user's own `localStorage`. They are not sensitive and contain no API key, balance, or API response.
+Theme (`keylight.theme.v1`) and language (`keylight.language.v1`) preferences are stored in the user's own `localStorage`. They are not sensitive and contain no API key, balance, or API response. Auto-refresh state and interval live only in page memory and reset to OFF / 30 seconds after a reload.
 
 ### 5. Data that is requested and displayed
 

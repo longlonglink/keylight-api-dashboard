@@ -62,31 +62,28 @@ export function DashboardSkeleton({
         </div>
 
         <div className="mt-7 space-y-4 lg:space-y-5">
-          <div className="balance-panel relative rounded-3xl p-6 sm:p-7">
+          <div className="card p-5 sm:p-7">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="size-10 rounded-xl bg-white/10" />
+                <div className="skeleton size-10 rounded-xl" />
                 <div className="space-y-2">
-                  <div className="h-2.5 w-24 rounded bg-white/10" />
-                  <div className="h-2 w-16 rounded bg-white/[0.07]" />
+                  <div className="skeleton h-2.5 w-24 rounded" />
+                  <div className="skeleton h-2 w-16 rounded" />
                 </div>
               </div>
-              <div className="h-7 w-32 rounded-full bg-white/[0.06]" />
+              <div className="skeleton h-7 w-32 rounded-full" />
             </div>
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="h-11 w-32 rounded-xl bg-white/10" />
-                <div className="mt-4 grid grid-cols-2 gap-2.5">
-                  <div className="h-[62px] rounded-xl bg-white/[0.06]" />
-                  <div className="h-[62px] rounded-xl bg-white/[0.06]" />
-                </div>
+            <div className="mt-6">
+              <div className="skeleton h-2.5 w-24 rounded" />
+              <div className="skeleton mt-3 h-12 w-44 rounded-xl" />
+              <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
+                <div className="skeleton h-[82px] rounded-2xl" />
+                <div className="skeleton h-[82px] rounded-2xl" />
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="h-11 w-32 rounded-xl bg-white/10" />
-                <div className="mt-4 grid grid-cols-2 gap-2.5">
-                  <div className="h-[62px] rounded-xl bg-white/[0.06]" />
-                  <div className="h-[62px] rounded-xl bg-white/[0.06]" />
-                </div>
+              <div className="mt-5 flex flex-wrap gap-2 border-t border-line/80 pt-4">
+                <div className="skeleton h-10 w-28 rounded-xl" />
+                <div className="skeleton h-10 w-44 rounded-xl" />
+                <div className="skeleton h-10 w-36 rounded-xl" />
               </div>
             </div>
           </div>

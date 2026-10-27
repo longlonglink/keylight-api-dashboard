@@ -89,6 +89,9 @@ access-control-allow-credentials: true
 - 加载 Skeleton、真实错误提示、空状态。
 - 最近一次成功查询时间。
 - 余额按 API 返回的币种分别展示，不换算、不合并。
+- 余额直接显示 `balance_infos` 中的原始字符串：`total_balance`、`granted_balance`、`topped_up_balance`；缺失字段显示“暂无数据”，不计算、不补零。
+- 手动刷新保留最近成功数据；自动刷新默认关闭，间隔默认 30 秒，可选 10 秒 / 30 秒 / 1 分钟 / 5 分钟 / 10 分钟。
+- 自动刷新状态和间隔只存在当前页面内存，不持久化；刷新失败不清空上一次成功余额。
 - 模型表格由 `/models` 实时生成，不硬编码模型列表。
 - Light / Dark / System 主题。
 - 响应式桌面和移动端布局。
@@ -341,6 +344,9 @@ If DeepSeek disables browser CORS in the future, the app reports it clearly and 
 - Loading skeletons, real error messages, and empty states.
 - Timestamp of the last successful query.
 - Balance rendered per currency returned by the API, with no conversion or cross-currency aggregation.
+- Raw `total_balance`, `granted_balance`, and `topped_up_balance` strings are displayed directly from `balance_infos`. Missing fields show “Unavailable” and are never calculated or zero-filled.
+- Manual refresh keeps the last successful data. Auto-refresh is off by default, defaults to 30 seconds, and offers 10s / 30s / 1m / 5m / 10m intervals.
+- Auto-refresh state and interval live in page memory only and are never persisted. A failed refresh never clears the latest successful balance.
 - Models generated live from `/models`, never hardcoded.
 - Light / Dark / System themes.
 - Responsive desktop and mobile layouts.
