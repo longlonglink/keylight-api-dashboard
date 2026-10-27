@@ -9,25 +9,20 @@ export const GITHUB_REPO_URL = 'https://github.com/longlonglink/keylight-api-das
 
 export const GITHUB_REPO_NAME = 'longlonglink/keylight-api-dashboard'
 
-export const TELEGRAM_PURCHASE_URL = 'https://t.me/+mErIcVI3_R4zMDE1'
+/**
+ * Community entry points.
+ *
+ * This version advertises API Access at 10% off but does not sell, collect
+ * payment, or issue keys on the website. All inquiries are handled in the
+ * Telegram or Discord community.
+ */
+export const TELEGRAM_COMMUNITY_URL = 'https://t.me/+mErIcVI3_R4zMDE1'
 
-export const PAYPAL_PAYMENT_URL = 'https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG'
+export const DISCORD_COMMUNITY_URL = 'https://discord.gg/UEZGQTTDj'
 
 /**
- * Active top-up offer:
- *   payment: USD amount chosen by the buyer
- *   estimated API credit: payment × USD/CNY reference rate × 100/95, in CNY
- *
- * The reference rate is displayed as an estimate only; the final CNY credit is
- * confirmed in Telegram. Update PROMO_USD_CNY_RATE when the reference changes.
- *
- * The PayPal hosted button is a VARIABLE_PRICE checkout, so the buyer enters
- * their chosen USD amount there. The frontend never injects an amount or
- * changes PayPal pricing. After payment the seller verifies it in the Telegram
- * group and sends the funded API key by private message.
+ * Public production origin used by canonical, sitemap, robots and JSON-LD.
+ * If Cloudflare Pages uses a different project name or a custom domain,
+ * update this value together with the static SEO files.
  */
-export const PROMO_DISCOUNT_ENABLED = true
-export const PROMO_PAY_CURRENCY = 'USD'
-export const PROMO_CREDIT_CURRENCY = 'CNY'
-export const PROMO_USD_CNY_RATE = 6.68
-export const PROMO_CREDIT_MULTIPLIER = 100 / 95
+export const SITE_URL = 'https://keylight-api-dashboard.pages.dev'

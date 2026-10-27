@@ -43,7 +43,7 @@ export function Brand({ className, markOnly = false }: BrandProps) {
       {!markOnly && (
         <div className="leading-none">
           <span className="block text-[17px] font-extrabold tracking-[-0.035em] text-ink">
-            Keylight
+            KeyLight
           </span>
           <span className="mt-1 hidden font-mono text-[9px] uppercase tracking-[0.16em] text-faint sm:block">
             {t('brand.tagline')}

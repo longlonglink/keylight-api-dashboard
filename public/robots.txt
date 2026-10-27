@@ -15,6 +15,8 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+Sitemap: https://keylight-api-dashboard.pages.dev/sitemap.xml
+
 # LLM-readable summary:
 # /llms.txt
 # /llms-full.txt

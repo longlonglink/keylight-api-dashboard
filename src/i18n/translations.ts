@@ -1,11 +1,11 @@
 export type Language = 'en' | 'zh'
 
 export const en = {
-  'meta.homeTitle': 'Keylight — DeepSeek API Dashboard | Balance & Models',
-  'meta.dashboardTitle': 'DeepSeek Balance & Models · Keylight',
-  'meta.connectingTitle': 'Connecting · DeepSeek API Dashboard | Keylight',
+  'meta.homeTitle': 'KeyLight API Dashboard — Check API Balance Online',
+  'meta.dashboardTitle': 'API Balance Dashboard · KeyLight',
+  'meta.connectingTitle': 'Connecting · KeyLight API Dashboard',
 
-  'brand.tagline': 'Private API console',
+  'brand.tagline': 'Open-source API console',
 
   'common.language': 'Language',
   'common.theme': 'Theme',
@@ -28,21 +28,23 @@ export const en = {
 
   'header.privacy': 'Privacy',
   'header.apiDocs': 'API docs',
+  'header.github': 'GitHub',
   'header.privateSession': 'Private session',
   'header.pageLinks': 'Page links',
 
   'provider.label': 'Provider',
-  'provider.integrationCount': '1 official integration',
+  'provider.integrationCount': '1 API integration',
   'provider.requestsTo': 'Requests go to {host}',
   'provider.officialApi': 'Official API',
   'provider.deepseekDescription':
     'Official DeepSeek balance and model catalogue endpoints. No other data is requested.',
 
-  'home.badge': 'Browser-direct API',
-  'home.title1': 'Your API.',
-  'home.title2': 'Your browser.',
-  'home.title3': 'No middleman.',
-  'home.intro': 'Check DeepSeek balance and models. Your key stays in this tab.',
+  'home.badge': 'Open-source API utility',
+  'home.title1': 'API balance',
+  'home.title2': 'checker.',
+  'home.title3': 'Browser-direct.',
+  'home.intro':
+    'An open-source DeepSeek dashboard for balance and models. No backend, proxy, or key storage.',
   'home.featureMemoryTitle': 'Key in memory',
   'home.featureMemoryCopy': 'The key is never written to local storage.',
   'home.featureDirectTitle': 'Direct to DeepSeek',
@@ -99,53 +101,24 @@ export const en = {
   'home.noAccountUsageBody':
     'DeepSeek exposes balance and models through documented read-only endpoints. There is no public usage-history or account-profile endpoint, so this project does not display those cards or make those requests.',
 
-  'footer.tagline': 'Static site. No backend. Key goes only to DeepSeek.',
+  'footer.tagline': 'Open-source API utility. No backend. No key storage.',
   'footer.noBackend': 'No backend',
-  'footer.getKey': 'Get a DeepSeek key',
-  'footer.apiDocs': 'Official API docs',
-  'footer.source': 'Source',
+  'footer.github': 'GitHub',
+  'footer.telegram': 'Telegram',
+  'footer.discord': 'Discord',
+  'footer.privacy': 'Privacy',
+  'footer.terms': 'Terms',
+  'footer.apiDocs': 'API docs',
+  'footer.links': 'Footer links',
   'footer.notAffiliated': 'Not affiliated with DeepSeek.',
 
-  'promo.eyebrowPurchase': 'API key purchase',
-  'promo.eyebrowOffer': 'API key offer',
-  'promo.titleNeutral': 'DeepSeek API Keys',
-  'promo.titleOffer': 'API Keys at 5% Off',
-  'promo.subtitle':
-    'Enter a USD top-up. CNY credit is estimated at the reference rate × 100/95.',
-  'promo.formula': 'API balance (CNY) = top-up (USD) × {rate} × 100/95',
-  'promo.rateNote':
-    'Reference rate: 1 USD = {rate} CNY. Final credit is confirmed on Telegram.',
-  'promo.accountNote':
-    'Actual queryable data depends on the official API response. The current dashboard displays balance and models.',
-  'promo.discountBadge': '5% off',
-  'promo.discountDefinition':
-    'Pay USD 95.00 and receive USD 100.00 in credit.',
-  'promo.calculatorPayLabel': 'Top-up amount (USD)',
-  'promo.calculatorCreditLabel': 'Estimated API balance (CNY)',
-  'promo.calculatorPlaceholder': 'Enter an amount',
-  'promo.calculatorNote': 'Estimate only. Enter the same amount on PayPal.',
-  'promo.checkoutNote':
-    'The PayPal page currently accepts a custom amount. Enter your chosen amount there; this calculator is informational only and does not change PayPal.',
-  'promo.keyDelivery':
-    'After payment, receive the API key on Telegram.',
-  'promo.stepPay': '1 · Pay',
-  'promo.stepVerify': '2 · Join & verify',
-  'promo.telegramFlow': 'After verification, I will send your API key by DM.',
-  'promo.featureOfficialTitle': 'Official API lookup',
-  'promo.featureOfficialCopy':
-    'Use the key with this dashboard. Balance and model data come directly from DeepSeek’s official API.',
-  'promo.featureNoLoginTitle': 'No account dashboard login',
-  'promo.featureNoLoginCopy':
-    'Check what the key can access without linking the associated account dashboard.',
-  'promo.checkoutEyebrow': 'Purchase & support',
-  'promo.checkoutTitle': 'Top up & get a key',
-  'promo.telegram': 'Join Telegram / Purchase Support',
-  'promo.paypalButton': 'Buy Now',
-  'promo.paypalCardsAlt': 'Credit and debit cards',
-  'promo.paypalSupport': 'Payment support:',
-  'promo.priceNote': 'Final charge is shown by PayPal.',
-  'promo.affiliation': 'Not a DeepSeek official store or authorized partner.',
-  'promo.telegramHint': 'Join after payment for verification and key delivery.',
+  'promotion.badge': '10% OFF',
+  'promotion.title': 'API Access — 10% Off',
+  'promotion.description':
+    'Get API access at 90% of the standard price. Join our Telegram or Discord community for details.',
+  'promotion.note': 'Community links only. Details are handled there.',
+  'promotion.telegram': 'Join Telegram',
+  'promotion.discord': 'Join Discord',
 
   'githubProof.heading': 'Open Source & Transparency',
   'githubProof.body1': 'Full source is public. Inspect the API calls and data handling.',
@@ -218,15 +191,15 @@ export const en = {
     'Connecting. Requests are sent directly from this browser to the official API.',
 
   'faq.title': 'FAQ',
-  'faq.q1': 'Does Keylight store my API key?',
+  'faq.q1': 'Does KeyLight store my API key?',
   'faq.a1': 'No. It stays in this tab’s memory and is sent only to DeepSeek.',
-  'faq.q2': 'What data can Keylight show?',
+  'faq.q2': 'What data can KeyLight show?',
   'faq.a2': 'Only the data exposed by DeepSeek’s official balance and model endpoints.',
-  'faq.q3': 'Is Keylight an official DeepSeek product?',
+  'faq.q3': 'Is KeyLight an official DeepSeek product?',
   'faq.a3': 'No. It is an independent open-source project, not affiliated with DeepSeek.',
-  'faq.q4': 'How does the API key top-up work?',
+  'faq.q4': 'How can I ask about API Access?',
   'faq.a4':
-    'Pay USD on PayPal, join Telegram for verification, then receive the API key by DM. CNY credit is estimated at the reference rate × 100/95.',
+    'Join the Telegram or Discord community. API Access is currently available at 10% off; transactions are handled in the community.',
 
   'errors.keyRequired.title': 'API key required',
   'errors.keyRequired.message':
@@ -267,11 +240,11 @@ export const en = {
 export type TranslationKey = keyof typeof en
 
 const zh: Record<TranslationKey, string> = {
-  'meta.homeTitle': 'Keylight — DeepSeek API 余额与模型仪表盘',
-  'meta.dashboardTitle': 'DeepSeek 余额与模型 · Keylight',
-  'meta.connectingTitle': '正在连接 · DeepSeek API 仪表盘 | Keylight',
+  'meta.homeTitle': 'KeyLight API Dashboard — 在线查询 API 余额',
+  'meta.dashboardTitle': 'API 余额仪表盘 · KeyLight',
+  'meta.connectingTitle': '正在连接 · KeyLight API 仪表盘',
 
-  'brand.tagline': '私有 API 控制台',
+  'brand.tagline': '开源 API 控制台',
 
   'common.language': '语言',
   'common.theme': '主题',
@@ -294,21 +267,22 @@ const zh: Record<TranslationKey, string> = {
 
   'header.privacy': '隐私',
   'header.apiDocs': 'API 文档',
+  'header.github': 'GitHub',
   'header.privateSession': '私有会话',
   'header.pageLinks': '页面链接',
 
   'provider.label': 'API 服务商',
-  'provider.integrationCount': '1 个官方集成',
+  'provider.integrationCount': '1 个 API 集成',
   'provider.requestsTo': '请求发往 {host}',
   'provider.officialApi': '官方 API',
   'provider.deepseekDescription':
     '仅使用 DeepSeek 官方余额与模型目录接口，不请求任何其他数据。',
 
-  'home.badge': '浏览器直连 API',
-  'home.title1': '你的 API。',
-  'home.title2': '你的浏览器。',
-  'home.title3': '没有中间层。',
-  'home.intro': '查看 DeepSeek 余额与模型，Key 只留在当前页面。',
+  'home.badge': '开源 API 工具',
+  'home.title1': 'API 余额',
+  'home.title2': '在线查询。',
+  'home.title3': '浏览器直连。',
+  'home.intro': '开源 DeepSeek 余额与模型仪表盘。无后端、无代理，不保存 Key。',
   'home.featureMemoryTitle': 'Key 仅存内存',
   'home.featureMemoryCopy': 'API Key 不会写入任何本地存储。',
   'home.featureDirectTitle': '直连 DeepSeek',
@@ -363,47 +337,24 @@ const zh: Record<TranslationKey, string> = {
   'home.noAccountUsageBody':
     'DeepSeek 官方文档只提供余额与模型列表这两个适合本项目的只读接口。当前没有公开的用量历史或账户资料接口，因此本项目不展示这些卡片，也不请求这些接口。',
 
-  'footer.tagline': '静态站点，无后端，Key 只发往 DeepSeek。',
+  'footer.tagline': '开源 API 工具。无后端，不保存 Key。',
   'footer.noBackend': '无后端',
-  'footer.getKey': '获取 DeepSeek Key',
-  'footer.apiDocs': '官方 API 文档',
-  'footer.source': '源码',
+  'footer.github': 'GitHub',
+  'footer.telegram': 'Telegram',
+  'footer.discord': 'Discord',
+  'footer.privacy': '隐私',
+  'footer.terms': '条款',
+  'footer.apiDocs': 'API 文档',
+  'footer.links': '页脚链接',
   'footer.notAffiliated': '本项目与 DeepSeek 无隶属关系。',
 
-  'promo.eyebrowPurchase': 'API KEY 购买',
-  'promo.eyebrowOffer': 'API KEY 优惠',
-  'promo.titleNeutral': 'DeepSeek API Key',
-  'promo.titleOffer': '更优惠的 API Key，95 折优惠',
-  'promo.subtitle': '输入美元充值金额，人民币额度按参考汇率 × 100/95 估算。',
-  'promo.formula': 'API 余额（CNY）= 充值（USD）× {rate} × 100/95',
-  'promo.rateNote': '参考汇率：1 USD = {rate} CNY，最终额度以 Telegram 核实为准。',
-  'promo.accountNote':
-    '实际可查询内容以官方 API 返回为准；当前 Dashboard 展示余额与模型列表。',
-  'promo.discountBadge': '95 折',
-  'promo.discountDefinition': '支付 USD 95.00，到账 USD 100.00 额度。',
-  'promo.calculatorPayLabel': '充值金额（USD）',
-  'promo.calculatorCreditLabel': '预计 API 余额（CNY）',
-  'promo.calculatorPlaceholder': '输入金额',
-  'promo.calculatorNote': '仅估算，请在 PayPal 填写相同金额。',
-  'promo.checkoutNote':
-    'PayPal 当前为自定义金额，请在付款页填写你选择的金额。此计算器仅作估算，不会修改 PayPal 金额。',
-  'promo.keyDelivery': '付款后通过 Telegram 领取 API Key。',
-  'promo.stepPay': '1 · 付款',
-  'promo.stepVerify': '2 · 进群核实',
-  'promo.telegramFlow': '核实后我会私聊发 API Key。',
-  'promo.featureOfficialTitle': '可通过官方 API 查询',
-  'promo.featureOfficialCopy': '将 Key 用于本 Dashboard，余额与模型数据直接来自 DeepSeek 官方 API。',
-  'promo.featureNoLoginTitle': '无需登录关联账号',
-  'promo.featureNoLoginCopy': '无需登录关联账户后台，即可查询 API Key 支持返回的信息。',
-  'promo.checkoutEyebrow': '购买与咨询',
-  'promo.checkoutTitle': '充值并领取 Key',
-  'promo.telegram': '加入 Telegram，咨询购买',
-  'promo.paypalButton': '立即购买',
-  'promo.paypalCardsAlt': '银行卡',
-  'promo.paypalSupport': '技术支持提供方：',
-  'promo.priceNote': '最终扣款以 PayPal 为准。',
-  'promo.affiliation': '非 DeepSeek 官方商店或授权合作伙伴。',
-  'promo.telegramHint': '付款后进群核实，我会私聊发 Key。',
+  'promotion.badge': '9 折优惠',
+  'promotion.title': 'API Access 9 折优惠',
+  'promotion.description':
+    '比常规价格便宜 10%，需要详情或购买咨询，请加入我们的 Telegram 或 Discord 社区。',
+  'promotion.note': '本站仅提供社区链接，详情在社区沟通。',
+  'promotion.telegram': '加入 Telegram',
+  'promotion.discord': '加入 Discord',
 
   'githubProof.heading': '开源透明，自行审查',
   'githubProof.body1': '完整源码公开，可自行审查 API 请求与数据处理。',
@@ -470,15 +421,14 @@ const zh: Record<TranslationKey, string> = {
   'loading.status': '正在连接。请求由浏览器直接发往官方 API。',
 
   'faq.title': '常见问题',
-  'faq.q1': 'Keylight 会保存我的 API Key 吗？',
+  'faq.q1': 'KeyLight 会保存我的 API Key 吗？',
   'faq.a1': '不会。只存在当前标签页内存中，并且只发送给 DeepSeek。',
-  'faq.q2': 'Keylight 能显示哪些数据？',
+  'faq.q2': 'KeyLight 能显示哪些数据？',
   'faq.a2': '只显示 DeepSeek 官方余额与模型接口实际返回的数据。',
-  'faq.q3': 'Keylight 是 DeepSeek 官方产品吗？',
+  'faq.q3': 'KeyLight 是 DeepSeek 官方产品吗？',
   'faq.a3': '不是。它是独立开源项目，与 DeepSeek 无隶属关系。',
-  'faq.q4': 'API Key 充值流程是什么？',
-  'faq.a4':
-    '在 PayPal 支付 USD，进 Telegram 群核实，然后私聊领取 API Key。人民币额度按参考汇率 × 100/95 估算。',
+  'faq.q4': '如何咨询 API Access？',
+  'faq.a4': '加入 Telegram 或 Discord 社区咨询。目前 API Access 9 折优惠，交易在社区内进行。',
 
   'errors.keyRequired.title': '需要 API Key',
   'errors.keyRequired.message': '请输入 API Key。它只用于当前标签页的直连请求。',

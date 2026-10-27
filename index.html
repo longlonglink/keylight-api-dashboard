@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Keylight — DeepSeek API Dashboard | Balance &amp; Models</title>
+    <title>KeyLight API Dashboard — Check API Balance Online</title>
     <meta
       name="description"
-      content="Privacy-first, fully static DeepSeek API dashboard. Check balance and models directly in your browser; the API key stays in memory and is sent only to the official API. 纯静态 DeepSeek 余额与模型仪表盘，API Key 只保存在浏览器内存中。"
+      content="A lightweight open-source API dashboard for checking supported API account information directly from your browser. 一个轻量开源 API 仪表盘，可直接在浏览器中查询支持的 API 账户信息。"
     />
     <meta
       name="keywords"
-      content="DeepSeek API, DeepSeek balance, DeepSeek models, API dashboard, privacy-first, frontend-only, 纯静态, DeepSeek 余额查询, DeepSeek 模型列表"
+      content="DeepSeek API balance, API balance checker, API key balance, API usage, API dashboard, API balance checker online"
     />
-    <meta name="author" content="Keylight" />
+    <meta name="author" content="KeyLight" />
     <meta
       name="robots"
       content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
@@ -21,15 +21,16 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f3ec" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#080e0c" media="(prefers-color-scheme: dark)" />
-    <meta name="application-name" content="Keylight" />
-    <meta name="apple-mobile-web-app-title" content="Keylight" />
+    <meta name="application-name" content="KeyLight" />
+    <meta name="apple-mobile-web-app-title" content="KeyLight" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
-    <link rel="canonical" href="/" />
+    <link rel="canonical" href="https://keylight-api-dashboard.pages.dev/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link
       rel="alternate"
       type="text/markdown"
@@ -38,42 +39,37 @@
     />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Keylight" />
-    <meta property="og:title" content="Keylight — DeepSeek API Dashboard" />
+    <meta property="og:site_name" content="KeyLight" />
+    <meta property="og:url" content="https://keylight-api-dashboard.pages.dev/" />
+    <meta property="og:title" content="KeyLight API Dashboard — Check API Balance Online" />
     <meta
       property="og:description"
-      content="Check DeepSeek balance and models in your browser. Privacy-first, fully static, browser-direct. API key stays in memory."
+      content="A lightweight open-source API dashboard for checking supported API account information directly from your browser."
     />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="zh_CN" />
-    <meta
-      property="og:image"
-      content="https://raw.githubusercontent.com/longlonglink/keylight-api-dashboard/main/public/og.png"
-    />
+    <meta property="og:image" content="https://keylight-api-dashboard.pages.dev/og.png" />
     <meta
       property="og:image:secure_url"
-      content="https://raw.githubusercontent.com/longlonglink/keylight-api-dashboard/main/public/og.png"
+      content="https://keylight-api-dashboard.pages.dev/og.png"
     />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Keylight — a privacy-first DeepSeek API dashboard with browser-direct requests"
+      content="KeyLight — an open-source API balance dashboard for the browser"
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Keylight — DeepSeek API Dashboard" />
+    <meta name="twitter:title" content="KeyLight API Dashboard — Check API Balance Online" />
     <meta
       name="twitter:description"
-      content="Check DeepSeek balance and models in your browser. No backend. API key stays in memory."
+      content="Check supported API account information directly from your browser. Open source, no backend, no API key storage."
     />
-    <meta
-      name="twitter:image"
-      content="https://raw.githubusercontent.com/longlonglink/keylight-api-dashboard/main/public/og.png"
-    />
+    <meta name="twitter:image" content="https://keylight-api-dashboard.pages.dev/og.png" />
     <meta
       name="twitter:image:alt"
-      content="Keylight — a privacy-first DeepSeek API dashboard with browser-direct requests"
+      content="KeyLight — an open-source API balance dashboard for the browser"
     />
 
     <script type="application/ld+json">
@@ -82,17 +78,18 @@
         "@graph": [
           {
             "@type": "WebApplication",
-            "name": "Keylight",
-            "alternateName": "Keylight DeepSeek API Dashboard",
-            "description": "A privacy-first, fully static DeepSeek API dashboard for checking account balance and available models directly from the browser. The API key stays in page memory and is sent only to the official DeepSeek API.",
+            "name": "KeyLight",
+            "alternateName": "KeyLight API Dashboard",
+            "url": "https://keylight-api-dashboard.pages.dev/",
+            "description": "A lightweight open-source API dashboard for checking supported API account information directly from a browser. The API key stays in page memory and is sent only to the official DeepSeek API.",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "Any",
             "browserRequirements": "Requires JavaScript",
             "isAccessibleForFree": true,
             "inLanguage": ["en", "zh-CN"],
             "featureList": [
-              "Query DeepSeek account balance from the official API",
-              "List available DeepSeek models from the official API",
+              "Check DeepSeek API account balance",
+              "List available DeepSeek models",
               "Browser-direct API requests with no backend or proxy",
               "API key kept only in page memory",
               "Chinese and English interface"
@@ -104,7 +101,7 @@
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "Does Keylight store my API key?",
+                "name": "Does KeyLight store my API key?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "No. The key stays in the current tab's memory and is sent only to the official DeepSeek API."
@@ -112,7 +109,7 @@
               },
               {
                 "@type": "Question",
-                "name": "What data can Keylight show?",
+                "name": "What data can KeyLight show?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Only the data exposed by DeepSeek's official balance and model endpoints: /user/balance and /models."
@@ -120,18 +117,18 @@
               },
               {
                 "@type": "Question",
-                "name": "Is Keylight an official DeepSeek product?",
+                "name": "Is KeyLight an official DeepSeek product?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "No. Keylight is an independent open-source project and is not affiliated with DeepSeek."
+                  "text": "No. KeyLight is an independent open-source project and is not affiliated with DeepSeek."
                 }
               },
               {
                 "@type": "Question",
-                "name": "How does the API key top-up work?",
+                "name": "How can I ask about API Access?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Pay USD on PayPal, join the Telegram group for verification, then receive the API key by private message. CNY credit is estimated using a configured reference exchange rate and the 100/95 ratio."
+                  "text": "Join the Telegram or Discord community. API Access is currently available at 10% off; transactions are handled in the community."
                 }
               }
             ]
@@ -146,16 +143,24 @@
     <div id="root"></div>
     <noscript>
       <div style="max-width: 680px; margin: 64px auto; padding: 24px; font-family: system-ui, sans-serif; line-height: 1.7">
-        <h1>Keylight — DeepSeek API Dashboard</h1>
+        <h1>KeyLight API Dashboard — Check API Balance Online</h1>
         <p>
-          A privacy-first, fully static dashboard for checking DeepSeek account balance and
-          available models. Enable JavaScript to use the interactive app.
+          An open-source dashboard for checking supported API account information directly from
+          your browser. Enable JavaScript to use the interactive dashboard.
         </p>
         <p>
-          纯静态 DeepSeek 余额与模型仪表盘，请启用 JavaScript 使用。API Key 只保留在浏览器内存中，
-          请求直接发送到 DeepSeek 官方 API，不经过本站服务器。
+          开源 API 余额查询工具，请启用 JavaScript 使用。API Key 只保留在浏览器内存中，请求直接发送到
+          DeepSeek 官方 API，不经过本站服务器。
         </p>
         <p>
+          Need API access? API Access is currently available at 10% off. Join the Telegram or
+          Discord community for details.
+        </p>
+        <p>
+          <a href="https://t.me/+mErIcVI3_R4zMDE1" rel="noopener noreferrer">Telegram</a>
+          &nbsp;·&nbsp;
+          <a href="https://discord.gg/UEZGQTTDj" rel="noopener noreferrer">Discord</a>
+          &nbsp;·&nbsp;
           <a href="https://github.com/longlonglink/keylight-api-dashboard">Source on GitHub</a>
           &nbsp;·&nbsp;
           <a href="/llms.txt">Machine-readable summary</a>

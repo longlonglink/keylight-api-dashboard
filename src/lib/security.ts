@@ -1,7 +1,7 @@
 /**
  * Secret-handling helpers.
  *
- * This version of Keylight deliberately has no feature that persists an API
+ * This version of KeyLight deliberately has no feature that persists an API
  * key. The key is held only in React memory for the current page.
  */
 

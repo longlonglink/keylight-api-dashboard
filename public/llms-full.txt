@@ -1,6 +1,6 @@
-# Keylight — full machine-readable summary
+# KeyLight API Dashboard — full machine-readable summary
 
-Keylight is a client-only DeepSeek API dashboard built with React, TypeScript, Vite, and Tailwind CSS. It is deployed as static assets on Cloudflare Pages. There is no server-side component.
+KeyLight is a client-only API dashboard built with React, TypeScript, Vite, and Tailwind CSS. It is deployed as static assets on Cloudflare Pages. There is no server-side component.
 
 ## Architecture
 
@@ -38,7 +38,8 @@ The dashboard requires the user to supply their own DeepSeek API key. The browse
 - No key in URL, query, fragment, console, logs, or error strings.
 - No analytics or error reporting.
 - Clear Key clears memory and aborts the current operation.
-- The site makes requests only to its own static assets, `https://api.deepseek.com`, and (on the homepage) two static PayPal brand SVGs from `https://www.paypalobjects.com`.
+- The site makes requests only to its own static assets and `https://api.deepseek.com`.
+- The API key is not sent to Telegram, Discord, or any community endpoint.
 
 ## CORS
 
@@ -50,29 +51,26 @@ On 2026-10-26, browser preflight requests to both official endpoints returned HT
 
 If CORS is disabled by the provider, the UI reports a browser/network error and does not attempt a proxy.
 
-## Purchase flow
+## API Access and community
 
-- Buyer chooses a USD top-up amount at the PayPal hosted payment page:
-  https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG
-- Estimated API balance in CNY:
-  `CNY credit = USD payment × reference USD/CNY rate × 100/95`
-- Current UI reference rate: `1 USD = 6.68 CNY`; this is a static estimate configured in `src/config.ts`.
-- The calculator is local-only and does not modify PayPal's amount.
-- After payment, the buyer joins the Telegram group:
-  https://t.me/+mErIcVI3_R4zMDE1
-- The seller verifies the payment and sends the API key by private message.
-- The website does not process payments, issue API keys, or receive purchased API keys.
-- This is manual fulfillment, not an automatic PayPal discount or automatic FX conversion.
+- API Access is advertised at 10% off the standard price.
+- No checkout or payment form is present on this website.
+- Website copy directs interested users to the Telegram or Discord community for details.
+- Telegram: https://t.me/+mErIcVI3_R4zMDE1
+- Discord: https://discord.gg/UEZGQTTDj
+- Any community transaction is outside this website. The site does not process payments, issue keys, or receive keys through the communities.
+- The website is not an official DeepSeek store, reseller, partner, or authorized agent.
 
 ## Source and documentation
 
 GitHub: https://github.com/longlonglink/keylight-api-dashboard
 
 - README: https://github.com/longlonglink/keylight-api-dashboard/blob/main/README.md
+- Terms: https://github.com/longlonglink/keylight-api-dashboard/blob/main/TERMS.md
 - Privacy: https://github.com/longlonglink/keylight-api-dashboard/blob/main/PRIVACY.md
 - Security: https://github.com/longlonglink/keylight-api-dashboard/blob/main/SECURITY.md
 - Architecture: https://github.com/longlonglink/keylight-api-dashboard/blob/main/ARCHITECTURE.md
 
 ## Affiliation
 
-Keylight is an independent open-source project. It is not an official DeepSeek product, store, authorized partner, or agent.
+KeyLight is an independent open-source project. It is not an official DeepSeek product, store, authorized partner, or agent.

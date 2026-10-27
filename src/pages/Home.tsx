@@ -20,7 +20,7 @@ import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { ProviderGlyph } from '../components/ProviderGlyph'
 import { ProviderSelector } from '../components/ProviderSelector'
-import { PurchaseSection } from '../components/PurchaseSection'
+import { CommunitySection } from '../components/CommunitySection'
 
 interface HomeProps {
   theme: ThemePreference
@@ -209,7 +209,7 @@ export function Home({
           </section>
         </section>
 
-        <PurchaseSection />
+        <CommunitySection />
 
         <section id="privacy" className="scroll-mt-20 border-t border-line/80">
           <div className="page-wrap flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between">
@@ -236,7 +236,7 @@ export function Home({
         <FaqSection />
       </main>
 
-      <Footer docsUrl={docsUrl} apiKeysUrl={apiKeysUrl} showSourceProof />
+      <Footer showSourceProof />
     </div>
   )
 }

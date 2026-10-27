@@ -48,8 +48,7 @@ Cloudflare Pages 只分发静态文件。它不会收到用户输入的 API Key�
 ```text
 用户下载静态文件：浏览器 → Cloudflare Pages
 用户查询 API：    浏览器 → api.deepseek.com
-购买咨询/付款：   浏览器 → t.me / www.paypal.com（用户点击后）
-PayPal 品牌图片： 浏览器 → www.paypalobjects.com（仅静态 SVG）
+社区咨询：        浏览器 → t.me / discord.gg（用户点击后）
 ```
 
 不存在：
@@ -63,7 +62,7 @@ PayPal 品牌图片： 浏览器 → www.paypalobjects.com（仅静态 SVG）
 ```text
 src/
 ├── App.tsx                 页面状态与 Key 内存生命周期
-├── config.ts               仓库、Telegram、PayPal URL、汇率与 100/95 倍率
+├── config.ts               仓库、Telegram、Discord 社区 URL
 ├── i18n/                   中英双语文案与错误映射
 ├── providers/
 │   ├── deepseek.ts         唯一的官方 API 客户端
@@ -78,7 +77,8 @@ src/
 │   ├── ApiKeyInput.tsx     内存输入、显示/隐藏、粘贴、清空
 │   ├── ErrorAlert.tsx      本地化错误展示
 │   ├── GitHubProof.tsx     首页底部开源证明
-│   ├── PurchaseSection.tsx 推广、Telegram、PayPal 表单
+│   ├── CommunitySection.tsx 9 折 API Access 宣传、Telegram、Discord
+│   ├── DiscordGlyph.tsx    Discord 图标
 │   └── ...
 ├── lib/
 │   ├── errors.ts           不包含 Key 的错误类型
@@ -100,20 +100,15 @@ src/
 6. 页面刷新时 React 内存清空，用户需要重新输入 Key。
 7. Clear Key 清空内存、中止当前请求并返回首页。
 
-### 购买推广与付款边界
+### 社区与 API Access
 
-- 首页 `PurchaseSection` 展示 Telegram 咨询链接和 PayPal 官方托管表单。
-- Telegram 链接指向 `https://t.me/+mErIcVI3_R4zMDE1`，在新标签页打开。
-- PayPal 表单直接 POST 到 `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`，在本站不经过任何后端。
-- 本站只加载 PayPal 提供的两张静态品牌 SVG，不加载 PayPal 脚本，也不处理支付数据。
-- 页面内充值计算器只保存在本地 React state，不持久化、不提交，也不填入 PayPal。
-- 额度公式为 `预计 CNY 余额 = USD 充值金额 × 静态参考汇率 × 100/95`；95 折倍率保持不变。
-- 参考汇率配置在 `src/config.ts`，不会在运行时请求第三方汇率 API；最终汇率与额度以 Telegram 核实为准。
-- PayPal 商品是 `VARIABLE_PRICE`，买家在 PayPal 页面输入自己选择的 USD 金额。
-- 流程为：PayPal 付款 → 加入 Telegram 群核实 → 商家私聊发送对应额度的 API Key。
-- 本站不接收、不存储、不展示已购 Key；这是人工核账与发放流程，不是 PayPal 自动折扣或自动汇率换算。
-- API Key、余额和模型数据不会进入 Telegram 链接或 PayPal 表单。
-- 禁止通过前端注入金额或修改 action 绕过 PayPal 定价。
+- 首页 `CommunitySection` 展示 9 折 API Access 信息和社区入口，不包含结账或付款表单。
+- Telegram 链接指向 `https://t.me/+mErIcVI3_R4zMDE1`。
+- Discord 链接指向 `https://discord.gg/UEZGQTTDj`。
+- 两个链接均在新标签页打开，并使用 `rel="noopener noreferrer"`。
+- 本站不加载支付 SDK、支付表单、支付品牌图片，也不处理付款或发放 Key。
+- API Access 详情和任何交易均在本站之外的社区进行；本站不接收、不存储、不展示 API Key。
+- API Key、余额和模型数据不会进入 Telegram 或 Discord 链接。
 
 ### 只展示官方数据
 
@@ -236,8 +231,7 @@ Cloudflare Pages serves static files only. It never receives the entered API key
 ```text
 Static downloads: Browser → Cloudflare Pages
 API queries:      Browser → api.deepseek.com
-Purchase support: Browser → t.me / www.paypal.com (after a click)
-PayPal images:    Browser → www.paypalobjects.com (static SVGs only)
+Community links:  Browser → t.me / discord.gg (after a click)
 ```
 
 Not present:
@@ -251,7 +245,7 @@ Browser → this site's backend / Worker → api.deepseek.com
 ```text
 src/
 ├── App.tsx                 page state and in-memory key lifecycle
-├── config.ts               repo, Telegram, PayPal URLs, FX rate, 100/95 rate
+├── config.ts               repo, Telegram, Discord community URLs
 ├── i18n/                   bilingual copy and error keys
 ├── providers/
 │   ├── deepseek.ts         the only official API client
@@ -266,7 +260,8 @@ src/
 │   ├── ApiKeyInput.tsx     memory input, show/hide, paste, clear
 │   ├── ErrorAlert.tsx      localized error display
 │   ├── GitHubProof.tsx     homepage open-source proof
-│   ├── PurchaseSection.tsx promotion, Telegram, PayPal form
+│   ├── CommunitySection.tsx 10% API Access notice, Telegram, Discord
+│   ├── DiscordGlyph.tsx    Discord icon
 │   └── ...
 ├── lib/
 │   ├── errors.ts           error types with no key material
@@ -288,20 +283,15 @@ src/
 6. Reloading the page clears React memory; the key must be entered again.
 7. Clear Key clears memory, aborts the active request, and returns home.
 
-### Purchase promotion and payment boundary
+### Community and API Access
 
-- The homepage `PurchaseSection` displays a Telegram support link and PayPal's official hosted form.
-- Telegram opens `https://t.me/+mErIcVI3_R4zMDE1` in a new tab.
-- The PayPal form posts directly to `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`; no site backend is involved.
-- The site loads only two static PayPal brand SVGs from PayPal. It loads no PayPal scripts and handles no payment data.
-- The top-up calculator keeps its value in local React state only. It is not persisted, submitted, or inserted into PayPal.
-- The credit formula is `estimated CNY balance = USD top-up × static reference rate × 100/95`; the 95% multiplier is unchanged.
-- The reference rate is configured in `src/config.ts`. The site makes no runtime exchange-rate API request; the final rate and credit are verified on Telegram.
-- The PayPal item is `VARIABLE_PRICE`; the buyer enters their chosen USD amount on PayPal.
-- Flow: PayPal payment → join the Telegram group for verification → the seller sends the API key by private message.
-- This site does not receive, store, or display purchased keys. This is a manual reconciliation and delivery flow, not an automatic PayPal discount or FX conversion.
-- The API key, balance, and model data are not added to the Telegram link or the PayPal form.
-- Never inject an amount or alter the PayPal action from the frontend to bypass PayPal pricing.
+- The homepage `CommunitySection` shows the 10% API Access notice and community links. It contains no checkout or payment form.
+- Telegram opens `https://t.me/+mErIcVI3_R4zMDE1`.
+- Discord opens `https://discord.gg/UEZGQTTDj`.
+- Both links open in a new tab and use `rel="noopener noreferrer"`.
+- The site loads no payment SDK, payment form, or payment brand images, and does not process payments or issue keys.
+- API Access details and any transaction happen outside this site in the communities. This site does not receive, store, or display API keys.
+- The API key, balance, and model data are not added to Telegram or Discord links.
 
 ### Confirmed data only
 

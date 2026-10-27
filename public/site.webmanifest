@@ -1,7 +1,7 @@
 {
-  "name": "Keylight — DeepSeek API Dashboard",
-  "short_name": "Keylight",
-  "description": "Privacy-first, fully static DeepSeek balance and model dashboard. The API key stays in browser memory; requests go directly to the official API.",
+  "name": "KeyLight API Dashboard",
+  "short_name": "KeyLight",
+  "description": "Open-source API dashboard for checking supported API account information directly from the browser. No backend and no API key storage.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

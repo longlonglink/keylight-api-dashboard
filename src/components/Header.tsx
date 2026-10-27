@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Github } from 'lucide-react'
+import { GITHUB_REPO_URL } from '../config'
 import { useI18n } from '../i18n/I18nProvider'
 import { Brand } from './Brand'
 import { LanguageToggle } from './LanguageToggle'
@@ -43,6 +44,15 @@ export function Header({
             >
               <a href="#privacy" className="nav-link">
                 {t('header.privacy')}
+              </a>
+              <a
+                href={GITHUB_REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link inline-flex items-center gap-1"
+              >
+                <Github className="size-3.5 text-faint" aria-hidden="true" />
+                {t('header.github')}
               </a>
               <a
                 href={docsUrl}

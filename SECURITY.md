@@ -10,7 +10,7 @@
 
 ### 安全模型
 
-Keylight 是纯静态前端：
+KeyLight 是纯静态前端：
 
 - 没有本站后端、Worker、API Proxy、数据库或服务器函数。
 - API Key 只存在于当前页面内存。
@@ -83,28 +83,24 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 - `Content-Security-Policy`
 - `script-src 'self' 'sha256-…'`（仅额外放行经过 hash 的 JSON-LD）
 - `connect-src 'self' https://api.deepseek.com`
-- `img-src 'self' data: https://www.paypalobjects.com`
-- `form-action 'self' https://www.paypal.com`
+- `img-src 'self' data:`
+- `form-action 'self'`
 - `font-src 'self' data:`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
-首页只加载 PayPal 提供的两张静态品牌 SVG，不加载 PayPal 脚本。PayPal 付款通过一个普通 HTML 表单直接提交到 `https://www.paypal.com`，不存在本站代理、付款 API 或付款数据存储。
+本站不加载支付脚本、支付表单或支付品牌图片，也没有站内结账。
 
 添加新的 Provider 时，必须审慎地把对应官方 API 域名加入 `connect-src`。不得添加代理域名。
 
-### 支付、95 折与 Key 发放
+### 社区与 API Access 咨询
 
-- 本站不处理付款。用户点击 PayPal 后进入 PayPal 托管的结账页。
-- 公开 PayPal 商品类型为 `VARIABLE_PRICE`，充值金额由买家在 PayPal 页面自行填写（USD）。
-- 页面计算器只按本地公式 `CNY 额度 = USD 金额 × 静态参考汇率 × 100/95` 估算，不会把金额注入 PayPal，也不修改付款 action。
-- 参考汇率来自 `src/config.ts`，不会在运行时请求第三方汇率服务；最终汇率与取整由商家在 Telegram 核实。
-- 付款后，用户加入 Telegram 群核实；核实完成后，商家私聊发送对应额度的 API Key。本站不接收、不保存、不展示已购 Key。
-- 这是人工履约流程，不是由 PayPal 自动计算的折扣或自动汇率换算。商家必须按实际付款金额履约，不得虚报额度。
-- API Key、余额和模型数据不会写入 Telegram 链接或 PayPal 表单。
-- 严禁通过前端注入金额或修改 PayPal action 绕过付款配置。
-- 本站无法保证第三方商品、履约、退款或付款页面安全；用户应在付款前通过 Telegram 和 PayPal 页面核对金额、汇率与发放方式。
+- 本站不处理付款，不提供结账页、支付表单或站内支付，也不收集付款信息。
+- API Access 9 折信息仅作宣传；详情和任何交易在本站之外的 Telegram 或 Discord 社区进行。
+- 不应把 API Key 发送到 Telegram、Discord 或任何社区；本站不会要求用户这样做。
+- API Key、余额和模型数据不会写入 Telegram 或 Discord 链接。
+- 本站无法保证社区交易、价格、履约或退款安全；用户应自行核实对方身份和报价。
 
 ### 报告安全问题
 
@@ -127,7 +123,7 @@ Key 只能出现在浏览器开发者工具的请求头中，不应出现在 URL
 
 ### Security model
 
-Keylight is a static frontend:
+KeyLight is a static frontend:
 
 - No site backend, Worker, API proxy, database, or server function.
 - The API key exists only in current-page memory.
@@ -200,28 +196,24 @@ In production, `public/_headers` sets:
 - `Content-Security-Policy`
 - `script-src 'self' 'sha256-…'` (only the hashed JSON-LD block is additionally allowed)
 - `connect-src 'self' https://api.deepseek.com`
-- `img-src 'self' data: https://www.paypalobjects.com`
-- `form-action 'self' https://www.paypal.com`
+- `img-src 'self' data:`
+- `form-action 'self'`
 - `font-src 'self' data:`
 - `frame-ancestors 'none'`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
 
-The homepage loads only two static PayPal brand SVGs from PayPal; it loads no PayPal scripts. The PayPal payment button is a plain HTML form that posts directly to `https://www.paypal.com`. There is no site proxy, payment API, or payment-data storage.
+The site loads no payment scripts, payment forms, or payment brand images, and has no on-site checkout.
 
 When adding a provider, deliberately add only its official API origin to `connect-src`. Never add a proxy origin.
 
-### Payments, the 95% rule, and key delivery
+### Community and API Access inquiries
 
-- This site does not process payments. Clicking PayPal opens a PayPal-hosted checkout page.
-- The public PayPal item is a `VARIABLE_PRICE` checkout; the buyer enters the top-up amount in USD on PayPal.
-- The calculator only estimates `CNY credit = USD amount × static reference rate × 100/95` locally. It does not inject an amount into PayPal or alter the payment action.
-- The reference rate is a static value in `src/config.ts`; the site makes no runtime exchange-rate API request. Final rate and rounding are verified on Telegram.
-- After payment, the buyer joins the Telegram group for verification. Once verified, the seller sends the API key by private message. This site does not receive, store, or display purchased keys.
-- This is a manual fulfillment process, not an automatic PayPal discount or FX conversion. The seller must honour the amount actually paid.
-- The API key, balance, and model data are not added to the Telegram link or PayPal form.
-- Never inject an amount or alter the PayPal action from the frontend to bypass payment configuration.
-- This site cannot guarantee third-party goods, fulfillment, refunds, or the security of the payment page. Buyers should verify the amount, rate, and delivery method through Telegram and PayPal before paying.
+- This site does not process payments and provides no checkout, payment form, or on-site payment. It collects no payment data.
+- The 10% API Access offer is promotional. Details and any transaction happen outside this site through Telegram or Discord.
+- Never send an API key to Telegram, Discord, or any community; the site never asks users to do so.
+- The API key, balance, and model data are not added to Telegram or Discord links.
+- This site cannot guarantee community transactions, pricing, fulfillment, or refunds. Users must verify the counterparty and price independently.
 
 ### Reporting security issues
 

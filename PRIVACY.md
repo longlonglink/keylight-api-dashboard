@@ -10,7 +10,7 @@
 
 ### 1. 没有本站后端
 
-Keylight 是部署在 Cloudflare Pages 上的纯静态站点，没有后端 API、Cloudflare Worker、Serverless Function、API Proxy、数据库、KV、D1 或 R2。
+KeyLight 是部署在 Cloudflare Pages 上的纯静态站点，没有后端 API、Cloudflare Worker、Serverless Function、API Proxy、数据库、KV、D1 或 R2。
 
 Cloudflare Pages 只负责向浏览器提供 HTML、CSS、JavaScript、字体和图标等静态文件，不处理 DeepSeek API 查询。
 
@@ -36,7 +36,7 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 
 ### 3. 旧版本存储清理
 
-较早的 Keylight 版本曾提供可选的“记住 Key”功能。当前版本不包含该功能，并且会在启动时主动删除旧版本可能留下的 `keylight.api-key*` / `keylight.remembered-key*` 存储项。
+较早的 KeyLight 版本曾提供可选的“记住 Key”功能。当前版本不包含该功能，并且会在启动时主动删除旧版本可能留下的 `keylight.api-key*` / `keylight.remembered-key*` 存储项。
 
 当前版本没有任何写入 API Key 到浏览器持久化存储的代码。
 
@@ -65,22 +65,18 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 - 不集成 Google Analytics、Sentry、PostHog、Mixpanel、Microsoft Clarity、Hotjar 等。
 - 不设置追踪 Cookie。
 - 字体自托管，不请求 Google Fonts 等第三方字体服务。
-- 首页购买区会加载两张来自 `https://www.paypalobjects.com` 的静态 PayPal 品牌 SVG 图片。本站不会加载 PayPal 脚本或追踪 SDK。
-- 本站代码不设置 Cookie；这些第三方图片请求由 PayPal 的服务器处理，适用 PayPal 自己的隐私政策。
-- 用户点击 Telegram 或 PayPal 后会主动离开本站；Telegram 和 PayPal 各自的隐私政策适用。
+- 首页不加载支付脚本、支付表单、支付 SDK 或支付品牌图片。
+- 本站代码不设置 Cookie。
+- 用户点击 Telegram 或 Discord 后会主动离开本站；Telegram 和 Discord 各自的隐私政策适用。
 
-### 7. 支付与外部链接
+### 7. 社区与外部链接
 
-- 首页的 PayPal 按钮是一个普通 HTML 表单，直接提交到 `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG` 并在新标签页打开。
-- 本站不接收、不处理、不存储银行卡号或 PayPal 登录信息。
-- API Key、余额和模型数据不会被加入 Telegram 链接或 PayPal 表单。
-- 用户点击 Telegram 按钮会打开外部邀请链接 `https://t.me/+mErIcVI3_R4zMDE1`。
-- 充值计算器中的金额只保存在当前页面的本地 state，不写入存储、不发送到本站服务器，也不会自动填入 PayPal。
-- 当前 PayPal 公开页面是可自定义金额的 `VARIABLE_PRICE` 商品；买家需要在 PayPal 页面自行输入 USD 充值金额。
-- 人民币额度按 `USD 金额 × 参考汇率 × 100/95` 估算；参考汇率是 `src/config.ts` 中的静态配置值，不会请求第三方汇率服务。
-- 本站无法控制第三方页面的价格、履约或隐私实践。最终扣款以 PayPal 结算页为准，最终汇率与额度以 Telegram 核实为准。
-- 付款后用户加入 Telegram 群核实；核实完成后，商家私聊发送对应 API Key。
-- 本站不接收、不保存、不展示通过 Telegram 私聊发放的已购 API Key。
+- 本站不处理付款，不提供结账页、付款表单或站内支付。
+- API Access 9 折信息仅作宣传；详情和任何交易在本站之外的 Telegram 或 Discord 社区进行。
+- 用户点击 Telegram 会打开 `https://t.me/+mErIcVI3_R4zMDE1`，点击 Discord 会打开 `https://discord.gg/UEZGQTTDj`。
+- API Key、余额和模型数据不会被加入 Telegram、Discord 链接，也不会发送到任何社区。
+- 本站不接收、不保存、不展示社区内发送的 API Key。
+- 本站无法控制 Telegram、Discord 或社区交易的隐私、价格、履约或退款实践；请自行核对。
 
 ### 8. 网络请求边界
 
@@ -89,15 +85,14 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 ```text
 浏览器 → Cloudflare Pages（静态资源）
 浏览器 → https://api.deepseek.com（官方 API）
-浏览器 → https://www.paypalobjects.com（PayPal 静态品牌图片）
-用户点击后 → https://t.me / https://www.paypal.com（外部页面）
+用户点击后 → https://t.me / https://discord.gg（外部社区页面）
 ```
 
 不存在：
 
 ```text
 浏览器 → 本站后端 / Worker / Proxy → DeepSeek
-浏览器 → 本站后端 → PayPal
+浏览器 → 本站后端 → 支付服务
 ```
 
 ### 9. 安全边界
@@ -125,7 +120,7 @@ DeepSeek 作为服务商必然能够看到为鉴权而发送的 Key。本项目�
 
 ### 1. No backend for this site
 
-Keylight is a fully static site hosted on Cloudflare Pages. It has no backend API, Cloudflare Worker, serverless function, API proxy, database, KV, D1, or R2.
+KeyLight is a fully static site hosted on Cloudflare Pages. It has no backend API, Cloudflare Worker, serverless function, API proxy, database, KV, D1, or R2.
 
 Cloudflare Pages only serves static HTML, CSS, JavaScript, fonts, and icons. It does not process any DeepSeek API query.
 
@@ -151,7 +146,7 @@ DeepSeek necessarily sees the key as part of authentication. This project guaran
 
 ### 3. Cleanup of legacy storage
 
-Earlier Keylight versions once offered an optional remember-key feature. The current version has no such feature and proactively removes any `keylight.api-key*` / `keylight.remembered-key*` entries that an older version may have left behind.
+Earlier KeyLight versions once offered an optional remember-key feature. The current version has no such feature and proactively removes any `keylight.api-key*` / `keylight.remembered-key*` entries that an older version may have left behind.
 
 The current version contains no code that persists an API key in browser storage.
 
@@ -180,22 +175,18 @@ The project does not request, display, or infer:
 - No Google Analytics, Sentry, PostHog, Mixpanel, Microsoft Clarity, Hotjar, or similar services.
 - No tracking cookies.
 - Fonts are self-hosted; no Google Fonts or other third-party font requests.
-- The homepage purchase section loads two static PayPal brand SVGs from `https://www.paypalobjects.com`. The site does not load PayPal scripts or tracking SDKs.
-- This site's code sets no cookies; those third-party image requests are handled by PayPal's servers under PayPal's own privacy policy.
-- Clicking Telegram or PayPal intentionally leaves this site. The privacy policies of Telegram and PayPal apply.
+- The homepage does not load payment scripts, payment forms, payment SDKs, or payment brand images.
+- This site's code sets no cookies.
+- Clicking Telegram or Discord intentionally leaves this site. The privacy policies of Telegram and Discord apply.
 
-### 7. Payments and external links
+### 7. Community and external links
 
-- The PayPal button is a plain HTML form that posts directly to `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG` and opens in a new tab.
-- This site never receives, processes, or stores card details or PayPal login information.
-- The API key, balance, and model data are not appended to the Telegram link or the PayPal form.
-- The Telegram button opens the external invite link `https://t.me/+mErIcVI3_R4zMDE1`.
-- The top-up amount in the calculator is kept only in local page state. It is not persisted, sent to this site's server, or automatically entered into PayPal.
-- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen USD amount on PayPal.
-- CNY credit is estimated as `USD amount × reference rate × 100/95`. The reference rate is a static value in `src/config.ts`; the site does not call a third-party exchange-rate service.
-- This site does not control third-party pricing, fulfillment, or privacy practices. The final charge is shown on PayPal; the final rate and credit are confirmed on Telegram.
-- After payment, the buyer joins the Telegram group for verification; the seller then sends the API key by private message.
-- This site does not receive, store, or display API keys delivered privately through Telegram after purchase.
+- This site does not process payments and provides no checkout, payment form, or on-site payment.
+- The 10% API Access offer is promotional. Details and any transaction are handled outside this site through Telegram or Discord.
+- Telegram opens `https://t.me/+mErIcVI3_R4zMDE1`; Discord opens `https://discord.gg/UEZGQTTDj`.
+- The API key, balance, and model data are not appended to Telegram or Discord links and are not sent to either community.
+- This site does not receive, store, or display API keys sent inside a community.
+- This site does not control the privacy, pricing, fulfillment, or refund practices of Telegram, Discord, or community transactions. Verify details independently.
 
 ### 8. Network boundary
 
@@ -204,15 +195,14 @@ Allowed:
 ```text
 Browser → Cloudflare Pages (static assets)
 Browser → https://api.deepseek.com (official API)
-Browser → https://www.paypalobjects.com (static PayPal brand images)
-After a click → https://t.me / https://www.paypal.com (external pages)
+After a click → https://t.me / https://discord.gg (external community pages)
 ```
 
 Not present:
 
 ```text
 Browser → this site's backend / Worker / proxy → DeepSeek
-Browser → this site's backend → PayPal
+Browser → this site's backend → payment service
 ```
 
 ### 9. Security limitations

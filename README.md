@@ -1,4 +1,4 @@
-# Keylight — 纯前端 DeepSeek API Dashboard
+# KeyLight — 纯前端 DeepSeek API Dashboard
 
 [简体中文](#简体中文) · [English](#english)
 
@@ -10,7 +10,7 @@
 
 ### 项目概览
 
-Keylight 是一个中英双语的纯静态 DeepSeek API 仪表盘。用户输入自己的 API Key 后，浏览器直接访问 DeepSeek 官方 API，只展示官方文档确认提供的余额与模型数据。
+KeyLight 是一个中英双语的纯静态 DeepSeek API 仪表盘。用户输入自己的 API Key 后，浏览器直接访问 DeepSeek 官方 API，只展示官方文档确认提供的余额与模型数据。
 
 ```text
 公开 GitHub 仓库
@@ -93,39 +93,7 @@ access-control-allow-credentials: true
 - Light / Dark / System 主题。
 - 响应式桌面和移动端布局。
 - 首页最底部提供 GitHub 开源自证链接，指向本仓库完整源码。
-- 首页 API Key 购买推广区，包含 Telegram 咨询入口和 PayPal 官方付款表单（均在新标签页打开）。
-
-### API Key 购买推广区与人民币额度
-
-首页在主要连接区域下方、页脚上方提供推广购买区：
-
-- Telegram：<https://t.me/+mErIcVI3_R4zMDE1>
-- PayPal 付款表单：`https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`
-- PayPal 表单保留原始 CSS 类名 `.pp-CMTG9BPF9Z2KG`、原始图片地址和 `POST` 目标地址。
-- 新标签页链接使用 `target="_blank"` 与 `rel="noopener noreferrer"`。
-- PayPal 只提供静态品牌 SVG 图片，没有在本站加载 PayPal 脚本、追踪 SDK 或付款代理。
-
-充值流程与计算：
-
-```text
-1. 在 PayPal 输入美元充值金额并付款
-2. 付款后加入 Telegram 群核实
-3. 核实完成后，商家私聊发送对应额度的 API Key
-```
-
-```text
-预计 API 余额（CNY） = 充值金额（USD） × 参考汇率 × 100 / 95
-```
-
-- 95 折不变，倍率仍为 `100/95`。
-- 当前参考汇率为 `1 USD = 6.68 CNY`（2026-10-26），配置在 `src/config.ts` 的 `PROMO_USD_CNY_RATE`。
-- 示例：充值 USD 95.00，按参考汇率预计到账 CNY 668.00。
-- 页面计算器仅做本地估算，不修改、不提交 PayPal 金额；最终汇率、取整和到账额度以 Telegram 核实为准。
-- 公开 PayPal 商品当前是 `VARIABLE_PRICE`，买家在 PayPal 页面自行填写 USD 金额。
-- 本站不接收、不存储、不展示付款后通过 Telegram 私下发放的 API Key。
-- 站点文案由 `PROMO_DISCOUNT_ENABLED`、`PROMO_USD_CNY_RATE` 和 `PROMO_CREDIT_MULTIPLIER` 控制。
-
-**维护者注意：** 本项目不是 DeepSeek 官方商店，也未声称是授权合作伙伴。请在推广区保留非官方声明，不要添加官方背书、虚构原价、销量或评价。
+- 首页社区推广区宣传 API Access 9 折，并提供 Telegram 与 Discord 咨询入口；本站不提供结账、支付表单或站内付款。
 
 ### API Key 与隐私
 
@@ -134,6 +102,7 @@ access-control-allow-credentials: true
 - 不写入 `localStorage`、`sessionStorage` 或 Cookie。
 - 不进入 URL、查询参数、Hash、console 或错误信息。
 - 不发送到本站域名、维护者服务器、Worker、数据库、KV 或统计服务。
+- 不会拼进 Telegram 或 Discord 链接；社区按钮是静态链接，不携带 API Key。
 - 浏览器只将 Key 放入 `Authorization` 请求头，直接发往 DeepSeek 官方 API。
 - 旧版本可能留下的 Key 存储项会在启动时主动清理；当前版本从不写入 Key。
 - `Clear Key` 会清空内存中的 Key、中止当前请求，并返回首页。
@@ -179,8 +148,7 @@ export const GITHUB_REPO_URL = 'https://github.com/longlonglink/keylight-api-das
 - 首页有中英双语的简短 FAQ（默认折叠），内容与结构化数据一致。
 - `public/llms.txt` 和 `public/llms-full.txt` 为生成式搜索/AI 工具提供简洁、可引用的事实摘要，不包含用户数据。
 - `public/robots.txt` 允许搜索引擎和常见 AI crawler；`public/site.webmanifest`、`public/og.png` 和 PNG 图标用于可发现性与社交分享。
-- `og:image` 使用本仓库的 `raw.githubusercontent.com` 绝对地址，确保社交抓取器获得完整图片；fork 后必须同步修改。
-- 当前 canonical 使用站点根路径 `/`，会解析到实际部署域名。绑定正式自定义域名后，可改为绝对 canonical，并按实际域名补充 `sitemap.xml`。
+- `public/sitemap.xml` 列出生产 URL。canonical、Open Graph URL/图片、JSON-LD、robots 和 sitemap 统一使用 `https://keylight-api-dashboard.pages.dev/`；如果 Cloudflare Pages 使用不同项目名或自定义域名，必须同步修改 `index.html`、`public/sitemap.xml`、`public/robots.txt`、`public/llms*.txt` 和 `src/config.ts` 中的 `SITE_URL`。
 - 修改内联 JSON-LD 后必须重新计算 CSP hash，否则会被 `public/_headers` 拦截。
 
 ### 本地运行
@@ -233,7 +201,8 @@ src/
 │   ├── ErrorAlert.tsx
 │   ├── GitHubProof.tsx
 │   ├── ModelsTable.tsx
-│   ├── PurchaseSection.tsx
+│   ├── CommunitySection.tsx
+│   ├── DiscordGlyph.tsx
 │   └── ...
 ├── i18n/
 │   ├── I18nProvider.tsx
@@ -251,11 +220,25 @@ src/
 └── main.tsx
 ```
 
+### 社区与 API Access
+
+需要 API Access？
+
+目前 API Access 以 9 折优惠宣传，即常规价格的 90%。具体详情与任何交易不在本站进行，请通过社区咨询：
+
+- Telegram：<https://t.me/+mErIcVI3_R4zMDE1>
+- Discord：<https://discord.gg/UEZGQTTDj>
+
+本站不提供结账、付款表单或站内支付，也不收集付款信息。不要把 API Key 发送到 Telegram、Discord 或任何社区；本站不会要求你这样做。
+
+本项目不是 DeepSeek 官方商店，也未声称是 DeepSeek 授权合作伙伴。
+
 ### 透明度文档
 
 - [PRIVACY.md](PRIVACY.md) — 隐私声明与数据流
 - [SECURITY.md](SECURITY.md) — 如何审计源码、网络请求与报告安全问题
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 架构图与边界
+- [TERMS.md](TERMS.md) — 网站与社区使用条款
 
 ### 检查结果
 
@@ -263,12 +246,15 @@ src/
 - `npm run build` 通过，生成 `dist/`。
 - TypeScript strict 通过。
 - 真实 401 响应能正确显示，不泄露 Key。
-- 网络请求只发往本站静态资源和 `https://api.deepseek.com`。
+- 网络请求只发往本站静态资源和 `https://api.deepseek.com`；Telegram / Discord 仅在用户点击后打开。
 - 无 Usage、Account、历史图表或伪造数据。
 - 无本地 Key 持久化。
 - 桌面 1440 / 1024、平板 768、移动 375 / 390 / 414 宽度通过。
 - Light / Dark / System 与中英切换正常。
 - GitHub 仓库为 Public，项目中没有真实 Key。
+- 页面无付款按钮、付款表单、结账链接或支付品牌图片。
+- 9 折 API Access 宣传与 Telegram / Discord 入口正常。
+- `sitemap.xml`、`robots.txt`、canonical 与 JSON-LD 已包含在构建产物中。
 
 ---
 
@@ -276,7 +262,7 @@ src/
 
 ### Overview
 
-Keylight is a bilingual, fully static DeepSeek API dashboard. After users enter their own API key, the browser calls DeepSeek's official API directly and displays only the data confirmed by the current public documentation: balance and models.
+KeyLight is a bilingual, fully static DeepSeek API dashboard. After users enter their own API key, the browser calls DeepSeek's official API directly and displays only the data confirmed by the current public documentation: balance and models.
 
 ```text
 Public GitHub repository
@@ -359,39 +345,7 @@ If DeepSeek disables browser CORS in the future, the app reports it clearly and 
 - Light / Dark / System themes.
 - Responsive desktop and mobile layouts.
 - A prominent GitHub open-source proof link at the very bottom of the homepage.
-- A homepage API key purchase section with a Telegram support link and the official PayPal hosted form (both open in a new tab).
-
-### API key purchase section and CNY credit
-
-The homepage includes a purchase section below the main connection area and above the footer:
-
-- Telegram: <https://t.me/+mErIcVI3_R4zMDE1>
-- PayPal form: `https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG`
-- The PayPal form keeps the original `.pp-CMTG9BPF9Z2KG` CSS class, image URLs, and `POST` target.
-- New-tab links use `target="_blank"` and `rel="noopener noreferrer"`.
-- PayPal is used only for static brand SVG images. No PayPal script, tracking SDK, or payment proxy runs on this site.
-
-Payment and calculation flow:
-
-```text
-1. Enter a USD top-up amount on PayPal and pay
-2. Join the Telegram group after payment for verification
-3. After verification, the seller sends the API key by Telegram DM
-```
-
-```text
-Estimated API balance (CNY) = top-up (USD) × reference rate × 100 / 95
-```
-
-- The 95% ratio is unchanged at `100/95`.
-- The current reference rate is `1 USD = 6.68 CNY` (2026-10-26), configured as `PROMO_USD_CNY_RATE` in `src/config.ts`.
-- Example: a USD 95.00 top-up is estimated at CNY 668.00.
-- The calculator is a local estimate only. It does not alter or submit a PayPal amount. The final rate, rounding, and credit are confirmed on Telegram.
-- The public PayPal item is currently a `VARIABLE_PRICE` checkout, so the buyer enters their chosen USD amount on PayPal.
-- This site does not receive, store, or display API keys sent privately through Telegram after payment.
-- The copy/rate is controlled by `PROMO_DISCOUNT_ENABLED`, `PROMO_USD_CNY_RATE`, and `PROMO_CREDIT_MULTIPLIER` in `src/config.ts`.
-
-**Maintainer note:** this project is not a DeepSeek official store and does not claim to be an authorized partner. Keep the non-affiliation statement and never invent an original price, sales volume, or reviews.
+- A homepage community notice advertising API Access at 10% off, with Telegram and Discord links. The website has no checkout, payment form, or on-site payment.
 
 ### API key and privacy
 
@@ -400,6 +354,7 @@ Estimated API balance (CNY) = top-up (USD) × reference rate × 100 / 95
 - It is never written to `localStorage`, `sessionStorage`, or cookies.
 - It never enters the URL, query string, hash, console, or error messages.
 - It is never sent to this site's domain, a maintainer server, Worker, database, KV store, or analytics service.
+- It is never appended to Telegram or Discord links; community buttons are static links.
 - The browser sends it only in the `Authorization` header directly to the official DeepSeek API.
 - Key values left by older versions are proactively removed on startup; the current version never writes keys.
 - Clear Key wipes the in-memory key, aborts the active request, and returns to the homepage.
@@ -445,8 +400,7 @@ No chart library is included because the current public API has no historical da
 - The homepage includes a short bilingual FAQ (collapsed by default) whose answers match the structured data.
 - `public/llms.txt` and `public/llms-full.txt` provide concise, citable facts for generative search and AI tools and contain no user data.
 - `public/robots.txt` allows search engines and common AI crawlers. `public/site.webmanifest`, `public/og.png`, and PNG icons support discovery and sharing.
-- `og:image` uses an absolute `raw.githubusercontent.com` URL from this repository so social crawlers receive a complete image; update it if you fork the project.
-- The canonical URL is currently root-relative (`/`) and resolves to the deployment origin. After assigning a custom production domain, switch to an absolute canonical and add `sitemap.xml` for that domain.
+- `public/sitemap.xml` lists the production URL. Canonical, Open Graph URL/image, JSON-LD, robots and sitemap use `https://keylight-api-dashboard.pages.dev/`; update `index.html`, `public/sitemap.xml`, `public/robots.txt`, `public/llms*.txt`, and `SITE_URL` in `src/config.ts` together if Cloudflare Pages uses a different project name or custom domain.
 - After editing the inline JSON-LD, recompute the CSP hash or `public/_headers` will block it.
 
 ### Local development
@@ -489,11 +443,25 @@ GitHub
 
 No Wrangler, Worker, backend, API route, or API key environment variable is required.
 
+### Community & API Access
+
+Need API access?
+
+API access is currently available at 10% off (90% of the standard price). Details and any transaction happen outside this website. Contact the community:
+
+- Telegram: <https://t.me/+mErIcVI3_R4zMDE1>
+- Discord: <https://discord.gg/UEZGQTTDj>
+
+This website has no checkout, payment form, or on-site payment and collects no payment information. Never send your API key to Telegram, Discord, or any community; the site never asks you to.
+
+This project is not a DeepSeek official store and does not claim to be an authorized DeepSeek partner.
+
 ### Transparency documents
 
 - [PRIVACY.md](PRIVACY.md)
 - [SECURITY.md](SECURITY.md)
 - [ARCHITECTURE.md](ARCHITECTURE.md)
+- [TERMS.md](TERMS.md)
 
 ### Verified
 
@@ -501,13 +469,12 @@ No Wrangler, Worker, backend, API route, or API key environment variable is requ
 - `npm run build` passes and writes `dist/`.
 - TypeScript strict checking passes.
 - Real 401 responses render safely without exposing the key.
-- Network requests target this static site's assets, `https://api.deepseek.com`, and the two PayPal logo SVGs on `https://www.paypalobjects.com`. There are no analytics or other tracking requests.
-- The Telegram and PayPal URLs are correct, open in a new tab, and the PayPal form retains its original action, class, and image resources.
+- Network requests target this static site's assets and `https://api.deepseek.com`; Telegram / Discord open only after a click. There are no analytics or other tracking requests.
 - No Usage, Account, historical chart, or fabricated data exists.
 - No local key persistence exists.
 - Desktop 1440 / 1024, tablet 768, and mobile 375 / 390 / 414 widths pass.
 - Light / Dark / System and Chinese/English switching work.
 - The GitHub repository is public and contains no real API key.
-- The 95% top-up offer is active: buyer pays a USD amount, CNY credit is estimated using the configured reference rate × 100/95, and the final API key is delivered manually through Telegram after verification.
-- The flow is PayPal payment → Telegram group verification → private API key delivery; no “or pay with” divider is shown.
-- The variable PayPal checkout and manual key delivery are documented; no frontend code changes or bypasses the PayPal amount.
+- The page has no payment button, payment form, checkout link, or payment brand image.
+- The 10% API Access notice and Telegram / Discord links work.
+- `sitemap.xml`, `robots.txt`, canonical, and JSON-LD are included.

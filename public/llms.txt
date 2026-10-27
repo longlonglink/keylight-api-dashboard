@@ -1,43 +1,43 @@
-# Keylight
+# KeyLight API Dashboard
 
-> Keylight is a privacy-first, fully static DeepSeek API dashboard. It shows only data returned by DeepSeek's official API: account balance (`/user/balance`) and available models (`/models`). The user's API key stays in browser memory and is sent directly to `https://api.deepseek.com`; there is no backend, proxy, Worker, database, or analytics.
+> KeyLight is a lightweight, open-source API dashboard. It checks supported API account information directly in the browser: DeepSeek account balance (`/user/balance`) and available models (`/models`). The user's API key stays in page memory and is sent only to `https://api.deepseek.com`; there is no backend, proxy, Worker, database, or analytics.
 
 ## Key facts
 
-- Live site: the current origin.
+- Live site: https://keylight-api-dashboard.pages.dev/
 - Source code: https://github.com/longlonglink/keylight-api-dashboard
-- Supported provider: DeepSeek only.
+- Supported provider: DeepSeek.
 - Official endpoints used: `GET https://api.deepseek.com/user/balance` and `GET https://api.deepseek.com/models`.
 - The API key is never persisted by the site. Reloading the page clears it.
-- The site does not expose Usage history, Account ID, plan, or account creation time because those are not in the current public DeepSeek API.
+- The dashboard does not expose Usage history, Account ID, plan, or creation time because those are not in the current public DeepSeek API.
 - Browser CORS preflight for both endpoints passed on 2026-10-26.
 - The interface supports Chinese and English.
 - No analytics, tracking SDKs, or error-reporting services are used.
+- This website does not process payments and has no checkout.
 
-## API key top-up
+## API Access and community
 
-- The buyer chooses a USD amount on the PayPal-hosted checkout: https://www.paypal.com/ncp/payment/CMTG9BPF9Z2KG
-- The estimated CNY API balance is: USD amount × reference USD/CNY rate × 100/95.
-- The current UI reference rate is 1 USD = 6.68 CNY; the final rate and credit are confirmed on Telegram.
-- After payment, the buyer joins the Telegram group for verification: https://t.me/+mErIcVI3_R4zMDE1
-- After verification, the seller sends the API key by private message. The key is not displayed or stored by this website.
-- This is a manual fulfillment flow, not an automatic PayPal discount.
+- API Access is currently advertised at 10% off the standard price.
+- Telegram community: https://t.me/+mErIcVI3_R4zMDE1
+- Discord community: https://discord.gg/UEZGQTTDj
+- Details and any transaction are handled outside this website through those communities.
+- The site does not collect payment details, issue API keys, or receive a user's API key through Telegram or Discord.
 
-## Important pages
+## Pages
 
-- [Homepage](/): connect a DeepSeek key, view the API dashboard, purchase section, privacy notes, FAQ, and GitHub source proof.
-- [README](https://github.com/longlonglink/keylight-api-dashboard/blob/main/README.md): setup and deployment.
+- [Homepage](https://keylight-api-dashboard.pages.dev/): connect a DeepSeek key, view the API dashboard, API Access notice, privacy notes, FAQ, and GitHub source proof.
+- [Terms](https://github.com/longlonglink/keylight-api-dashboard/blob/main/TERMS.md): website and community terms.
 - [Privacy](https://github.com/longlonglink/keylight-api-dashboard/blob/main/PRIVACY.md): data flow and storage.
 - [Security](https://github.com/longlonglink/keylight-api-dashboard/blob/main/SECURITY.md): audit and reporting.
 - [Architecture](https://github.com/longlonglink/keylight-api-dashboard/blob/main/ARCHITECTURE.md): static deployment boundaries.
 
 ## Limitations
 
-- Keylight is not an official DeepSeek store and is not affiliated with DeepSeek.
+- KeyLight is not an official DeepSeek product, store, reseller, partner, or authorized agent.
 - It cannot show data that the official API does not return.
 - It cannot bypass browser CORS restrictions and will not add a proxy.
-- The website cannot guarantee third-party payment, fulfillment, or Telegram delivery; buyers should verify the price, rate, and delivery with the seller.
+- Community offers are outside this website; verify all details before any transaction.
 
 ## Contact
 
-Use the Telegram link above for purchase support. Security issues without secrets can be reported at https://github.com/longlonglink/keylight-api-dashboard/issues.
+Security issues without secrets: https://github.com/longlonglink/keylight-api-dashboard/issues

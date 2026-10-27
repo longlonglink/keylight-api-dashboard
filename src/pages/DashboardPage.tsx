@@ -127,7 +127,7 @@ export function DashboardPage({
         </div>
       </main>
 
-      <Footer docsUrl={data.provider.docsUrl} apiKeysUrl={data.provider.apiKeysUrl} />
+      <Footer />
     </div>
   )
 }
